@@ -19,7 +19,7 @@
 - Receive NAHRIM-provided data and ensure consistency with external sources.
 - Store the collected data in a structured database for dashboard integration.
 
-### ***Week 3: Dashboard Development (Data Fusion & Display)
+### **Week 3: Dashboard Development (Data Fusion & Display)
 
 - Develop a prototype of the **spatial decision support dashboard**.
 - Integrate **real-time rainfall volume data** from all two external sources and NAHRIM.
@@ -27,7 +27,7 @@
 - Ensure **data refresh mechanisms** work correctly (real-time or scheduled updates).
 - Validate dashboard data with **historical records or ground truth observations**.
 
-### **Week 4***: Data Visualization & Initial Analysis
+### **Week 4**: Data Visualization & Initial Analysis
 
 - Design interactive visualizations for rainfall volume variations across Kedah and Selangor.
 - Implement charts, maps, and graphs for easier interpretation.
