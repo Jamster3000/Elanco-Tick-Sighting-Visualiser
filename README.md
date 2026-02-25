@@ -11,7 +11,7 @@
     o Longitude and Latitute
     o Type of Hospital (Private or Public hospital)
 
-### **Week 2***: Data Collection and Database Development (Rainfall Volume)
+### **Week 2**: Data Collection and Database Development (Rainfall Volume)
 
 - Set up an automated pipeline to extract data (rainfall volume) from two sources which are Google and Windy
 - Clean and standardize data (e.g., format timestamps, unit conversions).
@@ -19,7 +19,7 @@
 - Receive NAHRIM-provided data and ensure consistency with external sources.
 - Store the collected data in a structured database for dashboard integration.
 
-### **Week 3: Dashboard Development (Data Fusion & Display)
+### **Week 3**: Dashboard Development (Data Fusion & Display)
 
 - Develop a prototype of the **spatial decision support dashboard**.
 - Integrate **real-time rainfall volume data** from all two external sources and NAHRIM.
