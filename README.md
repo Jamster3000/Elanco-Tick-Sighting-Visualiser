@@ -51,7 +51,7 @@ Upon project completion, your team is required to submit the following:
 
 The following Elanco team members will provide guidance and support throughout the project:
 
-- Tom Youngs– Engineer -tom.youngs@elancoah.com
-- Liam Hammond– Data Engineer -liam.hammond@elancoah.com
-- Samad Olaibi– Engineer -samad.olaibi@network.elancoah.com
-- Luke Chapman– Data Engineer–luke.chapman@network.elancoah.com
+- Tom Youngs - Engineer - tom.youngs@elancoah.com
+- Liam Hammond - Data Engineer - liam.hammond@elancoah.com
+- Samad Olaibi - Engineer - samad.olaibi@network.elancoah.com
+- Luke Chapman - Data Engineer - luke.chapman@network.elancoah.com
