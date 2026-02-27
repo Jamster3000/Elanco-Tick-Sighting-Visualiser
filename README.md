@@ -1,3 +1,9 @@
+# Portfolio
+Access the Portfolio document below with the link:
+[Portfoio group project word doc](https://sheffieldhallam-my.sharepoint.com/:w:/g/personal/c5026574_hallam_shu_ac_uk/IQCxRbF484p_QZEAVyREyptmAT3KGKO0gT3tSYbJa2qlh1c?e=2CRuQi)
+
+> Suggest opening it in word desktop for correct and proper formatting.
+
 # Tick Sighting Visualiser
 
 ## Project Summary
