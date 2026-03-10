@@ -1,0 +1,37 @@
+Feedback:
+
+1. Correct formatting of timestamps
+
+2. Change formatting of the 'about' page, restructuring the text to be less centered, as this causes eye strain
+
+3. Clean data programmatically, not manually.
+
+4. Zoom the wireframe out
+
+5. reduce font size
+
+6. correct for phone size
+
+7. change wireframe to light mode
+
+8. Using a CSS library for styling may be overcomplicated - hard coding colour values would be easier.
+
+
+
+Action Plan:
+
+1. Timestamps will be reformatted naturally as the project develops, as this is simply an attribute of the prototype.
+
+2. Text will be restructured to reduce eye strain, and be more visually appealing
+
+3. Code will be created to clean the data systematically - this should not be too hard at all.
+
+4. Wireframe can be zoomed out slightly to improve visual appeal
+
+5. default font size should be reduced, but enlarged text should still be available when required as an accessibility feature
+
+6. Wireframe prototype will be created in mockplus, accounting for a mobile view
+
+7. change wireframe to light mode - dark mode can probably be built in with a CSS library
+
+8. Worth talking about as a group - depends what we are after in terms of styling :)
