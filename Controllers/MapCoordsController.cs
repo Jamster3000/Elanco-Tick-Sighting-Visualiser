@@ -1,0 +1,36 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ElantroProj.Data;
+
+namespace ElantroProj.Controllers
+{
+    [ApiController]
+    [Route("api/map")]
+    public class MapController : ControllerBase
+    {
+        private readonly HttpClient _http;
+
+        public MapController(HttpClient http)
+        {
+            _http = http;
+
+            // Required by Nominatim
+            _http.DefaultRequestHeaders.UserAgent.ParseAdd("ElantroProjTickMap/1.0 (student project)");
+        }
+
+        [HttpGet("reverse")]
+        public async Task<IActionResult> Reverse(double lat, double lon)
+        {
+            var url = $"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json";
+
+            var response = await _http.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                return StatusCode((int)response.StatusCode);
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            return Content(json, "application/json");
+        }
+    }
+}
