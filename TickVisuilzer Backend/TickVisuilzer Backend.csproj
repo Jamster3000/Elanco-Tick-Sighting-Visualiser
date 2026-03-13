@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.72" />
+    <PackageReference Include="FuzzySharp" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace TickVisuilzer_Backend.Models
+namespace TickVisualizer_Backend.Models
 {
     public class TickSpecies
     {

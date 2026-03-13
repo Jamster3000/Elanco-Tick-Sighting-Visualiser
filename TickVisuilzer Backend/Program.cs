@@ -1,4 +1,5 @@
 using TickVisuilzer_Backend.SQL;
+using TickVisuilzer_Backend.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddScoped<TickSQL>(provider =>
     var connectionString = builder.Configuration.GetConnectionString("TickDb");
     return new TickSQL(connectionString);
 });
+
+builder.Services.AddScoped<TickService>();
 
 var app = builder.Build();
 
