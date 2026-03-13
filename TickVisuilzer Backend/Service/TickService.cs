@@ -28,17 +28,40 @@ namespace TickVisuilzer_Backend.Service
 
             if (process.Score >= 80)
             {
-                Console.WriteLine(process.Value + " - " + name + " - " + process.Score);
                 return process.Value;
             }
 
             return process.Value;
         }
 
+        public string? CleanTickName(string? latin, List<string> latinNames)
+        {
+            if (latin == null || latin == "null") return null;
+
+            var process = Process.ExtractOne(latin, latinNames);    
+
+            if (latin == process.Value || process.Score == 100) return process.Value;
+
+            if (process.Score >= 80)
+            {
+                return process.Value;
+            }
+
+            return latin;
+        }
+
+        public string CleanSecondSpeciesName(string speciesName)
+        {
+            return "";
+        }
+
         public IEnumerable<TickSighting> GetTickSightings()
         {
             var sightings = _tickSQL.GetTickSightings();
             var frequencies = GetLocationNameFrequencies().ToList();
+            var mapping = GetTickLatinMapping()
+                .Select(t => t.LatinName)
+                .ToList();
 
             //Sort the frequences of the cities from highest to lowest
             var sorted = frequencies.OrderBy(f => f.Frequency).ToList();
@@ -71,18 +94,19 @@ namespace TickVisuilzer_Backend.Service
                 .Select(f => f.Name)
                 .ToList();
 
-            Console.Write(cleanNames.Count + " clean names  -  ");
-            Console.WriteLine(string.Join(", ", cleanNames));
-
-            Console.Write(misspelt.Count + " misspelt names  -  ");
-            Console.Write(string.Join(", ", misspelt));
-
             foreach (var sighting in sightings)
             {
                 if (misspelt.Contains(sighting.LocationName))
                 {
                     sighting.LocationName = CleanLocationNames(sighting.LocationName, cleanNames);
                 }
+
+                if (sighting.Species.Contains("/"))
+                {
+                    Console.WriteLine("test");
+                }
+
+                sighting.Latin = CleanTickName(sighting.Latin, mapping);
             }
 
             return sightings;
@@ -93,6 +117,12 @@ namespace TickVisuilzer_Backend.Service
             var frequencies = _tickSQL.GetLocationNameFrequencies();
 
             return frequencies;
+        }
+
+        public IEnumerable<TickLatinMapping> GetTickLatinMapping()
+        {
+            var mapping = _tickSQL.GetTickMapping();
+            return mapping;
         }
     }
 }

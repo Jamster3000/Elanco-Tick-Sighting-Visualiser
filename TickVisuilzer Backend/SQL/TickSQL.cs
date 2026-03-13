@@ -78,5 +78,17 @@ namespace TickVisuilzer_Backend.SQL
             ");
             return results;
         }
+
+        public IEnumerable<TickLatinMapping> GetTickMapping()
+        {
+            using var connection = new SqliteConnection(_connectionString);
+            var results = connection.Query<TickLatinMapping>(@"
+                SELECT 
+                    TICK_NAME as TickName,
+                    TICK_LATIN_NAME as LatinName
+                FROM TICK_LATIN_MAPPING
+            ");
+            return results;
+        }
     }
 }
