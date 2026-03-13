@@ -1,8 +1,10 @@
-﻿using System.Linq;
-using FuzzySharp;
-using TickVisuilzer_Backend.SQL;
+﻿using FuzzySharp;
+using Microsoft.VisualBasic;
+using System.Globalization;
+using System.Linq;
 using TickVisualizer_Backend.Models;
 using TickVisuilzer_Backend.Models;
+using TickVisuilzer_Backend.SQL;
 
 namespace TickVisuilzer_Backend.Service
 {
@@ -10,6 +12,15 @@ namespace TickVisuilzer_Backend.Service
     {
         private readonly TickSQL _tickSQL;
         private List<string> LocationNames = new List<string>();
+        private static readonly string[] DateFormats = {
+            "yyyy-MM-ddTHH:mm:ss",
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd",
+            "dd/MM/yyyy",
+            "MM/dd/yyyy",
+            "dd-MM-yyyy",
+        };
+
         public TickService(TickSQL tickSQL)
         {
             _tickSQL = tickSQL;
@@ -57,9 +68,24 @@ namespace TickVisuilzer_Backend.Service
             return splitName[0] + " tick";
         }
 
+        public string? FormatDate(string? date)
+        {
+            if (string.IsNullOrWhiteSpace(date)) return null;
+
+            if (DateTime.TryParseExact(date.Trim(), DateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) || DateTime.TryParse(date.Trim(), out result))
+            {
+                return result.ToString("d MMMM yyyy, HH:mm");
+            } else
+            {
+                Console.WriteLine(date);
+            }
+
+            return null;
+        }
+
         public IEnumerable<TickSighting> GetTickSightings()
         {
-            var sightings = _tickSQL.GetTickSightings();
+            var sightings = _tickSQL.GetTickSightings().ToList();
             var frequencies = GetLocationNameFrequencies().ToList();
             var mapping = GetTickLatinMapping()
                 .Select(t => t.LatinName)
@@ -109,6 +135,8 @@ namespace TickVisuilzer_Backend.Service
                 }
 
                 sighting.Latin = CleanTickName(sighting.Latin, mapping);
+
+                sighting.Date = FormatDate(sighting.Date);
             }
 
             return sightings;
@@ -116,15 +144,12 @@ namespace TickVisuilzer_Backend.Service
 
         public IEnumerable<LocationNameFrequencies> GetLocationNameFrequencies()
         {
-            var frequencies = _tickSQL.GetLocationNameFrequencies();
-
-            return frequencies;
+            return _tickSQL.GetLocationNameFrequencies();
         }
 
         public IEnumerable<TickLatinMapping> GetTickLatinMapping()
         {
-            var mapping = _tickSQL.GetTickMapping();
-            return mapping;
+            return _tickSQL.GetTickMapping();
         }
     }
 }
