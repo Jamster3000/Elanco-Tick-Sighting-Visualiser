@@ -32,6 +32,29 @@ location_name_cache = {}
 
 i = 0
 
+def clearTableRows():
+    cursor.execute("PRAGMA foreign_keys = OFF;")
+
+    cursor.execute("""
+        SELECT name FROM sqlite_master 
+        WHERE type='table' AND name NOT LIKE 'sqlite_%'
+    """)
+
+    tables = [row[0] for row in cursor.fetchall()]
+
+    for table in tables:
+        cursor.execute(f"DELETE FROM {table}")
+
+
+    cursor.execute("PRAGMA foreign_keys = ON;")
+
+    cursor.execute("DELETE FROM sqlite_sequence;")
+    
+    db.commit()
+
+clearTableRows()
+
+
 with open("Tick Sightings - Y1.csv", encoding="UTF-8") as csv_file:
     for row in csv.DictReader(csv_file):
         tick_generate_id = row["id"]
@@ -70,7 +93,17 @@ with open("Tick Sightings - Y1.csv", encoding="UTF-8") as csv_file:
             "INSERT INTO TICK_LOCATION (TICK_ID, LOCATION_ID, SOURCE_ID, DATE) VALUES (?, ?, ?, ?)", (tick_id, location_id, tick_generate_id, date,)
         )
 
+        
+
     db.commit()
+
+for tick in ticks_mapping:
+    cursor.execute(
+        "INSERT INTO TICK_LATIN_MAPPING (TICK_NAME, TICK_LATIN_NAME) VALUES (?, ?)", (tick, ticks_mapping[tick],)
+    )
+
+db.commit()
+
 db.close()
 
 print("FINISHED!!!!")
