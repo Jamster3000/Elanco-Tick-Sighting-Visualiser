@@ -5,6 +5,29 @@ import sqlite3
 db = sqlite3.connect("ticks.db")
 cursor = db.cursor()
 
+ticks_mapping = {
+    "Sheep tick": "Ixodes ricinus",
+    "Fox tick": "Ixodes canisuga", 
+    "Hedgehog tick": "Ixodes hexagonus",
+    "Ornate cow tick": "Dermacentor reticulatus",
+    "Southern rodent tick": "Ixodes acuminatus",
+    "Marsh tick": "Ixodes apronophorus",
+    "Tree-hole tick": "Ixodes arboricola",
+    "Sand martin tick": "Ixodes lividus",
+    "Vole tick": "Ixodes trianguliceps",
+    "Pigeon tick": "Argas reflexus",
+    "Long-legged bat tick": "Ixodes vespertilionis",
+    "Natterer's bat tick": "Carios vespertilionis",
+    "Cormorant tick": "Ixodes unicavatus",
+    "Red sheep tick": "Haemaphysalis punctata",
+    "Rabbit tick": "Haemaphysalis leporispalustris",
+    "Squirrel tick": "Ixodes affinis",
+    "Seabird tick": "Ixodes uriae",
+    "Brown dog tick": "Rhipicephalus sanguineus",
+    "Cattle tick": "Ixodes caledonicus",
+    "Wood mouse tick": "Ixodes minor"
+}
+
 location_name_cache = {}
 
 i = 0
