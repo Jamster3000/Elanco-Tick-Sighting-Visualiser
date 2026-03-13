@@ -52,7 +52,9 @@ namespace TickVisuilzer_Backend.Service
 
         public string CleanSecondSpeciesName(string speciesName)
         {
-            return "";
+            string[] splitName = speciesName.Split('/');
+
+            return splitName[0] + " tick";
         }
 
         public IEnumerable<TickSighting> GetTickSightings()
@@ -103,7 +105,7 @@ namespace TickVisuilzer_Backend.Service
 
                 if (sighting.Species.Contains("/"))
                 {
-                    Console.WriteLine("test");
+                    sighting.Species = CleanSecondSpeciesName(sighting.Species);
                 }
 
                 sighting.Latin = CleanTickName(sighting.Latin, mapping);
