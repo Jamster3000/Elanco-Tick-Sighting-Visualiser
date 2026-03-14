@@ -1,10 +1,6 @@
 ﻿using FuzzySharp;
-using Microsoft.VisualBasic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using TickVisualizer_Backend.Models;
-using TickVisuilzer_Backend.Models;
 using TickVisuilzer_Backend.SQL;
 
 namespace TickVisuilzer_Backend.Service
@@ -29,7 +25,7 @@ namespace TickVisuilzer_Backend.Service
         public string CleanLocationNames(string name, List<string> cleanNames)
         {
             if (name == null || name == "null") return "";
-            var process = FuzzySharp.Process.ExtractOne(name, cleanNames);
+            var process = Process.ExtractOne(name, cleanNames);
             return process.Score >= 80 ? process.Value : name;
         }
 
@@ -37,7 +33,7 @@ namespace TickVisuilzer_Backend.Service
         {
             if (latin == null || latin == "null") return null;
 
-            var process = FuzzySharp.Process.ExtractOne(latin, latinNames);    
+            var process = Process.ExtractOne(latin, latinNames);    
 
             if (latin == process.Value || process.Score == 100) return process.Value;
 

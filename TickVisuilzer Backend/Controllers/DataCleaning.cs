@@ -18,7 +18,6 @@ namespace TickVisuilzer_Backend.Controllers
         public IActionResult GetSightings()
         {
             var results = _tickService.GetTickSightings();
-            //var results = _tickService.GetLocationNameFrequencies();
             return Ok(results);
         }
     }

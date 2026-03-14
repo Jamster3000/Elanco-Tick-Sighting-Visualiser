@@ -2,7 +2,6 @@
 using Microsoft.Data.Sqlite;
 using TickVisualizer_Backend.Models;
 using TickVisuilzer_Backend.Models;
-using System.Diagnostics;
 
 namespace TickVisuilzer_Backend.SQL
 {
