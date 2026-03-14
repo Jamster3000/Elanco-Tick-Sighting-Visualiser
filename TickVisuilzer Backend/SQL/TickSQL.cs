@@ -2,6 +2,7 @@
 using Microsoft.Data.Sqlite;
 using TickVisualizer_Backend.Models;
 using TickVisuilzer_Backend.Models;
+using System.Diagnostics;
 
 namespace TickVisuilzer_Backend.SQL
 {
@@ -14,10 +15,10 @@ namespace TickVisuilzer_Backend.SQL
             _connectionString = connectionString;
         }
 
-        public IEnumerable<TickSighting> GetTickSightings()
+        public async Task<IEnumerable<TickSighting>> GetTickSightings()
         {
             using var connection = new SqliteConnection(_connectionString);
-            var results = connection.Query<TickSighting>(@"
+            var results = await connection.QueryAsync<TickSighting>(@"
                 SELECT 
                     TL.SOURCE_ID as SourceId,
                     TL.DATE as Date,
@@ -36,10 +37,10 @@ namespace TickVisuilzer_Backend.SQL
             return results;
         }
 
-        public IEnumerable<Location> GetLocation()
+        public async Task<IEnumerable<Location>> GetLocation()
         {
             using var connection = new SqliteConnection(_connectionString);
-            var results = connection.Query<Location>(@"
+            var results = await connection.QueryAsync<Location>(@"
                 SELECT 
                     LOCATION_ID as Id,
                     NAME as Name,
@@ -50,10 +51,10 @@ namespace TickVisuilzer_Backend.SQL
             return results;
         }
 
-        public IEnumerable<TickSpecies> GetTickSpecies()
+        public async Task<IEnumerable<TickSpecies>> GetTickSpecies()
         {
             using var connection = new SqliteConnection(_connectionString);
-            var results = connection.Query<TickSpecies>(@"
+            var results = await connection.QueryAsync<TickSpecies>(@"
                 SELECT 
                     SPECIES_ID as Id,
                     SPECIES as TickName,
@@ -66,10 +67,10 @@ namespace TickVisuilzer_Backend.SQL
             return results;
         }
 
-        public IEnumerable<LocationNameFrequencies> GetLocationNameFrequencies()
+        public async Task<IEnumerable<LocationNameFrequencies>> GetLocationNameFrequencies()
         {
             using var connection = new SqliteConnection(_connectionString);
-            var results = connection.Query<LocationNameFrequencies>(@"
+            var results = await connection.QueryAsync<LocationNameFrequencies>(@"
                 SELECT L.NAME, COUNT(*) as Frequency
                 FROM TICK_LOCATION TL
                 JOIN LOCATION L ON TL.LOCATION_ID = L.LOCATION_ID
@@ -79,10 +80,10 @@ namespace TickVisuilzer_Backend.SQL
             return results;
         }
 
-        public IEnumerable<TickLatinMapping> GetTickMapping()
+        public async Task<IEnumerable<TickLatinMapping>> GetTickMapping()
         {
             using var connection = new SqliteConnection(_connectionString);
-            var results = connection.Query<TickLatinMapping>(@"
+            var results = await connection.QueryAsync<TickLatinMapping>(@"
                 SELECT 
                     TICK_NAME as TickName,
                     TICK_LATIN_NAME as LatinName

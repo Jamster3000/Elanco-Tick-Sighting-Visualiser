@@ -1,5 +1,6 @@
 ﻿using FuzzySharp;
 using Microsoft.VisualBasic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using TickVisualizer_Backend.Models;
@@ -30,7 +31,7 @@ namespace TickVisuilzer_Backend.Service
         {
             if (name == null || name == "null") return "";
 
-            var process = Process.ExtractOne(name, cleanNames);
+            var process = FuzzySharp.Process.ExtractOne(name, cleanNames);
 
             if (name == process.Value || process.Score == 100)
             {
@@ -49,7 +50,7 @@ namespace TickVisuilzer_Backend.Service
         {
             if (latin == null || latin == "null") return null;
 
-            var process = Process.ExtractOne(latin, latinNames);    
+            var process = FuzzySharp.Process.ExtractOne(latin, latinNames);    
 
             if (latin == process.Value || process.Score == 100) return process.Value;
 
@@ -75,19 +76,16 @@ namespace TickVisuilzer_Backend.Service
             if (DateTime.TryParseExact(date.Trim(), DateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) || DateTime.TryParse(date.Trim(), out result))
             {
                 return result.ToString("d MMMM yyyy, HH:mm");
-            } else
-            {
-                Console.WriteLine(date);
             }
 
             return null;
         }
 
-        public IEnumerable<TickSighting> GetTickSightings()
+        public async Task<IEnumerable<TickSighting>> GetTickSightings()
         {
-            var sightings = _tickSQL.GetTickSightings().ToList();
-            var frequencies = GetLocationNameFrequencies().ToList();
-            var mapping = GetTickLatinMapping()
+            var sightings = (await _tickSQL.GetTickSightings()).ToList();
+            var frequencies = (await _tickSQL.GetLocationNameFrequencies()).ToList();
+            var mapping = (await _tickSQL.GetTickMapping())
                 .Select(t => t.LatinName)
                 .ToList();
 
@@ -117,16 +115,31 @@ namespace TickVisuilzer_Backend.Service
                 .ToList();
 
             //Words that appear less than 5 times are considered missspellings to check against clean names
-            var misspelt = frequencies
+            var misspelt = new HashSet<string>(frequencies
                 .Where(f => f.Frequency <= cutoff)
-                .Select(f => f.Name)
-                .ToList();
+                .Select(f => f.Name));
+
+            //By creating dictionaries and keepign the fuzzy matching functions out of the loop
+            //it only fuzzy matches on unique strings rather than all occurances of all strings that apply
+            var MisspeltMap = misspelt.ToDictionary(
+                name => name,
+                name => CleanLocationNames(name, cleanNames)
+            );
+
+            var latinCorrectionMap = sightings
+                .Where(s => s.Latin != null)
+                .Select(s => s.Latin!)
+                .Distinct()
+                .ToDictionary(
+                    latin => latin,
+                    latin => CleanTickName(latin, mapping)
+                );
 
             foreach (var sighting in sightings)
             {
-                if (misspelt.Contains(sighting.LocationName))
+                if (MisspeltMap.TryGetValue(sighting.LocationName, out var correctedLocation))
                 {
-                    sighting.LocationName = CleanLocationNames(sighting.LocationName, cleanNames);
+                    sighting.LocationName = correctedLocation;
                 }
 
                 if (sighting.Species.Contains("/"))
@@ -134,22 +147,15 @@ namespace TickVisuilzer_Backend.Service
                     sighting.Species = CleanSecondSpeciesName(sighting.Species);
                 }
 
-                sighting.Latin = CleanTickName(sighting.Latin, mapping);
+                if (sighting.Latin != null && latinCorrectionMap.TryGetValue(sighting.Latin, out var correctedLatin))
+                {
+                    sighting.Latin = correctedLatin;
+                }
 
                 sighting.Date = FormatDate(sighting.Date);
             }
 
             return sightings;
-        }
-
-        public IEnumerable<LocationNameFrequencies> GetLocationNameFrequencies()
-        {
-            return _tickSQL.GetLocationNameFrequencies();
-        }
-
-        public IEnumerable<TickLatinMapping> GetTickLatinMapping()
-        {
-            return _tickSQL.GetTickMapping();
         }
     }
 }
