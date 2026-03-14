@@ -12,7 +12,6 @@ namespace TickVisuilzer_Backend.Service
     public class TickService
     {
         private readonly TickSQL _tickSQL;
-        private List<string> LocationNames = new List<string>();
         private static readonly string[] DateFormats = {
             "yyyy-MM-ddTHH:mm:ss",
             "yyyy-MM-dd HH:mm:ss",
@@ -30,20 +29,8 @@ namespace TickVisuilzer_Backend.Service
         public string CleanLocationNames(string name, List<string> cleanNames)
         {
             if (name == null || name == "null") return "";
-
             var process = FuzzySharp.Process.ExtractOne(name, cleanNames);
-
-            if (name == process.Value || process.Score == 100)
-            {
-                return name;
-            }
-
-            if (process.Score >= 80)
-            {
-                return process.Value;
-            }
-
-            return process.Value;
+            return process.Score >= 80 ? process.Value : name;
         }
 
         public string? CleanTickName(string? latin, List<string> latinNames)
@@ -66,7 +53,7 @@ namespace TickVisuilzer_Backend.Service
         {
             string[] splitName = speciesName.Split('/');
 
-            return splitName[0] + " tick";
+            return splitName[0].Trim() + " tick";
         }
 
         public string? FormatDate(string? date)
@@ -137,7 +124,7 @@ namespace TickVisuilzer_Backend.Service
 
             foreach (var sighting in sightings)
             {
-                if (MisspeltMap.TryGetValue(sighting.LocationName, out var correctedLocation))
+                if (sighting.LocationName != null && MisspeltMap.TryGetValue(sighting.LocationName, out var correctedLocation))
                 {
                     sighting.LocationName = correctedLocation;
                 }
