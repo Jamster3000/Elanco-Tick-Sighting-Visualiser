@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ElantroProj")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83f7748a2810f98b5167cb432d316e0dc134bc6b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+644f8583504bd68bb2edb780846ded7d3404fb0d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ElantroProj")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ElantroProj")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

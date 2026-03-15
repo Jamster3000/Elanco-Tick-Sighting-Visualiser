@@ -2503,23 +2503,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kerim\\.nuget\\packages\\": {},
+    "C:\\Users\\ethan\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kerim\\source\\repos\\ElantroProj\\ElantroProj.csproj",
+      "projectUniqueName": "C:\\Users\\ethan\\source\\repos\\Elanco-Tick-Sighting-Visualiser\\DemoKerim\\ElantroProj.csproj",
       "projectName": "ElantroProj",
-      "projectPath": "C:\\Users\\kerim\\source\\repos\\ElantroProj\\ElantroProj.csproj",
-      "packagesPath": "C:\\Users\\kerim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kerim\\source\\repos\\ElantroProj\\obj\\",
+      "projectPath": "C:\\Users\\ethan\\source\\repos\\Elanco-Tick-Sighting-Visualiser\\DemoKerim\\ElantroProj.csproj",
+      "packagesPath": "C:\\Users\\ethan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ethan\\source\\repos\\Elanco-Tick-Sighting-Visualiser\\DemoKerim\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\kerim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ethan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2546,7 +2546,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
       "net10.0": {
@@ -2590,7 +2590,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.200/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="vue-client\public\Tick-Images\" />
+  </ItemGroup>
+
 </Project>

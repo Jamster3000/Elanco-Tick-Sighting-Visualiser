@@ -9,6 +9,7 @@
                 <div class="logo"> Elanco TickTracker - Pasa's Demo Version </div>
 
                 <div class="links">
+                    <router-link to="/tickinfo">Tick Info</router-link>
                     <router-link to="/">Home</router-link>
                     <router-link to="/map">Map</router-link>
                     <router-link to="/about">About</router-link>
