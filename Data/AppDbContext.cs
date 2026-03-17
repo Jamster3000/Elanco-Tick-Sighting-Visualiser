@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ElantroProj.Models;
+using TickVisualizer_Backend.Models;
 
 namespace ElantroProj.Data
 {
@@ -10,6 +10,6 @@ namespace ElantroProj.Data
         {
         }
 
-        public DbSet<TickSightings> Tick_Sightings { get; set; }
+        public DbSet<TickSighting> TickSightings { get; set; }
     }
 }

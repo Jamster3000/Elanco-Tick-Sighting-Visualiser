@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
-using ElantroProj.Data;
+using TickVisuilzer_Backend.Service;
+using TickVisuilzer_Backend.SQL;
 
 namespace ElantroProj
 {
@@ -13,8 +13,13 @@ namespace ElantroProj
             builder.Services.AddOpenApi();
             builder.Services.AddHttpClient();
 
-            builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlite("Data Source=Elanco_Dataset.db"));
+            builder.Services.AddScoped<TickSQL>(provider =>
+            {
+                var connectionString = builder.Configuration.GetConnectionString("TickDb");
+                return new TickSQL(connectionString);
+            });
+
+            builder.Services.AddScoped<TickService>();
 
             builder.Services.AddCors(options =>
             {

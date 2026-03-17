@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ElantroProj.Data;
+using TickVisuilzer_Backend.Service;
 
 namespace ElantroProj.Controllers
 {
@@ -8,33 +8,30 @@ namespace ElantroProj.Controllers
     [Route("api/[controller]")]
     public class TickSightingsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly TickService _tickService;
 
-        public TickSightingsController(AppDbContext context)
+        public TickSightingsController(TickService tickService)
         {
-            _context = context;
+            _tickService = tickService;
         }
 
         // GET: api/TickSightings/city/(any city)
         [HttpGet("city/{city}")]
         public async Task<IActionResult> GetSightingsByCity(string city)
         {
-            var count = await _context.Tick_Sightings
-                .Where(t => t.Location == city)
-                .CountAsync();
+            Console.WriteLine($"Received request for tick sightings in city: {city}");
 
-            var speciesList = await _context.Tick_Sightings
-                .Where(t => t.Location == city)
+            var allSightings = await _tickService.GetTickSightings();
+            var citySightings = allSightings.Where(t => t.LocationName == city).ToList();
+
+            var count = citySightings.Count;
+            var speciesList = citySightings
                 .Select(t => t.Species)
                 .Distinct()
-                .ToListAsync();
-
-            var latestSighting = await _context.Tick_Sightings
-                .Where(t => t.Location == city)
+                .ToList();
+            var latestDate = citySightings
                 .OrderByDescending(t => t.Date)
-                .FirstOrDefaultAsync();
-
-            var latestDate = latestSighting?.Date;
+                .FirstOrDefault()?.Date;
 
             return Ok(new
             {

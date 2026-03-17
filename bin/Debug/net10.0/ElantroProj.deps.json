@@ -8,6 +8,8 @@
     ".NETCoreApp,Version=v10.0": {
       "ElantroProj/1.0.0": {
         "dependencies": {
+          "Dapper": "2.1.72",
+          "FuzzySharp": "2.0.2",
           "Microsoft.AspNetCore.OpenApi": "10.0.3",
           "Microsoft.EntityFrameworkCore": "10.0.3",
           "Microsoft.EntityFrameworkCore.Sqlite": "10.0.3",
@@ -15,6 +17,22 @@
         },
         "runtime": {
           "ElantroProj.dll": {}
+        }
+      },
+      "Dapper/2.1.72": {
+        "runtime": {
+          "lib/net10.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.72.10375"
+          }
+        }
+      },
+      "FuzzySharp/2.0.2": {
+        "runtime": {
+          "lib/netcoreapp2.1/FuzzySharp.dll": {
+            "assemblyVersion": "1.0.4.0",
+            "fileVersion": "1.0.4.0"
+          }
         }
       },
       "Humanizer.Core/2.14.1": {
@@ -671,6 +689,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Dapper/2.1.72": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ns4mGqQd9a/MhP8m6w556vVlZIa0/MfUu03zrxjZC/jlr1uVCsUac8bkdB+Fs98Llbd56rRSo1eZH5VVmeGZyw==",
+      "path": "dapper/2.1.72",
+      "hashPath": "dapper.2.1.72.nupkg.sha512"
+    },
+    "FuzzySharp/2.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sBKqWxw3g//peYxDZ8JipRlyPbIyBtgzqBVA5GqwHVeqtIrw75maGXAllztf+1aJhchD+drcQIgf2mFho8ZV8A==",
+      "path": "fuzzysharp/2.0.2",
+      "hashPath": "fuzzysharp.2.0.2.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",

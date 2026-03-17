@@ -3,7 +3,7 @@
     import L, { Marker, LeafletMouseEvent } from 'leaflet'
     import 'leaflet/dist/leaflet.css'
 
-    const tickInfo = ref({ city: '', count: 0, speciesList: [] as string[], latestDate: ''})
+    const tickInfo = ref({ city: '', count: 0, speciesList: [] as string[], latestDate: '' })
 
     onMounted(() => {
         const map = L.map('map').setView([51.505, -0.09], 13)
@@ -28,12 +28,9 @@
             let latestDate = ""
 
             try {
-                // Delay to avoid API rate limits
-                await new Promise(r => setTimeout(r, 1100))
-
                 // FETCH #1: Reverse geocode
                 const reverseResponse = await fetch(
-                    `https://localhost:7279/api/map/reverse?lat=${lat}&lon=${lng}`
+                    `http://localhost:5021/api/map/reverse?lat=${lat}&lon=${lng}`
                 )
                 if (reverseResponse.ok) {
                     const reverseData = await reverseResponse.json()
@@ -49,7 +46,7 @@
 
                 // FETCH #2: Tick sightings count
                 const tickResponse = await fetch(
-                    `https://localhost:7279/api/TickSightings/city/${city}`
+                    `http://localhost:5021/api/TickSightings/city/${city}`
                 )
                 if (tickResponse.ok) {
                     var tickData = await tickResponse.json()
@@ -63,7 +60,7 @@
                 console.error('API error:', error)
             }
 
-            tickInfo.value = { city, count, speciesList,latestDate }
+            tickInfo.value = { city, count, speciesList, latestDate }
 
             // Only show tick count in popup
             const message = `You clicked in ${location}. There are ${count} recorded tick sightings here.`

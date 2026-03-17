@@ -461,3 +461,5 @@ C:\Users\jbain\Documents\Elanco Demo\obj\Debug\net10.0\refint\ElantroProj.dll
 C:\Users\jbain\Documents\Elanco Demo\obj\Debug\net10.0\ElantroProj.pdb
 C:\Users\jbain\Documents\Elanco Demo\obj\Debug\net10.0\ElantroProj.genruntimeconfig.cache
 C:\Users\jbain\Documents\Elanco Demo\obj\Debug\net10.0\ref\ElantroProj.dll
+C:\Users\jbain\Documents\Elanco Demo\bin\Debug\net10.0\Dapper.dll
+C:\Users\jbain\Documents\Elanco Demo\bin\Debug\net10.0\FuzzySharp.dll
