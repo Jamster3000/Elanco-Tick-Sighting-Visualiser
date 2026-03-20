@@ -413,3 +413,4 @@ FodyWeavers.xsd
 /obj/Debug/net10.0/ElantroProj.csproj.AssemblyReference.cache
 /obj/Debug/net10.0/ElantroProj.GeneratedMSBuildEditorConfig.editorconfig
 /obj/Debug/net10.0/rpswa.dswa.cache.json
+/vue-client/.vite/deps
