@@ -6,7 +6,7 @@
     const tickInfo = ref({ city: '', count: 0, speciesList: [] as string[], latestDate: '' })
 
     onMounted(() => {
-        const map = L.map('map').setView([51.505, -0.09], 13)
+        const map = L.map('map').setView([51.505, -0.09], 6)
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
