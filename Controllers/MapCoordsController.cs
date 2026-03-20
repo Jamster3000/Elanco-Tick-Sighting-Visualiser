@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ElantroProj.Data;
 
 namespace ElantroProj.Controllers
 {
