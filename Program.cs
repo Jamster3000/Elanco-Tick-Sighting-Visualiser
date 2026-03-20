@@ -23,25 +23,24 @@ namespace ElantroProj
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("vue", policy =>
+                options.AddPolicy("AllowFrontend", policy =>
                 {
-                    policy
-                        .WithOrigins("http://localhost:5173")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
+                    policy.WithOrigins("http://localhost:5173")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
                 });
             });
 
             var app = builder.Build();
 
-            app.UseCors("vue");
+            app.UseCors("AllowFrontend");
 
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseAuthorization();
 
             app.MapControllers();
