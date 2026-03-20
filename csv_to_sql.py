@@ -25,7 +25,36 @@ ticks_mapping = {
     "Seabird tick": "Ixodes uriae",
     "Brown dog tick": "Rhipicephalus sanguineus",
     "Cattle tick": "Ixodes caledonicus",
-    "Wood mouse tick": "Ixodes minor"
+    "Wood mouse tick": "Ixodes minor",
+    "Passerine Tick": "Ixodes frontalis"
+}
+
+tick_information_mapping = {
+    "Southen Rodent Tick": {
+        "Bio": "",
+        "Habitat": "",
+        "Health Risks": "",
+    },
+    
+    "Marh Tick": {
+        "Bio": "",
+        "Habitat": "",
+        "Health Risks": "",
+    },
+
+    "Fox Tick": {
+        "Bio": "",
+        "Habitat": "",
+        "Health Risks": "",
+    },
+
+    "Tree-hole Tick": {
+        "Bio": "",
+        "Habitat": "",
+        "Health Risks": "",
+    },
+    
+    "Passerine Tick": 
 }
 
 location_name_cache = {}
