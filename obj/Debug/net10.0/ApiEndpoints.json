@@ -21,6 +21,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ElantroProj.Controllers.TickChartController",
+    "Method": "GetTickChartData",
+    "RelativePath": "api/TickChart/GetChartData/{city}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "city",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ElantroProj.Controllers.TickSightingsController",
     "Method": "GetSightingsByCity",
     "RelativePath": "api/TickSightings/city/{city}",

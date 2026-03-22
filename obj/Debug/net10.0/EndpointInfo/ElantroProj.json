@@ -72,6 +72,28 @@
           }
         }
       }
+    },
+    "/api/TickChart/GetChartData/{city}": {
+      "get": {
+        "tags": [
+          "TickChart"
+        ],
+        "parameters": [
+          {
+            "name": "city",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "tags": [
@@ -80,6 +102,9 @@
     },
     {
       "name": "TickSightings"
+    },
+    {
+      "name": "TickChart"
     }
   ]
 }

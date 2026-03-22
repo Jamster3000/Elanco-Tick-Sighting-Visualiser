@@ -5,7 +5,7 @@
         <button class="nav-buttons" @click="previousSpecies">Previous</button>
 
         <div class="species-card">
-            <h2 style="padding-top: 80px;">{{ species[currentIndex].name }}</h2>
+            <h2 style="padding-top: 50px;">{{ species[currentIndex].name }}</h2>
             <img :src="species[currentIndex].image" alt="Tick Photo" />
             <p class="Sub-Title">Bio Characteristics</p>
             <p class="Information">{{ species[currentIndex].bioCharacteristics }}</p>
@@ -37,7 +37,7 @@
 
                     {
                         name: "Marsh Tick",
-                        image: "/Tick-Images/Marsh-Tick.jpg",
+                        image: "/Tick-Images/marshtick_2.webp",
                         bioCharacteristics: "Typically lives 1–2 years, possibly longer in colder climates. Larger than many ticks (4–5 mm). Oval body, reddish‑brown or black legs, dark brown back with white/silver patterns. Most active in colder months, especially February–April.",
                         typicalHabitat: "Marshes, fens, swamps, wetlands; usually attached to vegetation.",
                         healthRisks: "Risk of Lyme disease and various dangerous pathogens.",

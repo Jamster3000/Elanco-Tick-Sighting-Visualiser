@@ -6,13 +6,21 @@
     <div>
         <nav class="navbar">
             <div class="nav-container">
-                <div class="logo"> Elanco TickTracker - Pasa's Demo Version </div>
+                <div class="logo"> Elanco TickTracker - EXT 12 Version</div>
 
                 <div class="links">
-                    <router-link to="/tickinfo">Tick Info</router-link>
+
+                    <router-link to="/tickinfo">Explore Tick Species</router-link>
+                    <br />
+                    
                     <router-link to="/">Home</router-link>
+                    
+                    <br />
                     <router-link to="/map">Map</router-link>
+                    <br />
+                    
                     <router-link to="/about">About</router-link>
+
                 </div>
             </div>
         </nav>
@@ -38,42 +46,45 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%; 
-        height: 60px;
-        background-color: #f5f5f5;
-        border: 5px solid gray; 
-        box-sizing: border-box; /* makes sure the width includes the border */
+        width: 100%;
+        height: 64px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px); 
+
+        border-bottom: 5px solid #0072CE; 
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         z-index: 1000;
     }
 
-    /* container keeps things centered */
+  
 
     .nav-container {
         max-width: 1100px;
-        margin: auto;
+        margin: 0 auto;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 20px;
+        padding: 0 24px;
     }
 
-    /* logo */
+ 
 
     .logo {
-        font-size: 22px;
-        font-weight: bold;
-        color: #2c3e50;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #0072CE;
+        text-shadow: 1px 1px 1px #A9A9A9;
     }
 
-    /* link container */
+    
 
     .links {
         display: flex;
         gap: 25px;
     }
 
-        /* router links */
+    
 
         .links a {
             text-decoration: none;
@@ -87,14 +98,14 @@
                 color: #2c7be5;
             }
 
-    /* active route highlight */
+  
 
     .router-link-active {
         color: #2c7be5;
         font-weight: 600;
     }
 
-    /* prevent content hiding behind navbar */
+    
 
     .content {
         margin-top: 60px;
