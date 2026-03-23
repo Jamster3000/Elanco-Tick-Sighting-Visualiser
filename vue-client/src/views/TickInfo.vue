@@ -138,8 +138,8 @@
     }
 
     .species-container img:hover {
-        height: 20%;
-        width: 20%;
+        height: 60%;
+        width: 60%;
     }
 
     .species-card {
