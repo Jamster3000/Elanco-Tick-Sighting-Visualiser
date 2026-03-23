@@ -30,7 +30,7 @@
                     {
                         name: "Fox/Badger Tick",
                         image: "/Tick-Images/Fox-Badger-Tick.jpg",
-                        bioCharacteristics: "The Southern Rodent tick usually last from 2-3 years, they are small (1-3mm) with an oval body shape and are reddish brown or black uniformly coloured, most active through spring till autumn with the most active months being April and October.",
+                        bioCharacteristics: "The Southern Rodent tick usually live from 2-3 years, they are small (1-3mm) with an oval body shape and are reddish brown or black uniformly coloured, most active through spring till autumn with the most active months being April and October.",
                         typicalHabitat: "Underground burrows of small mammals.",
                         healthRisks: "Risk of Lyme disease, bacterial infections and other syndromes from a bite of this tick.",
                     },
@@ -47,7 +47,7 @@
                     {
                         name: "Southern Rodent Tick",
                         image: "/Tick-Images/Southern-Rodent-Tick.jpg",
-                        bioCharacteristics: "The Southern Rodent tick usually lasts 2–3 years. Small (1–3 mm), oval-bodied, reddish brown or black, uniformly coloured. Most active from spring to autumn, peaking in April and October.",
+                        bioCharacteristics: "The Southern Rodent tick usually live 2–3 years. Small (1–3 mm), oval-bodied, reddish brown or black, uniformly coloured. Most active from spring to autumn, peaking in April and October.",
                         typicalHabitat: "Underground burrows of small mammals.",
                         healthRisks: "Risk of Lyme disease, bacterial infections, and other syndromes from bites.",
                     },
@@ -138,8 +138,8 @@
     }
 
     .species-container img:hover {
-        height: 60%;
-        width: 60%;
+        height: 20%;
+        width: 20%;
     }
 
     .species-card {
