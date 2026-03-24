@@ -22,16 +22,15 @@ namespace TickVisuilzer_Backend.SQL
                     TL.SOURCE_ID as SourceId,
                     TL.DATE as Date,
                     L.NAME as LocationName,
-                    L.LAT as Lat,
-                    L.LONG as Long,
                     TS.SPECIES as Species,
                     TS.LATIN as Latin,
-                    TS.BIO_CHARACTERISTIC as BioCharacteristic,
-                    TS.TYPICAL_HABITAT as TypicalHabitat,
-                    TS.HEALTH_RISKS as HealthRisks
+                    TSI.BIO_CHARACTERISTIC as BioCharacteristic,
+                    TSI.TYPICAL_HABITAT as TypicalHabitat,
+                    TSI.HEALTH_RISKS as HealthRisks
                 FROM TICK_LOCATION TL
                 JOIN TICKS T ON TL.TICK_ID = T.TICK_ID
                 JOIN TICK_SPECIES TS ON T.SPECIES_ID = TS.SPECIES_ID
+                JOIN TICK_SPECIES_INFO TSI ON TS.SPECIES_ID = TSI.SPECIES_ID
                 JOIN LOCATION L ON TL.LOCATION_ID = L.LOCATION_ID");
             return results;
         }
@@ -42,9 +41,7 @@ namespace TickVisuilzer_Backend.SQL
             var results = await connection.QueryAsync<Location>(@"
                 SELECT 
                     LOCATION_ID as Id,
-                    NAME as Name,
-                    LAT as Lat,
-                    LONG as Long
+                    NAME as Name
                 FROM LOCATION
             ");
             return results;
@@ -55,13 +52,14 @@ namespace TickVisuilzer_Backend.SQL
             using var connection = new SqliteConnection(_connectionString);
             var results = await connection.QueryAsync<TickSpecies>(@"
                 SELECT 
-                    SPECIES_ID as Id,
-                    SPECIES as TickName,
-                    LATIN as LatinName,
-                    BIO_CHARACTERISTIC as BioCharacteristics,
-                    TYPICAL_HABITAT as TypicalHabitat,
-                    HEALTH_RISKS as HealthRisks
-                FROM TICK_SPECIES
+                    TS.SPECIES_ID as Id,
+                    TS.SPECIES as TickName,
+                    TS.LATIN as LatinName,
+                    TSI.BIO_CHARACTERISTIC as BioCharacteristics,
+                    TSI.TYPICAL_HABITAT as TypicalHabitat,
+                    TSI.HEALTH_RISKS as HealthRisks
+                FROM TICK_SPECIES TS
+                JOIN TICK_SPECIES_INFO TSI ON TS.SPECIES_ID = TSI.SPECIES_ID
             ");
             return results;
         }
