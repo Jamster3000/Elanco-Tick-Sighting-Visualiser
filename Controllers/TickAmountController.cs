@@ -19,8 +19,6 @@ namespace ElantroProj.Controllers
         [HttpGet("city/{city}")]
         public async Task<IActionResult> GetSightingsByCity(string city)
         {
-            Console.WriteLine($"Received request for tick sightings in city: {city}");
-
             var allSightings = await _tickService.GetTickSightings();
             var citySightings = allSightings.Where(t => t.LocationName == city).ToList();
 

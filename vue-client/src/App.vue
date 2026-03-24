@@ -9,19 +9,18 @@
                 <div class="logo"> Elanco TickTracker - EXT 12 Version</div>
 
                 <div class="links">
+                    <router-link to="/">Home</router-link>
+                    <br />
 
                     <router-link to="/tickinfo">Explore Tick Species</router-link>
                     <br />
-                    
-                    <router-link to="/">Home</router-link>
-                    
-                    <br />
+
                     <router-link to="/map">Map</router-link>
                     <br />
-                    
-                    <router-link to="/about">About</router-link>
 
+                    <router-link to="/about">About</router-link>
                 </div>
+
             </div>
         </nav>
 

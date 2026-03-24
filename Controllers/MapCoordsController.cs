@@ -20,7 +20,6 @@ namespace ElantroProj.Controllers
         [HttpGet("reverse")]
         public async Task<IActionResult> Reverse(double lat, double lon)
         {
-            Console.WriteLine($"Received reverse geocoding request for ({lat}, {lon})");
             var url = $"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&zoom=10&addressdetails=1";
 
             var response = await _http.GetAsync(url);
@@ -29,8 +28,6 @@ namespace ElantroProj.Controllers
                 return StatusCode((int)response.StatusCode);
 
             var json = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine($"Reverse geocoding for ({lat}, {lon}): {json}");
 
             return Content(json, "application/json");
         }
