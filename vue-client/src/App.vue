@@ -32,15 +32,13 @@
     h1 {
         margin-bottom: 1rem;
     }
-</style>
 
-<style>
     .navbar {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 64px;
+        height: var(--header-height);
         background: var(--bg);
         backdrop-filter: blur(10px);
         border-bottom: 5px solid var(--primary);

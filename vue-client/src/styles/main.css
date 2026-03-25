@@ -7,7 +7,9 @@
     --shadow-color: #A9A9A9;
     --card-bg: #ffffff;
     --page-bg: #f8f9fa;
+
     --top-padding: 80px;
+    --header-height: 64px;
 }
 
 * {

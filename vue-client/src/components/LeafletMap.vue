@@ -8,6 +8,7 @@
 
     import { AgCharts } from 'ag-charts-vue3';
 
+    const isSidebarOpen = ref(false)
     const tickInfo = ref({ city: '', count: 0, speciesList: [] as any[], latestDate: '' })
 
     const chartOptions = ref<any>({
@@ -30,6 +31,10 @@
             position: 'bottom'
         }
     })
+
+    const closeSidebar = () => {
+        isSidebarOpen.value = false
+    }
 
     onMounted(() => {
         const map = L.map('map').setView([51.505, -0.09], 6)
@@ -104,6 +109,8 @@
                 .addTo(map)
                 .bindPopup(message)
                 .openPopup()
+
+            isSidebarOpen.value = true
         })
     })
 </script>
@@ -112,22 +119,26 @@
     <div id="map-container">
         <div id="map"></div>
 
-        <div id="sidebar">
-            <h1 style="text-align:center;">Additional Info Panel</h1>
+        <div id="sidebar" :class="{ open: isSidebarOpen }">
+            <button class="sidebar-close-btn" @click="closeSidebar">✕</button>
 
-
-            <p style="font-weight:bold; font-size:25px"> City: {{ tickInfo.city || 'No city selected' }} </p>
-
-            <div style="height: 300px; margin-top: 20px;">
-                <AgCharts :options="chartOptions" />
+            <div class="sidebar-header">
+                <h1>Additional Info Panel</h1>
             </div>
 
-            <p style="font-weight:bold; font-size:25px"> Total tick sightings: </p>
-            <p> {{ tickInfo.count || 'No count data' }} </p>
+            <div class="sidebar-content">
+                <p class="info-label">City: {{ tickInfo.city || 'No city selected' }}</p>
 
-            <p style="font-weight:bold; font-size:25px"> Latest sighting: </p>
-            <p>{{tickInfo.latestDate || 'No date data'}}</p>
+                <div style="height: 300px; margin-top: 20px;">
+                    <AgCharts :options="chartOptions" />
+                </div>
 
+                <p class="info-label">Total tick sightings:</p>
+                <p>{{ tickInfo.count || 'No count data' }}</p>
+
+                <p class="info-label">Latest sighting:</p>
+                <p>{{ tickInfo.latestDate || 'No date data' }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -140,15 +151,58 @@
 
     #map {
         height: 100vh;
-        width: 80%;
+        width: 100%;
     }
 
     #sidebar {
-        flex: 1;
-        padding-top: 60px;
-        padding-left: 1px;
+        position: fixed;
+        right: 0;
+        top: var(--header-height);
+        width: 25%;
+        max-width: 400px;
+        height: calc(100vh - var(--header-height));
+        padding: 20px;
         background-color: white;
-        border: 3px solid lightgray;
+        border-left: 3px solid lightgray;
         overflow-y: auto;
+        transform: translateX(100%);
+        transition: transform 0.65s ease;
+        z-index: 1000;
+        box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
+    }
+
+        #sidebar.open {
+            transform: translateX(0);
+        }
+
+    .sidebar-close-btn {
+        float: right;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--text);
+        background: none;
+        border: none;
+        padding: 0;
+        margin-bottom: 10px;
+    }
+
+        .sidebar-close-btn:hover {
+            color: var(--primary);
+        }
+
+    .sidebar-header {
+        clear: both;
+        text-align: center;
+    }
+
+    .sidebar-content {
+        margin-top: 20px;
+    }
+
+    .info-label {
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 20px;
+        margin-bottom: 8px;
     }
 </style>
