@@ -60,6 +60,7 @@
 
             if (currentMarker) {
                 map.removeLayer(currentMarker)
+                chartOptions.value.data = []
             }
 
             let city = 'Unknown location'
