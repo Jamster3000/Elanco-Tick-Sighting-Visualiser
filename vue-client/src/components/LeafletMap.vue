@@ -9,6 +9,10 @@
     import { AgCharts } from 'ag-charts-vue3';
 
     const isSidebarOpen = ref(false)
+    const isLoading = ref(false)
+    const lastRequestTime = ref(0)
+    const REQUEST__THROTTLE_MS = 1000
+
     const tickInfo = ref({ city: '', count: 0, speciesList: [] as any[], latestDate: '' })
 
     const chartOptions = ref<any>({
@@ -36,6 +40,12 @@
         isSidebarOpen.value = false
     }
 
+    const canMakeRequest = (): boolean => {
+        const now = Date.now()
+        const timeSinceLastRequest = now - lastRequestTime.value
+        return timeSinceLastRequest >= REQUEST__THROTTLE_MS
+    }
+
     onMounted(() => {
         const map = L.map('map').setView([51.505, -0.09], 6)
 
@@ -46,6 +56,10 @@
         let currentMarker: L.Marker | null = null
 
         map.on('click', async (e: L.LeafletMouseEvent) => {
+            if (!canMakeRequest()) return
+            isLoading.value = true
+            lastRequestTime.value = Date.now()
+
             const { lat, lng } = e.latlng
 
             if (currentMarker) {
@@ -99,6 +113,8 @@
 
             } catch (error) {
                 console.error('API error:', error)
+            } finally {
+                isLoading.value = false
             }
 
             tickInfo.value = { city, count, speciesList, latestDate }
