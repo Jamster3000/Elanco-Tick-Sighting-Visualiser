@@ -10,8 +10,7 @@
 
     const isSidebarOpen = ref(false)
     const isLoading = ref(false)
-    const lastRequestTime = ref(0)
-    const REQUEST__THROTTLE_MS = 1000
+    const REQUEST_THROTTLE_MS = 1000
 
     const tickInfo = ref({ city: '', count: 0, speciesList: [] as any[], latestDate: '' })
 
@@ -40,12 +39,6 @@
         isSidebarOpen.value = false
     }
 
-    const canMakeRequest = (): boolean => {
-        const now = Date.now()
-        const timeSinceLastRequest = now - lastRequestTime.value
-        return timeSinceLastRequest >= REQUEST__THROTTLE_MS
-    }
-
     onMounted(() => {
         const map = L.map('map').setView([51.505, -0.09], 6)
 
@@ -54,11 +47,14 @@
         }).addTo(map)
 
         let currentMarker: L.Marker | null = null
+        let lastRequestTime = 0
 
         map.on('click', async (e: L.LeafletMouseEvent) => {
-            if (!canMakeRequest()) return
+            const now = Date.now()
+            if (now - lastRequestTime < REQUEST_THROTTLE_MS) return
+
+            lastRequestTime = now
             isLoading.value = true
-            lastRequestTime.value = Date.now()
 
             const { lat, lng } = e.latlng
 
@@ -76,6 +72,7 @@
                 const reverseResponse = await fetch(
                     `http://localhost:5021/api/map/reverse?lat=${lat}&lon=${lng}`
                 )
+
                 if (reverseResponse.ok) {
                     const reverseData = await reverseResponse.json()
                     if (reverseData.address) {
@@ -91,6 +88,7 @@
                 const tickResponse = await fetch(
                     `http://localhost:5021/api/TickChart/GetChartData/${city}`
                 )
+
                 if (tickResponse.ok) {
                     const tickData = await tickResponse.json()
 
@@ -109,6 +107,17 @@
                         ...chartOptions.value,
                         data: [...chartData]
                     }
+
+                    tickInfo.value = { city, count, speciesList, latestDate }
+
+                    const message = `You clicked in ${location}. There are ${count} recorded tick sightings here.`
+
+                    currentMarker = L.marker([lat, lng])
+                        .addTo(map)
+                        .bindPopup(message)
+                        .openPopup()
+
+                    isSidebarOpen.value = true
                 }
 
             } catch (error) {
@@ -118,15 +127,6 @@
             }
 
             tickInfo.value = { city, count, speciesList, latestDate }
-
-            const message = `You clicked in ${location}. There are ${count} recorded tick sightings here.`
-
-            currentMarker = L.marker([lat, lng])
-                .addTo(map)
-                .bindPopup(message)
-                .openPopup()
-
-            isSidebarOpen.value = true
         })
     })
 </script>
