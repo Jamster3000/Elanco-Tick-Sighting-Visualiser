@@ -1,10 +1,13 @@
 ﻿:root {
     --primary: #3498db;
+    --primary-dark: #2980b9;
+    --primary-light: #5dade2;
     --text: #343231;
     --bg: #fff;
     --shadow-color: #A9A9A9;
     --card-bg: #ffffff;
     --page-bg: #f8f9fa;
+    --top-padding: 80px;
 }
 
 * {
@@ -25,10 +28,59 @@ body {
     margin: 56px;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(52, 152, 219, 0.8) 0px -3px 0px inset;
     transition: transform 0.2s ease;
 }
 
-    .card card-hover:hover {
-        transform: translateY(-2px);
+.card-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--bg);
+    box-shadow: rgba(52, 152, 219, 0.2) 0px 2px 8px;
+}
+
+    .btn-primary:hover:not(:disabled) {
+        background-color: var(--primary-dark);
+        box-shadow: rgba(52, 152, 219, 0.3) 0px 4px 12px;
+    }
+
+    .btn-primary:active:not(:disabled) {
+        box-shadow: rgba(52, 152, 219, 0.2) 0px 2px 4px;
+    }
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+}
+
+    .btn-secondary:hover:not(:disabled) {
+        background-color: rgba(52, 152, 219, 0.1);
+        border-color: var(--primary-dark);
+        color: var(--primary-dark);
+    }
+
+    .btn-secondary:active:not(:disabled) {
+        background-color: rgba(52, 152, 219, 0.05);
     }

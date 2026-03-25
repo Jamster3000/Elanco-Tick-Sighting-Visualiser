@@ -1,6 +1,6 @@
 <style scoped>
     .about-container {
-        padding-top: 80px;
+        padding-top: var(--top-padding);
         max-width: 1000px;
         margin: 0 auto;
     }

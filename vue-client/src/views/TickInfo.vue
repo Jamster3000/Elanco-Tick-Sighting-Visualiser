@@ -1,10 +1,79 @@
 ﻿
+<style scoped>
+    h2 {
+        font-size: 36px;
+        text-decoration: underline;
+    }
+
+    h1 {
+        text-align: center;
+        padding-top: var(--top-padding);
+        text-decoration: underline;
+    }
+
+    .current {
+        text-align: center;
+    }
+
+    .species-container {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+        .species-container img {
+            width: 200px;
+            border: 2px solid;
+            border-radius: 8px;
+            transition: height 1s, width 1s;
+        }
+
+            .species-container img:hover {
+                height: 60%;
+                width: 60%;
+            }
+
+    .nav-buttons {
+        font-size: 24px;
+        margin-top: 20px;
+        align-self: flex-start;
+        width: 150px;
+        height: 60px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: solid 2px;
+        cursor: pointer;
+        transition: background-color 0.7s, height 0.2s, width 0.2s;
+    }
+
+        .nav-buttons:hover {
+            background-color: lightgrey;
+            height: 70px;
+            width: 160px;
+        }
+
+    .Information {
+        margin: 10px;
+        text-align: left;
+        font-size: 24px;
+    }
+
+    .Sub-Title {
+        text-decoration: underline;
+        font-size: 30px;
+    }
+</style>
+
 <template>
     <h1>Tick Information</h1>
     <div class="species-container">
-        <button class="nav-buttons" @click="previousSpecies">Previous</button>
+        <button class="btn btn-secondary nav-buttons" @click="previousSpecies">Previous</button>
 
-        <div class="species-card">
+        <div class="card card-center">
             <h2 style="padding-top: 50px;">{{ species[currentIndex].name }}</h2>
             <img :src="species[currentIndex].image" alt="Tick Photo" />
             <p class="Sub-Title">Bio Characteristics</p>
@@ -16,7 +85,7 @@
             <p class="current">{{currentIndex+1}} / {{TotalSpecies}}</p>
         </div>
 
-        <button class="nav-buttons" @click="nextSpecies">Next</button>
+        <button class="btn btn-secondary nav-buttons" @click="nextSpecies">Next</button>
     </div>
 </template>
 
@@ -105,83 +174,3 @@
         },
     };
 </script>
-
-<style scoped>
-
-    h2 {
-        font-size: 36px;
-        text-decoration: underline;
-    }
-
-    h1 {
-        text-align: center;
-        padding-top: 80px;
-        text-decoration: underline;
-    }
-
-    .current {
-        text-align: center;
-    }
-
-    .species-container {
-        display: flex;
-        gap: 20px;
-        align-items: flex-start;
-        justify-content: center;
-    }
-
-    .species-container img {
-        width: 200px;
-        border: 2px solid;
-        border-radius: 8px;    
-        transition: height 1s, width 1s;
-    }
-
-    .species-container img:hover {
-        height: 60%;
-        width: 60%;
-    }
-
-    .species-card {
-        width: 50%;
-        text-align: center;
-        margin: 20px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-    }
-
-    .nav-buttons {
-        font-size: 24px;
-        margin-top: 20px;
-        align-self: flex-start;
-        width: 150px;
-        height: 60px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        padding: 10px 20px;
-        border-radius: 8px;
-        border: solid 2px;
-        cursor: pointer;
-        transition: background-color 0.7s, height 0.2s, width 0.2s;
-    }
-
-    .nav-buttons:hover {
-        background-color: lightgrey;
-        height: 70px;
-        width: 160px;
-    }
-
-    .Information {
-        margin: 10px;
-        text-align: left;
-        font-size: 24px;
-    }
-
-    .Sub-Title {
-        text-decoration: underline;
-        font-size: 30px;
-    }
-
-</style>
