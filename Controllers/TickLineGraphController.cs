@@ -14,42 +14,32 @@ namespace ElantroProj.Controllers
             _tickService = tickService;
         }
 
-        // GET: api/TickChart/GetChartData/London
         [HttpGet("GetLineGraphData/{city}")]
         public async Task<IActionResult> GetLineChartData(string city)
         {
 
-            string year = "";
-            // Get all sightings 
             var allSightings = await _tickService.GetTickSightings();
 
             var citySightings = allSightings
-                .Where(t => t.LocationName == city && t.Date.Contains(year) == true )
+                .Where(t => t.LocationName == city)
                 .ToList();
 
-            var totalCount = citySightings.Count;
-
-            // Group by species, quite sure this is what AG charts wants
-            var speciesCounts = citySightings
-                .GroupBy(t => t.Species)
+            var result = citySightings
+                .GroupBy(t => new
+                {
+                    Year = int.Parse(t.Date.Substring(0, 4)),
+                    t.Species
+                })
                 .Select(g => new
                 {
-                    species = g.Key,
+                    year = g.Key.Year,
+                    species = g.Key.Species,
                     count = g.Count()
                 })
+                .OrderBy(x => x.year)
                 .ToList();
 
-            var latestDate = citySightings
-                .OrderByDescending(t => t.Date)
-                .FirstOrDefault()?.Date;
-
-            return Ok(new
-            {
-                city = city,
-                sightingsCount = totalCount,
-                species = speciesCounts,
-                latestDate = latestDate
-            });
+            return Ok(result);
         }
     }
 }
