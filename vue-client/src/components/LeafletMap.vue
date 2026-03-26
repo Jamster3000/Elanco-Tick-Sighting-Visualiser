@@ -11,6 +11,7 @@
     const isSidebarOpen = ref(false)
     const isLoading = ref(false)
     const REQUEST_THROTTLE_MS = 1000
+    const isChartVisible = ref(false)
 
     const tickInfo = ref({ city: '', count: 0, speciesList: [] as any[], latestDate: '' })
 
@@ -176,7 +177,7 @@
         right: 0;
         top: var(--header-height);
         width: 25%;
-        max-width: 400px;
+        max-width: 460px;
         height: calc(100vh - var(--header-height));
         padding: 20px;
         background-color: white;
