@@ -12,6 +12,7 @@
     const isLoading = ref(false)
     const REQUEST_THROTTLE_MS = 1000
     const isChartVisible = ref(false)
+    const isChart2Visible = ref(false)
 
     const tickInfo = ref({ city: '', count: 0, speciesList: [] as any[], latestDate: '' })
 
@@ -137,39 +138,64 @@
     <div id="map-container">
         <div id="map"></div>
 
+        <div v-if="isChartVisible" class="chart1-popup">
+            <button class="chart-close-btn" @click="isChartVisible = false">X</button>
+            <AgCharts :options="chartOptions" />
+        </div>
+
+        <div v-if="isChart2Visible" class="chart2-popup">
+            <button class="chart-close-btn" @click="isChart2Visible = false">X</button>
+            <p> hi lol</p>
+        </div>
+
+
         <div id="sidebar" :class="{ open: isSidebarOpen }">
+
             <button class="sidebar-close-btn" @click="closeSidebar">✕</button>
 
             <div class="sidebar-header">
                 <h1>Additional Info Panel</h1>
             </div>
 
+
+            <div class="chart1-hover-wrapper">
+                <p class="info-label" @click="isChartVisible = true">
+                    Click for tick species distribution
+                </p>
+            </div>
+
+            <div class="chart2-hover-wrapper">
+                <p class="info-label" @click="isChart2Visible = true">
+                    Click for tick something idk
+                </p>
+            </div>
+
+
             <div class="sidebar-content">
                 <p class="info-label">City: {{ tickInfo.city || 'No city selected' }}</p>
-
-                <div style="height: 300px; margin-top: 20px;">
-                    <AgCharts :options="chartOptions" />
-                </div>
-
                 <p class="info-label">Total tick sightings:</p>
                 <p>{{ tickInfo.count || 'No count data' }}</p>
-
                 <p class="info-label">Latest sighting:</p>
                 <p>{{ tickInfo.latestDate || 'No date data' }}</p>
             </div>
+
         </div>
+
     </div>
+
 </template>
 
 <style scoped>
     #map-container {
         display: flex;
         height: 100vh;
+        z-index: 0;
     }
 
     #map {
         height: 100vh;
         width: 100%;
+        isolation: auto;
     }
 
     #sidebar {
@@ -183,6 +209,7 @@
         background-color: white;
         border-left: 3px solid lightgray;
         overflow-y: auto;
+        overflow-x: visible; 
         transform: translateX(100%);
         transition: transform 0.65s ease;
         z-index: 1000;
@@ -208,6 +235,17 @@
             color: var(--primary);
         }
 
+    .chart-close-btn {
+        color: var(--text); 
+        background: none; 
+        border: none;
+        font-size: 18px;
+    }
+        .chart-close-btn:hover {
+            color: var(--primary);
+        }
+    
+
     .sidebar-header {
         clear: both;
         text-align: center;
@@ -223,4 +261,52 @@
         margin-top: 20px;
         margin-bottom: 8px;
     }
+
+
+
+    .chart1-hover-wrapper {
+        position: static; 
+    }
+
+        .chart1-hover-wrapper:hover {
+            color: mediumblue;
+        }
+
+    .chart1-popup {
+        position: fixed;
+        top: 6.7%;
+        right: 23.98%;
+        transform: none;
+        width: 450px;
+        height: 400px;
+        background: white;
+        border: 1px solid lightgray;
+        border-radius: 8px;
+        padding: 10px;
+        z-index: 100000;
+    }
+
+    .chart2-hover-wrapper {
+        position: static;
+    }
+
+        .chart2-hover-wrapper:hover {
+            color: mediumblue;
+        }
+
+    .chart2-popup {
+        position: fixed;
+        top: 56.7%;
+        right: 23.98%;
+        transform: none;
+        width: 450px;
+        height: 400px;
+        background: white;
+        border: 1px solid lightgray;
+        border-radius: 8px;
+        padding: 10px;
+        z-index: 100000;
+    }
+
+
 </style>
