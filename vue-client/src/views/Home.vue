@@ -15,7 +15,7 @@
                 <button class="btn btn-secondary btn-large" @click="router.push('/login')">
                     Login
                 </button>
-                <button class="btn btn-primary btn-large" @click="router.push('/signup')">
+                <button class="btn btn-primary btn-large" @click="router.push('/Signup')">
                     Sign Up
                 </button>
             </div>

@@ -1,12 +1,31 @@
 ﻿:root {
     --primary: #3498db;
     --primary-dark: #2980b9;
-    --primary-light: #5dade2;
+    --primary-light: #8bc5ea;
+    --warning-red: #dc3545;
     --text: #343231;
+    --disabled: #999;
+    --off-white-input: f8f9fa;
     --bg: #fff;
+    --placeholder-text: #adb5bd;
     --shadow-color: #A9A9A9;
     --card-bg: #ffffff;
     --page-bg: #f8f9fa;
+
+    --message-success-background: #d4edda;
+    --message-success-text: #155724;
+    --message-success-border: #c3e6cb;
+    --message-success-icon-background: #28a745;
+
+    --message-error-background: #f8d7da;
+    --message-error-text: #721c24;
+    --message-error-border: #f5c6cb;
+    --message-error-icon-background: #dc3545;
+
+    --message-warning-background: #fff3cd;
+    --message-warning-text: #856404;
+    --message-warning-border: #ffeeba;
+    --message-warning-icon-background: #ffc107;
 
     --top-padding: 80px;
     --header-height: 64px;
