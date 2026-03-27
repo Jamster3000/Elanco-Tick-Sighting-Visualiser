@@ -322,15 +322,15 @@
 
     .chart1-popup {
         position: fixed;
-        top: 6.7%;
+        top: var(--header-height);
         right: 23.98%;
         transform: none;
         width: 450px;
-        height: 400px;
         background: white;
         border: 1px solid lightgray;
         border-radius: 8px;
         padding: 10px;
+        padding-top: 5px;
         z-index: 100000;
     }
 
@@ -348,13 +348,11 @@
         right: 23.98%;
         transform: none;
         width: 450px;
-        height: 400px;
+        height: auto;
         background: white;
         border: 1px solid lightgray;
         border-radius: 8px;
         padding: 10px;
         z-index: 100000;
     }
-
-
 </style>
