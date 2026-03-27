@@ -307,7 +307,9 @@
         margin-bottom: 8px;
     }
 
-
+    .info-label:hover {
+        cursor: pointer;
+    }
 
     .chart1-hover-wrapper {
         position: static; 
