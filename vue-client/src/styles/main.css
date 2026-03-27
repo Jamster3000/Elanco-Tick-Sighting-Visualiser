@@ -24,6 +24,9 @@ body {
     background-color: var(--bg);
 }
 
+/*==========
+Standard Card
+==========*/
 .card {
     background: var(--card-bg);
     padding: 24px;
@@ -41,6 +44,9 @@ body {
     justify-content: center;
 }
 
+/*==========
+Buttons (primary and secondary)
+==========*/
 .btn {
     padding: 12px 24px;
     border: none;
@@ -86,3 +92,31 @@ body {
     .btn-secondary:active:not(:disabled) {
         background-color: rgba(52, 152, 219, 0.05);
     }
+
+.btn-large {
+    padding: 16px 48px;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+    box-shadow: rgba(52, 152, 219, 0.2) 0px 4px 12px;
+    transition: all 0.3s ease;
+    min-width: 180px;
+}
+
+.btn-primary.btn-large:hover {
+    transform: translateY(-2px);
+    box-shadow: rgba(52, 152, 219, 0.4) 0px 8px 20px;
+}
+
+.btn-secondary.btn-large:hover {
+    transform: translateY(-2px);
+}
+
+/*==========
+Main page container
+==========*/
+.container {
+    top: var(--header-height) !important;
+    padding-top: var(--top-padding) !important;
+}
