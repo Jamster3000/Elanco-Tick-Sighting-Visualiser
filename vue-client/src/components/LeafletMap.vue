@@ -288,6 +288,7 @@
     }
         .chart-close-btn:hover {
             color: var(--primary);
+            cursor: pointer;
         }
     
 
