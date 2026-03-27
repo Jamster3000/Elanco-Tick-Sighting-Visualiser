@@ -94,6 +94,28 @@
           }
         }
       }
+    },
+    "/api/TickLineGraph/GetLineGraphData/{city}": {
+      "get": {
+        "tags": [
+          "TickLineGraph"
+        ],
+        "parameters": [
+          {
+            "name": "city",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "tags": [
@@ -105,6 +127,9 @@
     },
     {
       "name": "TickChart"
+    },
+    {
+      "name": "TickLineGraph"
     }
   ]
 }

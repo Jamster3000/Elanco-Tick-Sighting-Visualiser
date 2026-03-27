@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TickVisuilzer_Backend.Service;
+using System.Globalization;
 
 namespace ElantroProj.Controllers
 {
@@ -17,19 +18,33 @@ namespace ElantroProj.Controllers
         [HttpGet("GetLineGraphData/{city}")]
         public async Task<IActionResult> GetLineChartData(string city)
         {
-
             var allSightings = await _tickService.GetTickSightings();
 
             var citySightings = allSightings
                 .Where(t => t.LocationName == city)
                 .ToList();
 
-            var result = citySightings
-                .GroupBy(t => new
+            var parsedData = citySightings
+                .Select(t =>
                 {
-                    Year = int.Parse(t.Date.Substring(0, 4)),
-                    t.Species
-                })
+                    DateTime parsedDate;
+                    bool success = DateTime.TryParseExact(
+                        t.Date,
+                        new[] { "d MMMM yyyy, HH:mm", "dd MMMM yyyy, HH:mm" },
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.None,
+                        out parsedDate
+                    );
+
+                    return new
+                    {
+                        Species = t.Species,
+                        Year = success ? parsedDate.Year : (int?)null
+                    };
+                });
+
+            var result = parsedData
+                .GroupBy(x => new { x.Year, x.Species })
                 .Select(g => new
                 {
                     year = g.Key.Year,

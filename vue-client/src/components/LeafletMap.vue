@@ -37,6 +37,13 @@
         }
     })
 
+
+    const scatterOptions = ref<any>({
+        title: { text: 'Tick Population Over Time' },
+        legend: { position: 'bottom' },
+        series: []
+    })
+
     const closeSidebar = () => {
         isSidebarOpen.value = false
     }
@@ -63,6 +70,7 @@
             if (currentMarker) {
                 map.removeLayer(currentMarker)
                 chartOptions.value.data = []
+                scatterOptions.value = { ...scatterOptions.value, series: [], data: undefined }
             }
 
             let city = 'Unknown location'
@@ -88,9 +96,10 @@
                     if (city === 'Greater London' || city === 'City of London') city = 'London'
                 }
 
-                const tickResponse = await fetch(
-                    `http://localhost:5021/api/TickChart/GetChartData/${city}`
-                )
+                const [tickResponse, scatterResponse] = await Promise.all([
+                    fetch(`http://localhost:5021/api/TickChart/GetChartData/${city}`),
+                    fetch(`http://localhost:5021/api/TickLineGraph/GetLineGraphData/${city}`)
+                ])
 
                 if (tickResponse.ok) {
                     const tickData = await tickResponse.json()
@@ -123,13 +132,49 @@
                     isSidebarOpen.value = true
                 }
 
+                if (scatterResponse.ok) {
+                    const rawData: any[] = await scatterResponse.json()
+
+                    const allYears = [...new Set(rawData.map((d: any) => d.year))].sort((a, b) => a - b)
+
+                    const allSpecies = [...new Set(rawData.map((d: any) => d.species))]
+
+                    const lookup: Record<string, Record<number, number>> = {}
+                    rawData.forEach((d: any) => {
+                        if (!lookup[d.species]) lookup[d.species] = {}
+                        lookup[d.species][d.year] = d.count
+                    })
+
+                    const sharedData = allYears.map(year => {
+                        const row: any = { year }
+                        allSpecies.forEach(species => {
+                            row[species] = lookup[species]?.[year] ?? 0
+                        })
+                        return row
+                    })
+
+                    const series = allSpecies.map(species => ({
+                        type: 'line',
+                        xKey: 'year',
+                        yKey: species,
+                        title: species,
+                        marker: { enabled: true }
+                    }))
+
+                    scatterOptions.value = {
+                        title: { text: 'Tick Population Over Time' },
+                        legend: { position: 'bottom' },
+                        data: sharedData,
+                        series: series
+                    }
+                }
+
+
             } catch (error) {
                 console.error('API error:', error)
             } finally {
                 isLoading.value = false
             }
-
-            tickInfo.value = { city, count, speciesList, latestDate }
         })
     })
 </script>
@@ -145,7 +190,7 @@
 
         <div v-if="isChart2Visible" class="chart2-popup">
             <button class="chart-close-btn" @click="isChart2Visible = false">X</button>
-            <p> hi lol</p>
+            <AgCharts :options="scatterOptions" />
         </div>
 
 

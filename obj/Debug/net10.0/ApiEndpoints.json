@@ -37,6 +37,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ElantroProj.Controllers.TickLineGraphController",
+    "Method": "GetLineChartData",
+    "RelativePath": "api/TickLineGraph/GetLineGraphData/{city}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "city",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ElantroProj.Controllers.TickSightingsController",
     "Method": "GetSightingsByCity",
     "RelativePath": "api/TickSightings/city/{city}",
