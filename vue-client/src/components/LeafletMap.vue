@@ -86,6 +86,7 @@
 
                 if (reverseResponse.ok) {
                     const reverseData = await reverseResponse.json()
+                    console.log(reverseData);
                     if (reverseData.address) {
                         city =
                             reverseData.address.city ||
@@ -93,7 +94,12 @@
                             reverseData.address.village ||
                             city
                     }
-                    if (city === 'Greater London' || city === 'City of London') city = 'London'
+                    if (city === 'Greater London' ||
+                        city === 'City of London' ||
+                        city === 'City of Westminster' ||
+                        city?.includes('London')) {
+                        city = 'London'
+                    }
                 }
 
                 const [tickResponse, scatterResponse] = await Promise.all([
@@ -183,15 +189,19 @@
     <div id="map-container">
         <div id="map"></div>
 
-        <div v-if="isChartVisible" class="chart1-popup">
-            <button class="chart-close-btn" @click="isChartVisible = false">X</button>
-            <AgCharts :options="chartOptions" />
-        </div>
+        <Transition name="popup">
+            <div v-if="isChartVisible" class="chart1-popup">
+                <button class="chart-close-btn" @click="isChartVisible = false">X</button>
+                <AgCharts :options="chartOptions" />
+            </div>
+        </Transition>
 
-        <div v-if="isChart2Visible" class="chart2-popup">
-            <button class="chart-close-btn" @click="isChart2Visible = false">X</button>
-            <AgCharts :options="scatterOptions" />
-        </div>
+        <Transition name="popup">
+            <div v-if="isChart2Visible" class="chart2-popup">
+                <button class="chart-close-btn" @click="isChart2Visible = false">X</button>
+                <AgCharts :options="scatterOptions" />
+            </div>
+        </Transition>
 
 
         <div id="sidebar" :class="{ open: isSidebarOpen }">
@@ -202,18 +212,13 @@
                 <h1>Additional Info Panel</h1>
             </div>
 
+            <button class="btn btn-secondary info-button" @click="isChartVisible = true">
+                Click for tick species distribution
+            </button>
 
-            <div class="chart1-hover-wrapper">
-                <p class="info-label" @click="isChartVisible = true">
-                    Click for tick species distribution
-                </p>
-            </div>
-
-            <div class="chart2-hover-wrapper">
-                <p class="info-label" @click="isChart2Visible = true">
-                    Click for tick something idk
-                </p>
-            </div>
+            <button class="btn btn-secondary info-button" @click="isChart2Visible = true">
+                Click for tick something idk
+            </button>
 
 
             <div class="sidebar-content">
@@ -308,7 +313,14 @@
         margin-bottom: 8px;
     }
 
-    .info-label:hover {
+    .info-button {
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 20px;
+        margin-bottom: 8px;
+    }
+
+    .info-button:hover {
         cursor: pointer;
     }
 
@@ -320,11 +332,25 @@
             color: mediumblue;
         }
 
+    .popup-enter-active,
+    .popup-leave-active {
+        transition: all 0.3s ease;
+    }
+
+    .popup-enter-from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    .popup-leave-to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
     .chart1-popup {
         position: fixed;
         top: var(--header-height);
         right: 23.98%;
-        transform: none;
         width: 450px;
         background: white;
         border: 1px solid lightgray;
@@ -346,7 +372,6 @@
         position: fixed;
         top: 56.7%;
         right: 23.98%;
-        transform: none;
         width: 450px;
         height: auto;
         background: white;
