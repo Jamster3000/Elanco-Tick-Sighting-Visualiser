@@ -1,25 +1,4 @@
 ﻿
-<template>
-    <h1>Tick Information</h1>
-    <div class="species-container">
-        <button class="nav-buttons" @click="previousSpecies">Previous</button>
-
-        <div class="species-card">
-            <h2 style="padding-top: 50px;">{{ species[currentIndex].name }}</h2>
-            <img :src="species[currentIndex].image" alt="Tick Photo" />
-            <p class="Sub-Title">Bio Characteristics</p>
-            <p class="Information">{{ species[currentIndex].bioCharacteristics }}</p>
-            <p class="Sub-Title">Typical Habitat</p>
-            <p class="Information">{{species[currentIndex].typicalHabitat}}</p>
-            <p class="Sub-Title">Health Risks</p>
-            <p class="Information">{{species[currentIndex].healthRisks}}</p>
-            <p class="current">{{currentIndex+1}} / {{TotalSpecies}}</p>
-        </div>
-
-        <button class="nav-buttons" @click="nextSpecies">Next</button>
-    </div>
-</template>
-
 <script>
     export default {
         name: "TickInfo",
@@ -82,32 +61,47 @@
         methods: {
 
             nextSpecies() {
-                if (this.currentIndex < this.TotalSpecies - 1)
-                {
+                if (this.currentIndex < this.TotalSpecies - 1) {
                     this.currentIndex++;
                 }
-                else
-                {
+                else {
                     this.currentIndex = 0;
                 }
             },
-            previousSpecies()
-            {
-                if (this.currentIndex > 0)
-                {
+            previousSpecies() {
+                if (this.currentIndex > 0) {
                     this.currentIndex--;
                 }
-                else
-                {
-                    this.currentIndex = this.TotalSpecies-1;
+                else {
+                    this.currentIndex = this.TotalSpecies - 1;
                 }
             },
         },
     };
 </script>
 
-<style scoped>
+<template>
+    <h1>Tick Information</h1>
+    <div class="species-container">
+        <button class="btn btn-secondary nav-buttons" @click="previousSpecies">Previous</button>
 
+        <div class="card card-center">
+            <h2 style="padding-top: 50px;">{{ species[currentIndex].name }}</h2>
+            <img :src="species[currentIndex].image" alt="Tick Photo" />
+            <p class="Sub-Title">Bio Characteristics</p>
+            <p class="Information">{{ species[currentIndex].bioCharacteristics }}</p>
+            <p class="Sub-Title">Typical Habitat</p>
+            <p class="Information">{{species[currentIndex].typicalHabitat}}</p>
+            <p class="Sub-Title">Health Risks</p>
+            <p class="Information">{{species[currentIndex].healthRisks}}</p>
+            <p class="current">{{currentIndex+1}} / {{TotalSpecies}}</p>
+        </div>
+
+        <button class="btn btn-secondary nav-buttons" @click="nextSpecies">Next</button>
+    </div>
+</template>
+
+<style scoped>
     h2 {
         font-size: 36px;
         text-decoration: underline;
@@ -115,7 +109,7 @@
 
     h1 {
         text-align: center;
-        padding-top: 80px;
+        padding-top: var(--top-padding);
         text-decoration: underline;
     }
 
@@ -130,26 +124,17 @@
         justify-content: center;
     }
 
-    .species-container img {
-        width: 200px;
-        border: 2px solid;
-        border-radius: 8px;    
-        transition: height 1s, width 1s;
-    }
+        .species-container img {
+            width: 200px;
+            border: 2px solid;
+            border-radius: 8px;
+            transition: height 1s, width 1s;
+        }
 
-    .species-container img:hover {
-        height: 60%;
-        width: 60%;
-    }
-
-    .species-card {
-        width: 50%;
-        text-align: center;
-        margin: 20px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-    }
+            .species-container img:hover {
+                height: 60%;
+                width: 60%;
+            }
 
     .nav-buttons {
         font-size: 24px;
@@ -167,11 +152,11 @@
         transition: background-color 0.7s, height 0.2s, width 0.2s;
     }
 
-    .nav-buttons:hover {
-        background-color: lightgrey;
-        height: 70px;
-        width: 160px;
-    }
+        .nav-buttons:hover {
+            background-color: lightgrey;
+            height: 70px;
+            width: 160px;
+        }
 
     .Information {
         margin: 10px;
@@ -183,5 +168,4 @@
         text-decoration: underline;
         font-size: 30px;
     }
-
 </style>
