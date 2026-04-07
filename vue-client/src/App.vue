@@ -19,6 +19,8 @@
                     <router-link to="/map">Map</router-link>
                     <br />
                     
+                    <router-link to="/tickHistory">Tick History</router-link>
+                    <br />
                     <router-link to="/about">About</router-link>
 
                 </div>

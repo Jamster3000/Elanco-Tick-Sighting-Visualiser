@@ -10,9 +10,8 @@
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "lib": [ "ESNext", "DOM" ],
-        "baseUrl": ".",
         "paths": {
-            "@/*": [ "src/*" ]
+            "@/*": [ "./src/*" ]
         },
         "types": [ "vite/client" ]
     },

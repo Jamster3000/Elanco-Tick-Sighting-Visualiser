@@ -1,4 +1,5 @@
 ﻿using FuzzySharp;
+using Microsoft.Data.Sqlite;
 using System.Globalization;
 using TickVisualizer_Backend.Models;
 using TickVisuilzer_Backend.SQL;
@@ -7,6 +8,8 @@ namespace TickVisuilzer_Backend.Service
 {
     public class TickService
     {
+        private readonly string _connectionString;
+
         private readonly TickSQL _tickSQL;
         private static readonly string[] DateFormats = {
             "yyyy-MM-ddTHH:mm:ss",
@@ -20,6 +23,11 @@ namespace TickVisuilzer_Backend.Service
         public TickService(TickSQL tickSQL)
         {
             _tickSQL = tickSQL;
+        }
+
+        public TickService(string connectionString)
+        {
+            _connectionString = connectionString;
         }
 
         public string CleanLocationNames(string name, List<string> cleanNames)

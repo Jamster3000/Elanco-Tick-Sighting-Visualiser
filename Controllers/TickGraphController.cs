@@ -49,5 +49,37 @@ namespace ElantroProj.Controllers
                 latestDate = latestDate
             });
         }
+
+        [HttpGet("GetYearlyData")] //this is for TickHistory line chart
+        public async Task<IActionResult> GetYearlyData([FromQuery] string species)
+        {
+
+            var allSightings = await _tickService.GetTickSightings(); //gets all sightings
+
+            var speciesSightings = allSightings
+                .Where(s => s.Species.Equals(species, StringComparison.OrdinalIgnoreCase)) //all sightings for a given species
+                .ToList();
+
+            var yearlyCounts = speciesSightings
+                .Where(t => !string.IsNullOrWhiteSpace(t.Date))
+                .GroupBy(t => { //group records for given species by year
+                    if (DateTime.TryParse(t.Date, out var parsed))
+                        return parsed.Year;
+                    return 0;
+                })
+                .Where(g => g.Key != 0)
+                .Select(g => new
+                {
+                    year = g.Key,
+                    count = g.Count()
+                })
+                .OrderBy(x => x.year)
+                .ToList();
+
+            return Ok(new
+            {
+                year = yearlyCounts
+            });
+        }
     }
 }
