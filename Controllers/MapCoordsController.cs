@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ElantroProj.Controllers
 {
@@ -20,19 +19,20 @@ namespace ElantroProj.Controllers
         [HttpGet("reverse")]
         public async Task<IActionResult> Reverse(double lat, double lon)
         {
-            Console.WriteLine($"Received reverse geocoding request for ({lat}, {lon})");
-            var url = $"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&zoom=10&addressdetails=1";
+            try
+            {
+                var response = await _http.GetAsync($"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&zoom=10&addressdetails=1");
 
-            var response = await _http.GetAsync(url);
+                if (!response.IsSuccessStatusCode)
+                    return StatusCode((int)response.StatusCode);
 
-            if (!response.IsSuccessStatusCode)
-                return StatusCode((int)response.StatusCode);
-
-            var json = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine($"Reverse geocoding for ({lat}, {lon}): {json}");
-
-            return Content(json, "application/json");
+                var json = await response.Content.ReadAsStringAsync();
+                return Content(json, "application/json");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error calling Nominatim: {ex.Message}");
+            }
         }
     }
 }
