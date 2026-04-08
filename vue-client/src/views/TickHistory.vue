@@ -42,48 +42,44 @@
 
         const response = await fetch(`/api/TickChart/GetYearlyData?species=${encodeURIComponent(selected)}`); //sends get request to backend for tick data for selected species
         const data = await response.json(); //expects a json response
-        const years = data.year.map(d => d.year); //takes just the year from each record
-        const counts = data.year.map(d => d.count);
+        const years = data.year.map((d: any) => d.year); //takes just the year from each record
+        const counts = data.year.map((d: any) => d.count);
 
         updateChart(years, counts, selected);
         };
 
-        const updateChart = (years, counts, label) =>
-        {
+        const updateChart = (years: number[], counts: number[], label: string) => {
             const ctx = document.getElementById("tickChart") as HTMLCanvasElement;
 
-
-            if (chartInstance)
-            {
+            if (chartInstance) {
                 chartInstance.destroy();
                 chartInstance = null;
             }
 
-        chartInstance = new Chart(ctx, { //maps the line chart
-            type: "line",
-            data: {
-            labels: years,
-            datasets: [
-                {
-                label: label,
-                data: counts,
-                borderColor: "#1529d6",
-                backgroundColor: "rgba(76, 175, 80, 0.2)",
-                tension: 0.3
-
+            chartInstance = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: years,
+                    datasets: [
+                        {
+                            label: label,
+                            data: counts,
+                            borderColor: "#1529d6",
+                            backgroundColor: "rgba(76, 175, 80, 0.2)",
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: "Year" } },
+                        y: { title: { display: true, text: "Sightings" }, beginAtZero: true }
+                    }
                 }
-            ]
-            },
-            options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            scales: { //labels the axes
-                x: { title: { display: true, text: "Year" } },
-                y: { title: { display: true, text: "Sightings" }, beginAtZero: true }
-            }
-            }
-        });
-        };
+            });
+};
 
         onUnmounted(() => {
             if (chartInstance) {
