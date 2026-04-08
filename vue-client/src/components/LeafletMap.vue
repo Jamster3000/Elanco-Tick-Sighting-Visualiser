@@ -217,7 +217,7 @@
             </button>
 
             <button class="btn btn-secondary info-button" @click="isChart2Visible = true">
-                Click for tick something idk
+                Click for tick population over time
             </button>
 
 
