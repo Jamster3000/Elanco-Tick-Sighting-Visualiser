@@ -236,6 +236,11 @@
 </template>
 
 <style scoped>
+    /*This moves the zoom in and out buttons down so they're not above the */
+    #map :deep(.leaflet-control) {
+        margin-top: calc(var(--header-height) + 10px);
+    }
+
     #map-container {
         display: flex;
         height: 100vh;
