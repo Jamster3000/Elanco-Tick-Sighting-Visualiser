@@ -1,5 +1,22 @@
 <script setup lang="ts">
+    import { ref, watch } from 'vue'
+    import { useRouter } from 'vue-router'
     import LeafletMap from '@/components/LeafletMap.vue'
+    import Profile from '@/components/Profile.vue'
+
+    const router = useRouter()
+    const fullName = ref<string | null>(null)
+
+    const updateUser = () => {
+        const userData = localStorage.getItem('user')
+        fullName.value = userData ? JSON.parse(userData).fullName : null
+    }
+
+    updateUser()
+
+    watch(() => router.currentRoute.value.path, () => {
+        updateUser()
+    })
 </script>
 
 <template>
@@ -17,13 +34,20 @@
 
                     <router-link to="/map">Map</router-link>
                     <br />
-                    
+
                     <router-link to="/tickHistory">Tick History</router-link>
                     <br />
 
                     <router-link to="/about">About</router-link>
                 </div>
 
+                <div class="auth-buttons">
+                    <Profile v-if="fullName" :fullName="fullName" />
+                    <template v-else>
+                        <router-link to="/signup" class="btn btn-primary" style="text-decoration: none;">Signup</router-link>
+                        <router-link to="/login" class="btn btn-secondary" style="text-decoration: none;">Login</router-link>
+                    </template>
+                </div>
             </div>
         </nav>
 
@@ -50,7 +74,6 @@
     }
 
     .nav-container {
-        max-width: 1100px;
         margin: 0 auto;
         height: 100%;
         display: flex;
@@ -90,5 +113,11 @@
 
     .content {
         margin-top: 60px;
+    }
+
+    .auth-buttons {
+        display: flex;
+        gap: 15px;
+        align-items: center;
     }
 </style>

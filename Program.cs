@@ -1,5 +1,6 @@
 using TickVisuilzer_Backend.Service;
 using TickVisuilzer_Backend.SQL;
+using TickVisualizer_Backend.Models;
 
 namespace ElantroProj
 {
@@ -17,6 +18,12 @@ namespace ElantroProj
             {
                 var connectionString = builder.Configuration.GetConnectionString("TickDb");
                 return new TickSQL(connectionString);
+            });
+
+	    builder.Services.AddScoped<AuthSQL>(provider =>
+            {
+                var connectionString = builder.Configuration.GetConnectionString("TickDb");
+                return new AuthSQL(connectionString);
             });
 
             builder.Services.AddScoped<TickService>();

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
     <PackageReference Include="Dapper" Version="2.1.72" />
     <PackageReference Include="FuzzySharp" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
