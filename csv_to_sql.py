@@ -31,29 +31,29 @@ ticks_mapping = {
 
 tick_information_mapping = {
     "Southern rodent tick": {
-        "Bio": "The Southern Rodent Tick typically lives for 2–3 years. It is a small tick, measuring 1–3mm, with an oval body and a reddish-brown to black colouration. It is most active from spring through to autumn, with peak activity occurring between April and October.",
-        "Habitat": "The Southern Rodent Tick is most commonly found in the underground burrows of small mammals.",
-        "Health Risks": "The Southern Rodent Tick is capable of transmitting Lyme disease, bacterial infections, and other associated syndromes through its bite."
+        "Bio": "A small (1–3mm) reddish-brown to black tick with a 2–3 year lifespan, most active between April and October.",
+        "Habitat": "Commonly found in the underground burrows of small mammals.",
+        "Health Risks": "Can transmit Lyme disease, bacterial infections, and other associated syndromes."
     },
     "Marsh tick": {
-        "Bio": "The Marsh Tick has a lifespan of 1–2 years, though individuals in colder climates may live longer. It is larger than many other tick species, measuring 4–5mm, with an oval body, reddish-brown or black legs, and a dark brown back marked with distinctive white-silver patterns. It is most active during cooler periods, particularly late winter, early spring, and autumn, with peak activity between February and April.",
-        "Habitat": "The Marsh Tick is typically found in marshes, fens, swamps, and wetlands, where it commonly attaches itself to low-lying vegetation.",
-        "Health Risks": "The Marsh Tick is known to transmit Lyme disease and other potentially dangerous pathogens."
+        "Bio": "A larger tick (4–5mm) with a dark brown back and distinctive white-silver markings, most active between February and April.",
+        "Habitat": "Found in marshes, fens, swamps, and wetlands, typically attached to low-lying vegetation.",
+        "Health Risks": "Known to transmit Lyme disease and other potentially dangerous pathogens."
     },
     "Fox/badger tick": {
-        "Bio": "The Fox/Badger Tick has a lifespan of approximately 3 years, progressing through four life stages: egg, larva, nymph, and adult. It is characterised by a tough, pale yellowish scutum (the hard plate on its back), which is proportionally smaller in females. Female Fox/Badger Ticks typically remain attached to a host for 7–8 days before detaching to reproduce. Preferred hosts include foxes, badgers, and dogs; human infestations are uncommon due to this tick's preference for damp, sheltered environments. It is active from early spring through to late autumn, with peak activity between April and May.",
-        "Habitat": "The Fox/Badger Tick tends to share its habitat with its preferred hosts, commonly found in fox and badger earths, dog kennels, and similar sheltered dens.",
-        "Health Risks": "The Fox/Badger Tick can transmit Lyme disease and Rocky Mountain Spotted Fever. A blood meal from a host is required at each stage of its life cycle."
+        "Bio": "A 3-year lifespan tick with a pale yellowish scutum, preferring foxes, badgers, and dogs as hosts; active from spring to late autumn with peak activity in April–May.",
+        "Habitat": "Found in fox and badger earths, dog kennels, and similar sheltered dens.",
+        "Health Risks": "Can transmit Lyme disease and Rocky Mountain Spotted Fever."
     },
     "Tree-hole tick": {
-        "Bio": "The Tree-hole Tick typically lives for 2–3 years. It ranges in colour from light brown to reddish-brown and varies in size between 2.5mm and 6mm depending on its life stage and feeding status.",
-        "Habitat": "The Tree-hole Tick is most commonly found in natural cavities within trees and in the nesting material of birds.",
-        "Health Risks": "The Tree-hole Tick is associated with several health risks, including Powassan Virus and tick paralysis, among others."
+        "Bio": "A 2–3 year lifespan tick ranging from light to reddish-brown, measuring 2.5–6mm depending on life stage and feeding status.",
+        "Habitat": "Most commonly found in natural tree cavities and bird nesting material.",
+        "Health Risks": "Associated with Powassan Virus and tick paralysis, among other risks."
     },
     "Passerine tick": {
-        "Bio": "The Passerine Tick has a lifespan of approximately 1 year. It primarily targets birds as its host, and biting humans is considered rare. It ranges in colour from reddish-brown to black, with adults measuring between 2.3mm and 8mm.",
-        "Habitat": "The Passerine Tick is typically found in leaf litter, beneath bamboo bushes, and in areas of high humidity.",
-        "Health Risks": "The Passerine Tick poses health risks to both humans and animals. It is known to transmit Lyme disease. In animals, Passerine Ticks act as hosts for tick larvae and nymphs, supporting their life cycle and indirectly increasing tick populations in an area. Ticks carried by birds, such as Ixodes ricinus, can be introduced into domestic environments, posing a risk to pets and livestock. While some studies suggest minimal impact on overall bird health, high infestations of Ixodes ricinus have been shown to cause adverse effects in smaller passerine hosts."
+        "Bio": "A short-lived (roughly 1 year) reddish-brown to black tick (2.3–8mm) that primarily targets birds; human bites are rare.",
+        "Habitat": "Typically found in leaf litter, beneath bamboo bushes, and in high-humidity environments.",
+        "Health Risks": "Can transmit Lyme disease, and infestations on birds can indirectly increase local tick populations and risk to pets and livestock."
     }
 }
 
