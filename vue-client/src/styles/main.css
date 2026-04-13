@@ -43,6 +43,19 @@ body {
     background-color: var(--bg);
 }
 
+body {
+    position: relative;
+    min-height: 100vh;
+}
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(125% 125% at 50% 10%, var(--bg) 60%, var(--primary-light) 100%);
+        z-index: -1;
+    }
+
 /*==========
 Standard Card
 ==========*/
