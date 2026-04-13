@@ -84,6 +84,7 @@
 
         <div class="card card-center" v-if="species.length > 0">
             <h2>{{ species[currentIndex].SPECIES }}</h2>
+            <p>{{ species[currentIndex].LATIN }}</p>
             <img :src="species[currentIndex].IMAGE" :alt="species[currentIndex].SPECIES" @click="showLightbox" />
 
             <div class="info-columns">
