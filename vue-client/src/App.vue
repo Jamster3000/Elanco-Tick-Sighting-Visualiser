@@ -23,7 +23,7 @@
     <div>
         <nav class="navbar">
             <div class="nav-container">
-                <div class="logo"> Elanco TickTracker - EXT 12 Version</div>
+                <div class="logo"> Elanco TickTracker</div>
 
                 <div class="links">
                     <router-link to="/">Home</router-link>
