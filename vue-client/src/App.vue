@@ -56,20 +56,16 @@
 </template>
 
 <style scoped>
-    h1 {
-        margin-bottom: 1rem;
-    }
-
     .navbar {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: var(--header-height);
-        background: var(--bg);
-        backdrop-filter: blur(10px);
-        border-bottom: 5px solid var(--primary);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        background-color: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(12px);
+        border-bottom: 2px solid var(--primary-light);
+        box-shadow: 0 4px 24px rgba(52, 152, 219, 0.1);
         z-index: 1000;
     }
 
@@ -79,45 +75,45 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 24px;
+        padding: 0 32px;
     }
 
     .logo {
-        font-weight: 600;
+        font-weight: 700;
         font-size: 1.1rem;
         color: var(--primary);
-        text-shadow: 1px 1px 1px var(--shadow_color);
+        letter-spacing: -0.3px;
     }
 
     .links {
         display: flex;
-        gap: 25px;
+        gap: 8px;
     }
 
         .links a {
             text-decoration: none;
             color: var(--text);
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 500;
-            transition: color 0.2s ease;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
         }
 
             .links a:hover {
                 color: var(--primary);
+                background: rgba(52, 152, 219, 0.08);
             }
 
     .router-link-active {
         color: var(--primary) !important;
+        background: rgba(52, 152, 219, 0.1) !important;
         font-weight: 600;
-    }
-
-    .content {
-        margin-top: 60px;
     }
 
     .auth-buttons {
         display: flex;
-        gap: 15px;
+        gap: 12px;
         align-items: center;
     }
 </style>
