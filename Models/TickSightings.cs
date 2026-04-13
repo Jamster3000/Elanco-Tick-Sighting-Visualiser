@@ -24,14 +24,5 @@ namespace TickVisualizer_Backend.Models
 
         [JsonPropertyName("LATIN")]
         public string? Latin { get; set; }
-
-        [JsonPropertyName("BIO_CHARACTERISTIC")]
-        public string? BioCharacteristic { get; set; }
-
-        [JsonPropertyName("TYPICAL_HABITAT")]
-        public string? TypicalHabitat { get; set; }
-
-        [JsonPropertyName("HEALTH_RISKS")]
-        public string? HealthRisks { get; set; }
     }
 }

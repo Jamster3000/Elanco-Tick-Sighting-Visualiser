@@ -239,6 +239,18 @@
         }
       }
     },
+    "/api/tick/species": {
+      "get": {
+        "tags": [
+          "TickInformation"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TickLineGraph/GetLineGraphData/{city}": {
       "get": {
         "tags": [
@@ -344,6 +356,9 @@
     },
     {
       "name": "TickChart"
+    },
+    {
+      "name": "TickInformation"
     },
     {
       "name": "TickLineGraph"

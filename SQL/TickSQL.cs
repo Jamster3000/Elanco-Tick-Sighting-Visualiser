@@ -23,14 +23,10 @@ namespace TickVisuilzer_Backend.SQL
                     TL.DATE as Date,
                     L.NAME as LocationName,
                     TS.SPECIES as Species,
-                    TS.LATIN as Latin,
-                    TSI.BIO_CHARACTERISTIC as BioCharacteristic,
-                    TSI.TYPICAL_HABITAT as TypicalHabitat,
-                    TSI.HEALTH_RISKS as HealthRisks
+                    TS.LATIN as Latin
                 FROM TICK_LOCATION TL
                 JOIN TICKS T ON TL.TICK_ID = T.TICK_ID
                 JOIN TICK_SPECIES TS ON T.SPECIES_ID = TS.SPECIES_ID
-                JOIN TICK_SPECIES_INFO TSI ON TS.SPECIES_ID = TSI.SPECIES_ID
                 JOIN LOCATION L ON TL.LOCATION_ID = L.LOCATION_ID");
             return results;
         }
@@ -57,7 +53,8 @@ namespace TickVisuilzer_Backend.SQL
                     TS.LATIN as LatinName,
                     TSI.BIO_CHARACTERISTIC as BioCharacteristics,
                     TSI.TYPICAL_HABITAT as TypicalHabitat,
-                    TSI.HEALTH_RISKS as HealthRisks
+                    TSI.HEALTH_RISKS as HealthRisks,
+                    TS.IMAGE as Image
                 FROM TICK_SPECIES TS
                 JOIN TICK_SPECIES_INFO TSI ON TS.SPECIES_ID = TSI.SPECIES_ID
             ");

@@ -20,7 +20,7 @@ namespace ElantroProj
                 return new TickSQL(connectionString);
             });
 
-	    builder.Services.AddScoped<AuthSQL>(provider =>
+	        builder.Services.AddScoped<AuthSQL>(provider =>
             {
                 var connectionString = builder.Configuration.GetConnectionString("TickDb");
                 return new AuthSQL(connectionString);
@@ -39,6 +39,8 @@ namespace ElantroProj
             });
 
             var app = builder.Build();
+
+            app.UseStaticFiles();
 
             app.UseCors("AllowFrontend");
 

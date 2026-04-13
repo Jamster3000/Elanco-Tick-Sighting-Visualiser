@@ -20,7 +20,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="vue-client\public\Tick-Images\" />
+    <Folder Include="wwwroot\Tick-Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Tick-Images\Fox-Badger-Tick.jpg" />
+    <None Include="wwwroot\Tick-Images\Marsh-Tick.jpg" />
+    <None Include="wwwroot\Tick-Images\marshtick_2.webp" />
+    <None Include="wwwroot\Tick-Images\Passerine-Tick.jpg" />
+    <None Include="wwwroot\Tick-Images\Southern-Rodent-Tick.jpg" />
+    <None Include="wwwroot\Tick-Images\Tree-Hole-Tick.jpg" />
   </ItemGroup>
 
 </Project>

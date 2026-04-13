@@ -85,6 +85,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ElantroProj.Controllers.TickInformationController",
+    "Method": "GetAllSpecies",
+    "RelativePath": "api/tick/species",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ElantroProj.Controllers.TickChartController",
     "Method": "GetTickChartData",
     "RelativePath": "api/TickChart/GetChartData/{city}",

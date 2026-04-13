@@ -20,6 +20,11 @@ namespace TickVisuilzer_Backend.Service
             "dd-MM-yyyy",
         };
 
+        public async Task<IEnumerable<TickSpecies>> GetAllTickSpecies()
+        {
+            return await _tickSQL.GetTickSpecies();
+        }
+
         public TickService(TickSQL tickSQL)
         {
             _tickSQL = tickSQL;

@@ -157,3 +157,4 @@ C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\n
 C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\net10.0\ElantroProj.genruntimeconfig.cache
 C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\net10.0\ref\ElantroProj.dll
 C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\bin\Debug\net10.0\BCrypt.Net-Next.dll
+C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\bin\Debug\net10.0\ElantroProj.staticwebassets.runtime.json
