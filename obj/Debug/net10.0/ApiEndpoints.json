@@ -157,5 +157,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ElantroProj.Controllers.TickSightingsController",
+    "Method": "GetPercentageChange",
+    "RelativePath": "api/TickSightings/species/{species}/percentage-change",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "species",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

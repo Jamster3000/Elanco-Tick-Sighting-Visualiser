@@ -9,6 +9,8 @@
 
             let chartInstance: Chart | null = null; //stores the current chart instance
 
+            const percentageObject = ref<any>(null);
+
             const species = ref([
                 { name: "Fox tick", image: "/Tick-Images/Fox-Badger-Tick.jpg" },
                 { name: "Marsh tick", image: "/Tick-Images/marshtick_2.webp" },
@@ -28,6 +30,13 @@
                 const counts = data.year.map((d: any) => d.count);
 
                 updateChart(years, counts, selected);
+            };
+
+            const fetchPercentageChange = async () => {
+                const selected = species.value[currentIndex.value].name;
+                const response = await fetch(`/api/TickSightings/species/${encodeURIComponent(selected)}/percentage-change`);
+                const data = await response.json();
+                percentageObject.value = data;
             };
 
             const updateChart = (years: number[], counts: number[], label: string) => {
@@ -76,13 +85,22 @@
                 }
             });
 
-            watch(currentIndex, fetchChartData);
+            watch(currentIndex, async () =>
+            {
+                await fetchChartData();
+                await fetchPercentageChange();
+            });
 
-            onMounted(fetchChartData);
+            onMounted(async () =>
+            {
+                await fetchChartData();
+                await fetchPercentageChange();
+            });
 
             return {
                 species,
                 currentIndex,
+                percentageObject,
             };
         }
     };
@@ -102,10 +120,38 @@
         <div class="chart-area">
             <canvas id="tickChart"></canvas>
         </div>
+
+        <div class="statistics" v-if="percentageObject">
+            <p v-if="!percentageObject.message">
+                <p v-if="percentageObject.percentageChange > 0">
+                    Between {{percentageObject.firstYear}} and {{percentageObject.mostRecentYear}} there has been a {{percentageObject.percentageChange.toFixed(2)}}% increase in population of {{percentageObject.species}}s
+                </p>
+                <p v-else-if="percentageObject.percentageChange < 0">
+                    Between {{percentageObject.firstYear}} and {{percentageObject.mostRecentYear}} there has been a {{Math.abs(percentageObject.percentageChange).toFixed(2)}}% decrease in population of {{percentageObject.species}}s
+                </p>
+                <p v-else>
+                    Between {{percentageObject.firstYear}} and {{percentageObject.mostRecentYear}} there has been no change in population of {{percentageObject.species}}s
+                </p>
+            </p>
+            <p v-else>{{percentageObject.message}}</p>
+        </div>
+
     </div>
 </template>
 
 <style scoped>
+
+    .statistics {
+        font-size: 24px;
+        font-weight: bold;
+        background: #3498db;
+        color: rgba(0,0,0,0.65);
+        padding: 12px 16px;
+        border-radius: 12px;
+        max-width: 600px;
+        text-align: center;
+        margin-top: 20px;
+    }
     .page-container {
         display: flex;
         flex-direction: column;
@@ -151,4 +197,4 @@
         border: 2px solid var(--primary);
         cursor: pointer;
     }
-    </style>
+</style>

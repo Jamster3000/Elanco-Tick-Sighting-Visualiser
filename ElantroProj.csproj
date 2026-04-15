@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="TickVisuilzer Backend\" />
     <Folder Include="wwwroot\Tick-Images\" />
   </ItemGroup>
 
