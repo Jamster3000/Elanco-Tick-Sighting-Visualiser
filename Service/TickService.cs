@@ -38,6 +38,10 @@ namespace TickVisuilzer_Backend.Service
 
             double percentageChange = ((double)(mostRecentYear.Count - firstYear.Count) / firstYear.Count * 100);
 
+            var peakYearData = yearlyCounts.OrderByDescending(x => x.Count).First();
+            var lowestYearData = yearlyCounts.OrderBy(x => x.Count).First();
+            var averageTickCount = yearlyCounts.Average(x =>  x.Count);
+
             return new
             {
                 Species = species,
@@ -46,6 +50,14 @@ namespace TickVisuilzer_Backend.Service
                 FirstCount = firstYear.Count,
                 MostRecentCount = mostRecentYear.Count,
                 PercentageChange = percentageChange,
+
+                // more values
+                PeakTickCount = peakYearData.Count,
+                LowestTickCount = lowestYearData.Count,
+                PeakYear = peakYearData.Year,
+                LowestYear = lowestYearData.Year,
+                AverageTickCount = averageTickCount,
+
             };
         }
 

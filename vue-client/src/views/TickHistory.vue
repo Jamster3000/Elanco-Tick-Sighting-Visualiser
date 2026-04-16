@@ -117,23 +117,34 @@
                 </option>
             </select>
         </div>
-        <div class="chart-area">
-            <canvas id="tickChart"></canvas>
-        </div>
-
-        <div class="statistics" v-if="percentageObject">
-            <p v-if="!percentageObject.message">
-                <p v-if="percentageObject.percentageChange > 0">
-                    Between {{percentageObject.firstYear}} and {{percentageObject.mostRecentYear}} there has been a {{percentageObject.percentageChange.toFixed(2)}}% increase in population of {{percentageObject.species}}s
-                </p>
-                <p v-else-if="percentageObject.percentageChange < 0">
-                    Between {{percentageObject.firstYear}} and {{percentageObject.mostRecentYear}} there has been a {{Math.abs(percentageObject.percentageChange).toFixed(2)}}% decrease in population of {{percentageObject.species}}s
-                </p>
-                <p v-else>
-                    Between {{percentageObject.firstYear}} and {{percentageObject.mostRecentYear}} there has been no change in population of {{percentageObject.species}}s
-                </p>
-            </p>
-            <p v-else>{{percentageObject.message}}</p>
+        <div class="content">
+            <div class="chart-area">
+                <canvas id="tickChart"></canvas>
+            </div>
+            <div class="statistics" v-if="percentageObject">
+                <div class="population">
+                    <p><strong>Peak Population</strong></p>
+                    <p>{{percentageObject.peakTickCount}} ({{percentageObject.peakYear}})</p>
+                    <p><strong>Minimum Population</strong></p>
+                    <p>{{percentageObject.lowestTickCount}} ({{percentageObject.lowestYear}})</p>
+                    <p><strong>Average Population</strong></p>
+                    <p>{{percentageObject.averageTickCount.toFixed(0)}}</p>
+                </div>
+                <div class="percentage">
+                    <p v-if="!percentageObject.message">
+                    <p v-if="percentageObject.percentageChange > 0">
+                        Between {{percentageObject.firstYear}} and {{percentageObject.mostRecentYear}} there has been a {{percentageObject.percentageChange.toFixed(2)}}% increase in population of {{percentageObject.species}}s
+                    </p>
+                    <p v-else-if="percentageObject.percentageChange < 0">
+                        Between {{percentageObject.firstYear}} and {{percentageObject.mostRecentYear}} there has been a {{Math.abs(percentageObject.percentageChange).toFixed(2)}}% decrease in population of {{percentageObject.species}}s
+                    </p>
+                    <p v-else>
+                        Between {{percentageObject.firstYear}} and {{percentageObject.mostRecentYear}} there has been no change in population of {{percentageObject.species}}s
+                    </p>
+                    </p>
+                    <p v-else>{{percentageObject.message}}</p>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -141,17 +152,55 @@
 
 <style scoped>
 
+    .content {
+        height: 80vh;
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+        align-items: stretch;
+    }
+
     .statistics {
-        font-size: 24px;
-        font-weight: bold;
-        background: #3498db;
-        color: rgba(0,0,0,0.65);
-        padding: 12px 16px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        background-color: aliceblue;
+        padding: 16px;
+        border-width: 3px;
+        border-style: solid;
+        border-color: #3498db;
         border-radius: 12px;
         max-width: 600px;
         text-align: center;
-        margin-top: 20px;
+        height: 80%;
     }
+    
+    .population p{
+        margin-top: 6px 0;
+    }
+
+    .population p:nth-child(odd){
+        margin-top: 16px;
+    }
+
+    .chart-area {
+        flex: 4;
+        height: 80%;
+        border-style: solid;
+        border-width: 3px;
+        border-color: #3498db;
+        border-radius: 15px;
+    }
+
+    .percentage, .population {
+        font-size: 24px;
+        font-weight: bold;
+        color: rgba(0,0,0,0.75);
+        padding:10px;
+        padding-top: 30px;
+    }
+
     .page-container {
         display: flex;
         flex-direction: column;
