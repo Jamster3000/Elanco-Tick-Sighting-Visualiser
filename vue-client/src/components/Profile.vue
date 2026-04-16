@@ -39,6 +39,7 @@
     </div>
 </template>
 
+<!--Profile CSS adapted from https://uiverse.io/withyzu/wicked-lionfish-36-->
 <style scoped>
     .user-name {
         letter-spacing: 1px;
@@ -76,14 +77,14 @@
         transition: background-color 500ms, color 500ms;
     }
 
-    .button:hover {
-        background-color: var(--fill-hover);
-    }
+        .button:hover {
+            background-color: var(--fill-hover);
+        }
 
-    .button:focus,
-    .button:active {
-        background-color: var(--fill-active);
-    }
+        .button:focus,
+        .button:active {
+            background-color: var(--fill-active);
+        }
 
     a, button.item {
         display: block;
@@ -100,9 +101,9 @@
         transition: background-color 500ms, color 500ms;
     }
 
-    a:hover, button.item:hover {
-        background-color: var(--button-fill-hover);
-    }
+        a:hover, button.item:hover {
+            background-color: var(--button-fill-hover);
+        }
 
     button.logout:hover {
         background-color: var(--message-error-text);
@@ -166,5 +167,60 @@
 
     li {
         list-style: none;
+    }
+
+    @media (max-width: 900px) {
+        .profile {
+            --fill-hover: hsla(0, 0%, 70%, 0.15);
+            --button-fill-hover: hsla(0, 0%, 10%, 0.2);
+            --fill-active: hsla(0, 0%, 35%, 0.3);
+            --txt: var(--text);
+            --br: 0.625rem;
+            --gap: 0.25rem;
+            --popup-max-h: 20rem;
+            font-size: 14px;
+            position: relative;
+            z-index: 1003;
+        }
+
+        .user-name {
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            padding: 0.5rem 0rem 0.5rem 0.625rem;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .button {
+            padding: calc(var(--gap) * 1.5) calc(var(--gap) * 6) calc(var(--gap) * 1.5) calc(var(--gap) * 3);
+        }
+
+        .popup-header {
+            gap: calc(var(--gap) * 2);
+        }
+
+            .popup-header svg {
+                width: 24px;
+                height: 24px;
+            }
+
+        a, button.item {
+            padding: calc(var(--gap) * 1.5) calc(var(--gap) * 6) calc(var(--gap) * 1.5) calc(var(--gap) * 3);
+            font-size: 14px;
+        }
+
+        .list-box {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: auto;
+            min-width: 180px;
+            z-index: 1003;
+            pointer-events: auto;
+        }
+
+        hr {
+            margin: 0.25rem;
+        }
     }
 </style>

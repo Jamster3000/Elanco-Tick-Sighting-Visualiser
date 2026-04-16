@@ -94,4 +94,28 @@
             transform: translateY(0);
         }
     }
+
+    @media (max-width: 900px) {
+        .message {
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+        }
+
+        .message-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .message-icon {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+        }
+
+            .message-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+    }
 </style>

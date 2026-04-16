@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { useRouter } from 'vue-router'
-
     const router = useRouter()
 </script>
 
@@ -12,20 +11,13 @@
                 <p class="hero-subtitle">Track and analyze tick populations in the UK</p>
             </div>
             <div class="auth-buttons">
-                <button class="btn btn-secondary btn-large" @click="router.push('/login')">
-                    Login
-                </button>
-                <button class="btn btn-primary btn-large" @click="router.push('/Signup')">
-                    Sign Up
-                </button>
+                <button class="btn btn-secondary btn-large" @click="router.push('/login')">Login</button>
+                <button class="btn btn-primary btn-large" @click="router.push('/Signup')">Sign Up</button>
             </div>
         </div>
-
         <div class="map-section">
             <h2 class="map-section-title">Tick Visualization Map</h2>
-            <button class="btn btn-primary btn-large" @click="router.push('/map')">
-                Explore the Map
-            </button>
+            <button class="btn btn-primary btn-large" @click="router.push('/map')">Explore the Map</button>
         </div>
     </div>
 </template>
@@ -35,10 +27,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 40px;
         min-height: calc(60vh - var(--header-height));
-        padding: 40px 80px;
-        flex-wrap: wrap;
+        padding: 60px 80px;
     }
 
     .hero-content {
@@ -59,13 +49,12 @@
         font-size: 20px;
         color: var(--primary);
         font-weight: 500;
-        margin-bottom: 24px;
+        margin-bottom: 32px;
     }
 
     .auth-buttons {
         display: flex;
         gap: 16px;
-        justify-content: flex-start;
         align-items: center;
         flex-wrap: wrap;
     }
@@ -77,7 +66,7 @@
         justify-content: center;
         gap: 20px;
         padding: 60px 40px;
-        border-top: 1px solid rgba(52, 152, 219, 0.12);
+        border-top: 3px solid rgba(52, 152, 219, 0.12);
         animation: fadeInUp 1s ease 0.2s both;
     }
 
@@ -86,6 +75,7 @@
         font-weight: 600;
         color: var(--text);
         opacity: 0.85;
+        text-align: center;
     }
 
     @keyframes fadeInUp {
@@ -97,6 +87,64 @@
         to {
             opacity: 1;
             transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 900px) {
+        .hero-container {
+            flex-direction: column;
+            padding: 40px 16px;
+            text-align: center;
+            width: 100%;
+            align-items: stretch;
+            min-height: auto;
+        }
+
+        .hero-content {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 28px;
+            letter-spacing: -0.3px;
+            margin-bottom: 12px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .auth-buttons {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+            .auth-buttons .btn {
+                width: 100%;
+                padding: 14px 16px;
+                box-sizing: border-box;
+                font-size: 16px;
+                border-radius: 6px;
+            }
+
+        .map-section {
+            padding: 40px 16px;
+            border-top: 2px solid rgba(52, 152, 219, 0.12);
+            gap: 16px;
+        }
+
+        .map-section-title {
+            font-size: 24px;
+        }
+
+        .map-section .btn {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            border-radius: 6px;
         }
     }
 </style>

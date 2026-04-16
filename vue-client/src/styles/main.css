@@ -29,6 +29,8 @@
 
     --top-padding: 80px;
     --header-height: 64px;
+    --mobile-header-height: 90px;
+    --mobile-top-padding: 50px;
 }
 
 * {
@@ -52,7 +54,7 @@ body {
         content: "";
         position: fixed;
         inset: 0;
-        background: radial-gradient(125% 125% at 50% 10%, var(--bg) 60%, var(--primary-light) 100%);
+        background: radial-gradient(125% 125% at 50% 10%, var(--bg) 50%, var(--primary-light) 95%);
         z-index: -1;
     }
 
@@ -151,4 +153,27 @@ Main page container
 .container {
     top: var(--header-height) !important;
     padding-top: var(--top-padding) !important;
+}
+
+@media (max-width: 900px) {
+    body::before {
+        background: radial-gradient(125% 125% at 50% 10%, var(--bg) 60%, var(--primary-light) 80%);
+    }
+
+    .card {
+        background: var(--card-bg);
+        padding: 24px;
+        margin: 56px;
+        border-radius: 8px;
+        border: 2px solid #e0e0e0;
+        box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 8px, rgba(0, 0, 0, 0.4) 0px 12px 16px -3px, rgba(52, 152, 219, 1) 0px -5px 0px inset;
+        transition: transform 0.2s ease;
+    }
+
+    .card-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 }

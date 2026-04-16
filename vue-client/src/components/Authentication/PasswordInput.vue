@@ -254,8 +254,50 @@
         box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.08);
     }
 
-    .form-input-match:focus {
-        border-color: var(--message-success-icon-background);
-        box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.15);
+        .form-input-match:focus {
+            border-color: var(--message-success-icon-background);
+            box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.15);
+        }
+
+    @media (max-width: 900px) {
+        .form-group {
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: 14px;
+        }
+
+        .form-input {
+            font-size: 16px;
+            padding: 12px 44px 12px 16px;
+        }
+
+        .strength-container {
+            margin-top: 6px;
+        }
+
+        .strength-label {
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .strength-bar {
+            height: 6px;
+        }
+
+        .toggle-btn {
+            width: 40px;
+            height: 40px;
+            right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .toggle-btn svg {
+                width: 20px;
+                height: 20px;
+            }
     }
 </style>

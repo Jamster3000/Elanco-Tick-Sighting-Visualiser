@@ -32,4 +32,34 @@
         line-height: 1.7;
         letter-spacing: 0.5px;
     }
+
+    @media (max-width: 900px) {
+        .about-container {
+            padding-top: var(--mobile-header-height);
+            padding-left: 12px;
+            padding-right: 12px;
+            max-width: 100%;
+            margin: 0;
+        }
+
+            .about-container .card {
+                margin: 16px 0;
+                padding: 16px;
+            }
+
+        h1 {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            padding: 0;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.5;
+            letter-spacing: 0.2px;
+        }
+    }
 </style>

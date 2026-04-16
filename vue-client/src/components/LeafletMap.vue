@@ -3,6 +3,7 @@
     import L, { Marker, LeafletMouseEvent } from 'leaflet'
     import 'leaflet/dist/leaflet.css'
     import { ModuleRegistry, AllCommunityModule } from 'ag-charts-community'
+    import { SERVER_CONFIG } from '@/config/server';
 
     ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -13,10 +14,14 @@
     const REQUEST_THROTTLE_MS = 1000
     const isChartVisible = ref(false)
     const isChart2Visible = ref(false)
+    const tapDetected = ref(false) //REMOVE THIS !!!!!!
+
+    const serverURL = SERVER_CONFIG.BASE_URL;
 
     const tickInfo = ref({ city: '', count: 0, speciesList: [] as any[], latestDate: '' })
 
     const chartOptions = ref<any>({
+        height: 280,
         data: [],
 
         series: [
@@ -33,14 +38,15 @@
         },
 
         legend: {
-            position: 'bottom'
+            position: 'right'
         }
     })
 
 
     const scatterOptions = ref<any>({
+        height: 280,
         title: { text: 'Tick Population Over Time' },
-        legend: { position: 'bottom' },
+        legend: { position: 'right' },
         series: []
     })
 
@@ -81,7 +87,7 @@
 
             try {
                 const reverseResponse = await fetch(
-                    `http://localhost:5021/api/map/reverse?lat=${lat}&lon=${lng}`
+                    `${serverURL}/api/map/reverse?lat=${lat}&lon=${lng}`
                 )
 
                 if (reverseResponse.ok) {
@@ -103,8 +109,8 @@
                 }
 
                 const [tickResponse, scatterResponse] = await Promise.all([
-                    fetch(`http://localhost:5021/api/TickChart/GetChartData/${city}`),
-                    fetch(`http://localhost:5021/api/TickLineGraph/GetLineGraphData/${city}`)
+                    fetch(`${serverURL}/api/TickChart/GetChartData/${city}`),
+                    fetch(`${serverURL}/api/TickLineGraph/GetLineGraphData/${city}`)
                 ])
 
                 if (tickResponse.ok) {
@@ -114,8 +120,6 @@
                     location = tickData?.city
                     speciesList = tickData?.species ?? []
                     latestDate = tickData?.latestDate
-
-                    console.log('Chart data being set:', JSON.stringify(speciesList))
 
                     const chartData = Array.isArray(speciesList) && typeof speciesList[0] === 'object'
                         ? speciesList
@@ -182,12 +186,24 @@
                 isLoading.value = false
             }
         })
+
+        //FOR TESTING: REMOVE THIS
+        map.on('tap', (e: any) => {
+            tapDetected.value = true
+            setTimeout(() => {
+                tapDetected.value = false
+            }, 2000)
+        })
     })
 </script>
 
 <template>
     <div id="map-container">
         <div id="map"></div>
+
+        <div v-if="tapDetected" style="position: fixed; top: 200px; left: 50%; transform: translateX(-50%); background: #28a745; color: white; padding: 30px; font-weight: bold; border-radius: 8px; z-index: 99999; font-size: 24px;">
+            ✓ TAP DETECTED!
+        </div>
 
         <Transition name="popup">
             <div v-if="isChartVisible" class="chart1-popup">
@@ -224,9 +240,9 @@
             <div class="sidebar-content">
                 <p class="info-label">City: {{ tickInfo.city || 'No city selected' }}</p>
                 <p class="info-label">Total tick sightings:</p>
-                <p>{{ tickInfo.count || 'No count data' }}</p>
+                <p class="nobold">{{ tickInfo.count || 'No count data' }}</p>
                 <p class="info-label">Latest sighting:</p>
-                <p>{{ tickInfo.latestDate || 'No date data' }}</p>
+                <p class="nobold">{{ tickInfo.latestDate || 'No date data' }}</p>
             </div>
 
         </div>
@@ -384,5 +400,158 @@
         border-radius: 8px;
         padding: 10px;
         z-index: 100000;
+    }
+
+    @media (max-width: 900px) {
+        #map :deep(.leaflet-control) {
+            margin-top: calc(var(--mobile-header-height) + 10px);
+        }
+
+        #map-container {
+            display: flex;
+            height: 100vh;
+            z-index: 0;
+        }
+
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+
+        #sidebar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: auto;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            max-height: 70vh;
+            padding: 20px;
+            background-color: white;
+            border-left: none;
+            border-top: 3px solid lightgray;
+            overflow-y: auto;
+            overflow-x: visible;
+            transform: translateY(100%);
+            transition: transform 0.65s ease;
+            z-index: 1000;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 16px 16px 0 0;
+        }
+
+            #sidebar.open {
+                transform: translateY(0);
+            }
+
+        .sidebar-close-btn {
+            float: right;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text);
+            background: none;
+            border: none;
+            padding: 0;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header {
+            clear: both;
+            text-align: center;
+        }
+
+            .sidebar-header h1 {
+                font-size: 18px;
+                margin: 0;
+            }
+
+        .sidebar-content {
+            margin-top: 16px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .nobold {
+            font-size: 14px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .info-button {
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 12px;
+            margin-bottom: 8px;
+            width: 100%;
+            padding: 12px 16px;
+            text-align: center;
+        }
+
+        .chart1-popup {
+            position: fixed;
+            top: var(--mobile-header-height);
+            right: 8px;
+            left: 8px;
+            width: auto;
+            height: 320px;
+            background: white;
+            border: 1px solid lightgray;
+            border-radius: 8px;
+            padding: 4px 8px 8px 8px;
+            z-index: 1001;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart2-popup {
+            position: fixed;
+            top: var(--mobile-header-height);
+            right: 8px;
+            left: 8px;
+            width: auto;
+            height: 320px;
+            background: white;
+            border: 1px solid lightgray;
+            border-radius: 8px;
+            padding: 4px 8px 8px 8px;
+            z-index: 1001;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-close-btn {
+            color: var(--text);
+            background: none;
+            border: none;
+            font-size: 20px;
+            align-self: flex-end;
+            padding: 0 4px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+            .chart-close-btn:hover {
+                color: var(--primary);
+            }
+
+        .chart1-popup :deep(.ag-chart-wrapper),
+        .chart2-popup :deep(.ag-chart-wrapper) {
+            padding: 0 !important;
+            margin: 0 !important;
+            flex: 1;
+            min-height: 0;
+        }
     }
 </style>

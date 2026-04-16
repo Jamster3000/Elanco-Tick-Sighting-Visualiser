@@ -239,4 +239,95 @@
             transform: translateY(0);
         }
     }
+
+    @media (max-width: 900px) {
+        .container {
+            padding-top: calc(var(--mobile-header-height)) !important;
+        }
+
+        .manage-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 10px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+            .section-title.danger {
+                color: var(--message-error-text);
+                text-align: center;
+            }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .warning-text {
+            font-size: 15px;
+            color: var(--message-error-text);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .confirmation {
+            background: rgba(255, 0, 0, 0.05);
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--message-error-text);
+        }
+
+        .confirm-text {
+            font-size: 12px;
+            color: var(--text);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-block {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+        }
+
+        .divider {
+            height: 1px;
+            border: none;
+            background: var(--text);
+            opacity: 0.1;
+            margin: 8px 0;
+        }
+    }
 </style>

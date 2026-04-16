@@ -106,28 +106,28 @@
         z-index: 1;
     }
 
-    .form-input::placeholder {
-        color: var(--placeholder-text);
-        background-color: var(--card-bg);
-    }
+        .form-input::placeholder {
+            color: var(--placeholder-text);
+            background-color: var(--card-bg);
+        }
 
-    .form-input:hover:not(:disabled) {
-        border-color: var(--primary-light);
-        background-color: var(--card-bg);
-    }
+        .form-input:hover:not(:disabled) {
+            border-color: var(--primary-light);
+            background-color: var(--card-bg);
+        }
 
-    .form-input:focus {
-        outline: none;
-        border-color: var(--primary);
-        background-color: var(--card-bg);
-        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.08);
-    }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: var(--card-bg);
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.08);
+        }
 
-    .form-input:disabled {
-        background-color: var(--text);
-        color: var(--disabled);
-        cursor: not-allowed;
-    }
+        .form-input:disabled {
+            background-color: var(--text);
+            color: var(--disabled);
+            cursor: not-allowed;
+        }
 
     .form-input-filled {
         background-color: var(--card-bg);
@@ -147,6 +147,31 @@
         to {
             opacity: 1;
             transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 900px) {
+        .form-group {
+            gap: 6px;
+        }
+
+        .form-label {
+            padding-top: 0;
+            font-size: 14px;
+        }
+
+        .form-input {
+            font-size: 16px;
+            padding: 12px 16px;
+        }
+
+        .form-error {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .error-icon {
+            margin-right: 4px;
         }
     }
 </style>

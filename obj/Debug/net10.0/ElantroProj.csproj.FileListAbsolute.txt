@@ -149,7 +149,6 @@ C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\n
 C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\net10.0\swae.build.ex.cache
-C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\net10.0\ElantroP.93251B73.Up2Date
 C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\net10.0\ElantroProj.dll
 C:\Users\jbain\Documents\Elanco Demo\Elanco-Tick-Sighting-Visualiser\obj\Debug\net10.0\refint\ElantroProj.dll

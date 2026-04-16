@@ -56,7 +56,7 @@
                         },
                         options: {
                             responsive: true,
-                            maintainAspectRatio: true,
+                            maintainAspectRatio: false,
                             animation: {
                                 duration: 750
                             },
@@ -150,5 +150,61 @@
         border-radius: 8px;
         border: 2px solid var(--primary);
         cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+        .page-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 22px;
+            height: calc(100vh - var(--mobile-header-height));
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            padding-top: var(--mobile-header-height);
+            font-size: 20px;
+            text-decoration: underline;
+            margin-bottom: 8px;
+            margin-top: 20px;
+        }
+
+        h4 {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 16px;
+            padding: 0 12px;
+        }
+
+        .controls {
+            align-self: center;
+            margin-right: 0;
+            margin-bottom: 12px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        #ticks {
+            font-size: 14px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .chart-area {
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+        }
+
+        #tickChart {
+            width: 100% !important;
+            height: 100% !important;
+        }
     }
     </style>
