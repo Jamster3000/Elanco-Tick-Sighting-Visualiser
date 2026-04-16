@@ -1,5 +1,69 @@
 [
   {
+    "ContainingType": "ElantroProj.Controllers.AuthController",
+    "Method": "DeleteAccount",
+    "RelativePath": "api/auth/delete-account/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ElantroProj.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Microsoft.AspNetCore.Identity.Data.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ElantroProj.Controllers.AuthController",
+    "Method": "Signup",
+    "RelativePath": "api/auth/signup",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "ElantroProj.Controllers.SignupRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ElantroProj.Controllers.AuthController",
+    "Method": "UpdateEmail",
+    "RelativePath": "api/auth/update-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "ElantroProj.Controllers.UpdateEmailRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ElantroProj.Controllers.MapController",
     "Method": "Reverse",
     "RelativePath": "api/map/reverse",
@@ -21,6 +85,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ElantroProj.Controllers.TickInformationController",
+    "Method": "GetAllSpecies",
+    "RelativePath": "api/tick/species",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ElantroProj.Controllers.TickChartController",
     "Method": "GetTickChartData",
     "RelativePath": "api/TickChart/GetChartData/{city}",
@@ -32,6 +106,22 @@
         "Name": "city",
         "Type": "System.String",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ElantroProj.Controllers.TickChartController",
+    "Method": "GetYearlyData",
+    "RelativePath": "api/TickChart/GetYearlyData",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "species",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -62,6 +152,22 @@
     "Parameters": [
       {
         "Name": "city",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ElantroProj.Controllers.TickSightingsController",
+    "Method": "GetPercentageChange",
+    "RelativePath": "api/TickSightings/species/{species}/percentage-change",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "species",
         "Type": "System.String",
         "IsRequired": true
       }

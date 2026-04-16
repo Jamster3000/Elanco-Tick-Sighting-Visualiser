@@ -3,16 +3,93 @@
     import L, { Marker, LeafletMouseEvent } from 'leaflet'
     import 'leaflet/dist/leaflet.css'
     import { ModuleRegistry, AllCommunityModule } from 'ag-charts-community'
+    import { nextTick } from 'vue'
 
     ModuleRegistry.registerModules([AllCommunityModule])
 
-    import { AgCharts } from 'ag-charts-vue3';
+    import { AgCharts } from 'ag-charts-vue3'
 
     const isSidebarOpen = ref(false)
     const isLoading = ref(false)
     const REQUEST_THROTTLE_MS = 1000
     const isChartVisible = ref(false)
     const isChart2Visible = ref(false)
+
+    function makeDraggable(selector: string) {
+        nextTick(() => {
+            const popup = document.querySelector(selector) as HTMLDivElement
+            if (!popup) return
+
+            let isDown = false
+            let offsetX = 0
+            let offsetY = 0
+
+            popup.addEventListener("mousedown", (e: MouseEvent) => {
+                isDown = true
+                offsetX = e.clientX - popup.offsetLeft
+                offsetY = e.clientY - popup.offsetTop
+                popup.style.cursor = "grabbing"
+            })
+
+            document.addEventListener("mousemove", (e: MouseEvent) => {
+                if (!isDown) return
+                popup.style.left = `${e.clientX - offsetX}px`
+                popup.style.top = `${e.clientY - offsetY}px`
+            })
+
+            document.addEventListener("mouseup", () => {
+                isDown = false
+                popup.style.cursor = "grab"
+            })
+        })
+    }
+
+    function makeResizable(selector: string) {
+        nextTick(() => {
+            const popup = document.querySelector(selector) as HTMLDivElement
+            if (!popup) return
+
+            const rightBar = popup.querySelector(".resize-bar-right") as HTMLDivElement
+            const bottomBar = popup.querySelector(".resize-bar-bottom") as HTMLDivElement
+
+            let resizingX = false
+            let resizingY = false
+
+            rightBar.addEventListener("mousedown", (e) => {
+                e.stopPropagation()
+                resizingX = true
+            });
+
+            bottomBar.addEventListener("mousedown", (e) => {
+                e.stopPropagation()
+                resizingY = true
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                if (resizingX) {
+                    popup.style.width = e.clientX - popup.offsetLeft + "px"
+                }
+                if (resizingY) {
+                    popup.style.height = e.clientY - popup.offsetTop + "px"
+                }
+            });
+
+            document.addEventListener("mouseup", () => {
+                resizingX = false
+                resizingY = false
+            });
+        });
+    }
+
+    function initChart1Drag() {
+        makeDraggable(".chart1-popup")
+        makeResizable(".chart1-popup")
+    }
+
+    function initChart2Drag() {
+        makeDraggable(".chart2-popup")
+        makeResizable(".chart2-popup")
+    }
 
     const tickInfo = ref({ city: '', count: 0, speciesList: [] as any[], latestDate: '' })
 
@@ -48,7 +125,10 @@
         isSidebarOpen.value = false
     }
 
+    
+
     onMounted(() => {
+
         const map = L.map('map').setView([51.505, -0.09], 6)
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -189,19 +269,34 @@
     <div id="map-container">
         <div id="map"></div>
 
-        <Transition name="popup">
+        <Transition name="popup" @after-enter="initChart1Drag">
             <div v-if="isChartVisible" class="chart1-popup">
                 <button class="chart-close-btn" @click="isChartVisible = false">X</button>
-                <AgCharts :options="chartOptions" />
+
+                <div class="popup-content">
+                    <AgCharts :options="chartOptions" />
+                </div>
+
+                <div class="resize-bar-right"></div>
+                <div class="resize-bar-bottom"></div>
             </div>
+
         </Transition>
 
-        <Transition name="popup">
+        <Transition name="popup" @after-enter="initChart2Drag">
             <div v-if="isChart2Visible" class="chart2-popup">
                 <button class="chart-close-btn" @click="isChart2Visible = false">X</button>
-                <AgCharts :options="scatterOptions" />
+
+                <div class="popup-content">
+                    <AgCharts :options="scatterOptions" />
+                </div>
+
+                <div class="resize-bar-right"></div>
+                <div class="resize-bar-bottom"></div>
             </div>
+
         </Transition>
+
 
 
         <div id="sidebar" :class="{ open: isSidebarOpen }">
@@ -217,7 +312,7 @@
             </button>
 
             <button class="btn btn-secondary info-button" @click="isChart2Visible = true">
-                Click for tick something idk
+                Click for tick population over time
             </button>
 
 
@@ -236,6 +331,11 @@
 </template>
 
 <style scoped>
+    /*This moves the zoom in and out buttons down so they're not above the */
+    #map :deep(.leaflet-control) {
+        margin-top: calc(var(--header-height) + 10px);
+    }
+
     #map-container {
         display: flex;
         height: 100vh;
@@ -348,18 +448,27 @@
         transform: scale(0.95);
     }
 
+    .popup-content {
+        padding: 10px;
+        height: calc(100% - 20px);
+        width: calc(100% - 20px);
+    }
+
+
     .chart1-popup {
-        position: fixed;
+        position: absolute;
         top: var(--header-height);
-        right: 23.98%;
+        left: calc(76% - 450px);
         width: 450px;
+        height: 330px;
         background: var(--bg);
         border: 1px solid lightgray;
         border-radius: 8px;
-        padding: 10px;
-        padding-top: 5px;
         z-index: 100000;
+        cursor: grab;
+        overflow: hidden;
     }
+
 
     .chart2-hover-wrapper {
         position: static;
@@ -370,15 +479,40 @@
         }
 
     .chart2-popup {
-        position: fixed;
-        top: 56.7%;
-        right: 23.98%;
+        position: absolute;
+        top: calc(var(--header-height) + 340px); 
+        left: calc(76% - 450px); 
         width: 450px;
-        height: auto;
+        height: 330px;
         background: var(--bg);
         border: 1px solid lightgray;
         border-radius: 8px;
-        padding: 10px;
         z-index: 100000;
+        cursor: grab;
+        overflow: hidden;
+       
     }
+
+    .resize-bar-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 12px;
+        height: 100%;
+        cursor: ew-resize;
+        z-index: 1000000;
+    }
+
+    .resize-bar-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 12px;
+        width: 100%;
+        cursor: ns-resize;
+        z-index: 1000000;
+    }
+
+
+
 </style>

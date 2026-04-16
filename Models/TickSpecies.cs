@@ -21,5 +21,8 @@ namespace TickVisualizer_Backend.Models
 
         [JsonPropertyName("HEALTH_RISKS")]
         public string HealthRisks { get; set; } = "";
+
+        [JsonPropertyName("IMAGE")]
+        public string Image { get; set; } = "";
     }
 }

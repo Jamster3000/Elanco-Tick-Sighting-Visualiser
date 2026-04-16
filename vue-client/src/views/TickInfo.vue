@@ -1,106 +1,122 @@
-﻿
-<script>
-    export default {
-        name: "TickInfo",
-        data() {
-            return {
-                currentIndex: 0,
-                species: [
-                    {
-                        name: "Fox/Badger Tick",
-                        image: "/Tick-Images/Fox-Badger-Tick.jpg",
-                        bioCharacteristics: "The Southern Rodent tick usually live from 2-3 years, they are small (1-3mm) with an oval body shape and are reddish brown or black uniformly coloured, most active through spring till autumn with the most active months being April and October.",
-                        typicalHabitat: "Underground burrows of small mammals.",
-                        healthRisks: "Risk of Lyme disease, bacterial infections and other syndromes from a bite of this tick.",
-                    },
+﻿<script setup lang="ts">
+    import { ref, onMounted, onUnmounted } from 'vue'
 
-                    {
-                        name: "Marsh Tick",
-                        image: "/Tick-Images/marshtick_2.webp",
-                        bioCharacteristics: "Typically lives 1–2 years, possibly longer in colder climates. Larger than many ticks (4–5 mm). Oval body, reddish‑brown or black legs, dark brown back with white/silver patterns. Most active in colder months, especially February–April.",
-                        typicalHabitat: "Marshes, fens, swamps, wetlands; usually attached to vegetation.",
-                        healthRisks: "Risk of Lyme disease and various dangerous pathogens.",
-                    },
+    interface Species {
+        SPECIES_ID: number
+        SPECIES: string
+        LATIN: string
+        BIO_CHARACTERISTIC: string
+        TYPICAL_HABITAT: string
+        HEALTH_RISKS: string
+        IMAGE?: string
+    }
 
+    const species = ref<Species[]>([])
+    const currentIndex = ref(0)
+    const isLightboxOpen = ref(false)
+    const isLightboxClosing = ref(false)
 
-                    {
-                        name: "Southern Rodent Tick",
-                        image: "/Tick-Images/Southern-Rodent-Tick.jpg",
-                        bioCharacteristics: "The Southern Rodent tick usually live 2–3 years. Small (1–3 mm), oval-bodied, reddish brown or black, uniformly coloured. Most active from spring to autumn, peaking in April and October.",
-                        typicalHabitat: "Underground burrows of small mammals.",
-                        healthRisks: "Risk of Lyme disease, bacterial infections, and other syndromes from bites.",
-                    },
+    const fetchSpecies = async () => {
+        try {
+            const response = await fetch('http://localhost:5021/api/tick/species')
+            const data = await response.json()
 
-                    {
-                        name: "Tree Hole Tick",
-                        image: "/Tick-Images/Tree-Hole-Tick.jpg",
-                        bioCharacteristics: "Lifespan of 2–3 years. Host‑specific. Males do not feed. Light to reddish brown. 2.5–6.0 mm. Wrinkled surface.",
-                        typicalHabitat: "Natural cavities in trees; bird nests.",
-                        healthRisks: "To humans: Powassan virus, tick paralysis, infections, local irritation. To animals: Powassan virus, tick paralysis, anaemia.",
-                    },
+            species.value = data.map((s: Species) => ({
+                ...s,
+                IMAGE: `http://localhost:5021${s.IMAGE}`
+            }))
+            console.log(species.value)
+        } catch (error) {
+            console.error("Failed to fetch tick data")
+        }
+    }
 
-                    {
-                        name: "Passerine Tick",
-                        image: "/Tick-Images/Passerine-Tick.jpg",
-                        bioCharacteristics: "1‑year lifespan. Targets birds; human bites rare. Reddish‑brown to blackish, no patterns. Oval, 2.3–8.0 mm. Hairy/fuzzy appearance.",
-                        typicalHabitat: "Leaf litter under bamboo bushes; highly humid environments.",
-                        healthRisks: "To humans: Lyme borreliosis, tick‑borne encephalitis, anaplasmosis, Borrelia miyamotoi. To animals: Supports life cycles on passerine birds; can drop in domestic areas affecting pets and livestock.",
-                    },
+    onMounted(() => {
+        fetchSpecies()
+        window.addEventListener("keydown", handleKeyPress)
+    })
 
+    onUnmounted(() => {
+        window.removeEventListener("keydown", handleKeyPress)
+    })
 
-                ],
-            };
-        },
+    const handleKeyPress = (event: KeyboardEvent) => {
+        if (event.key == "ArrowLeft" || event.key == "a" || event.key == "A") {
+            previousSpecies()
+        } else if (event.key == "ArrowRight" || event.key == "d" || event.key == "D") {
+            nextSpecies()
+        }
+    }
 
-        computed: {
-            TotalSpecies() {
-                return this.species.length
-            }
-        },
+    const nextSpecies = () => {
+        if (currentIndex.value < species.value.length - 1) {
+            currentIndex.value++
+        } else {
+            currentIndex.value = 0
+        }
+    }
 
-        methods: {
+    const previousSpecies = () => {
+        if (currentIndex.value > 0) {
+            currentIndex.value--
+        } else {
+            currentIndex.value = species.value.length - 1
+        }
+    }
 
-            nextSpecies() {
-                if (this.currentIndex < this.TotalSpecies - 1) {
-                    this.currentIndex++;
-                }
-                else {
-                    this.currentIndex = 0;
-                }
-            },
-            previousSpecies() {
-                if (this.currentIndex > 0) {
-                    this.currentIndex--;
-                }
-                else {
-                    this.currentIndex = this.TotalSpecies - 1;
-                }
-            },
-        },
-    };
+    const showLightbox = () => {
+        isLightboxOpen.value = true
+    }
+
+    const closeLightbox = () => {
+        isLightboxClosing.value = true
+        setTimeout(() => {
+            isLightboxOpen.value = false
+            isLightboxClosing.value = false
+        }, 300)
+    }
 </script>
 
 <template>
     <h1 class="title">Tick Information</h1>
     <div class="species-container">
-        <button class="btn btn-secondary nav-buttons" @click="previousSpecies">Previous</button>
+        <button class="nav-arrow nav-prev" title="Press `A` or Left arrow key" @click="previousSpecies"><svg xmlns="http://www.w3.org/2000/svg" width="66" height="66" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16"><path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" /></svg></button>
 
-        <div class="card card-center">
-            <h1 style="padding-bottom: 30px;" class="tick-name">{{ species[currentIndex].name }}</h1>
-            <img :src="species[currentIndex].image" alt="Tick Photo" />
-            <h2 class="tick-name">Bio Characteristics</h2>
-            <p class="Information">{{ species[currentIndex].bioCharacteristics }}</p>
-            <h2 class="tick-name">Typical Habitat</h2>
-            <p class="Information">{{species[currentIndex].typicalHabitat}}</p>
-            <h2 class="tick-name">Health Risks</h2>
-            <p class="Information">{{species[currentIndex].healthRisks}}</p>
-            <p class="current">{{currentIndex+1}} / {{TotalSpecies}}</p>
+        <div class="card card-center" v-if="species.length > 0">
+            <h2>{{ species[currentIndex].SPECIES }}</h2>
+            <p>{{ species[currentIndex].LATIN }}</p>
+            <img :src="species[currentIndex].IMAGE" :alt="species[currentIndex].SPECIES" @click="showLightbox" />
+
+            <div class="info-columns">
+                <div class="info-column">
+                    <p class="Sub-Title">Bio Characteristics</p>
+                    <p class="Information">{{ species[currentIndex].BIO_CHARACTERISTIC }}</p>
+                </div>
+                <div class="info-column">
+                    <p class="Sub-Title">Typical Habitat</p>
+                    <p class="Information">{{ species[currentIndex].TYPICAL_HABITAT }}</p>
+                </div>
+                <div class="info-column">
+                    <p class="Sub-Title">Health Risks</p>
+                    <p class="Information">{{ species[currentIndex].HEALTH_RISKS }}</p>
+                </div>
+            </div>
+
+            <p class="current">{{ currentIndex + 1 }} / {{ species.length }}</p>
         </div>
 
-        <button class="btn btn-secondary nav-buttons" @click="nextSpecies">Next</button>
+        <button class="nav-arrow nav-next" title="Press `D` or Right arrow key" @click="nextSpecies"><svg xmlns="http://www.w3.org/2000/svg" width="66" height="66" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" /></svg></button>
+    </div>
+
+    <div class="lightbox { 'fade-out': isLightboxClosing }" v-if="isLightboxOpen" @click="closeLightbox">
+        <div class="lightbox-content" @click.stop>
+            <button class="lightbox-close" @click="closeLightbox">×</button>
+            <img :src="species[currentIndex].IMAGE" :alt="species[currentIndex].SPECIES" />
+        </div>
     </div>
 </template>
 
+<!--Used `https://www.w3schools.com/howto/howto_js_lightbox.asp` for adding a lightbox to the tick images-->
 <style scoped>
     h1.title {
         text-align: center;
@@ -119,60 +135,181 @@
         font-size: calc(24px * var(--font-scale, 1));
     }
 
-    .current {
+    h2 {
+        font-size: calc(24px * var(--font-scale, 1));
+        text-decoration: underline;
+        margin: 5px 0 10px 0;
         text-align: center;
+    }
+
+    .card {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        width: 700px;
+        flex: 0 0 900px;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 15px 20px;
     }
 
     .species-container {
         display: flex;
-        gap: 20px;
-        align-items: flex-start;
+        gap: 0;
+        align-items: stretch;
         justify-content: center;
+        padding: 20px;
+        width: 100%;
+        height: calc(90vh - var(--header-height));
     }
 
         .species-container img {
-            width: 200px;
-            border: 2px solid;
-            border-radius: 8px;
-            transition: height 1s, width 1s;
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+            margin: 10px auto;
+            transition: all 0.3s ease;
         }
 
             .species-container img:hover {
-                height: 60%;
-                width: 60%;
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+                transform: scale(1.05);
+                cursor: pointer;
             }
 
-    .nav-buttons {
-        font-size: calc(22px * var(--font-scale, 1));
-        margin-top: 20px;
-        align-self: flex-start;
-        width: 150px;
-        height: 60px;
+    .nav-arrow {
+        width: 50px;
+        flex: 0 0 50px;
         background: var(--bg);
-        color: var(--primary);
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        padding: 10px 20px;
-        border-radius: 8px;
-        border: solid 2px;
+        border: 2px solid var(--primary);
         cursor: pointer;
-        transition: background-color 0.7s, height 0.2s, width 0.2s;
+        font-size: calc(40px * var(--font-scale, 1));
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
     }
 
-        .nav-buttons:hover {
-            background-color: lightgrey;
-            height: 70px;
-            width: 160px;
+        .nav-arrow:hover {
+            background: var(--primary);
+            color: var(--bg);
         }
 
-    .Information {
-        margin: 10px;
-        text-align: center;
-        font-size: calc(18px * var(--font-scale, 1));
+    .nav-prev {
+        border-radius: 8px 0 0 8px;
+    }
+
+    .nav-next {
+        border-radius: 0 8px 8px 0;
+    }
+
+    .info-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+        width: 100%;
+        flex: 1;
+    }
+
+    .info-column {
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        border-radius: 8px;
+        background: var(--bg);
+        overflow-y: auto;
     }
 
     .Sub-Title {
         text-decoration: underline;
-        font-size: 30px;
+        font-size: calc(20px * var(--font-scale, 1));
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: var(--primary);
+        text-align: center;
+    }
+
+    .Information {
+        font-size: calc(18px * var(--font-scale, 1));
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .current {
+        text-align: center;
+        font-size: calc(22px * var(--font-scale, 1));
+        margin-top: 8px;
+        color: var(--text);
+    }
+
+    .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .lightbox-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+    }
+
+        .lightbox-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+    .lightbox.fade-out {
+        animation: fadeOut 0.3s ease forwards;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        background: none;
+        border: none;
+        color: var(--bg));
+        font-size: calc(40px * var(--font-scale, 1));
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+        .lightbox-close:hover {
+            color: var(--primary);
+        }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
     }
 </style>

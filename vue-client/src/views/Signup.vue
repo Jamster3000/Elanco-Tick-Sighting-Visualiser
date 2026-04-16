@@ -33,6 +33,32 @@
         }
 
         isLoading.value = true
+
+        try {
+            const response = await fetch('http://localhost:5021/api/auth/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify({
+                    fullName: formData.value.fullName,
+                    email: formData.value.email,
+                    password: formData.value.password
+                })
+            })
+
+            const data = await response.json()
+
+            if (response.ok) {
+                message.value = { type: 'success', text: 'Account created successfully! Redirecting to login...' }
+                setTimeout(() => router.push('/login'), 2000)
+            } else {
+                message.value = { type: 'error', text: data.message || 'Signup failed' }
+            }
+        } catch (error) {
+            message.value = { type: 'error', text: 'An error occurred. Please try again.' }
+            console.error('Signup error:', error)
+        } finally {
+            isLoading.value = false
+        }
     }
 
     const goToLogin = () => {

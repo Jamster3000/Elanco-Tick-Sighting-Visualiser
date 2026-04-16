@@ -1,5 +1,6 @@
 using TickVisuilzer_Backend.Service;
 using TickVisuilzer_Backend.SQL;
+using TickVisualizer_Backend.Models;
 
 namespace ElantroProj
 {
@@ -19,6 +20,12 @@ namespace ElantroProj
                 return new TickSQL(connectionString);
             });
 
+	        builder.Services.AddScoped<AuthSQL>(provider =>
+            {
+                var connectionString = builder.Configuration.GetConnectionString("TickDb");
+                return new AuthSQL(connectionString);
+            });
+
             builder.Services.AddScoped<TickService>();
 
             builder.Services.AddCors(options =>
@@ -32,6 +39,8 @@ namespace ElantroProj
             });
 
             var app = builder.Build();
+
+            app.UseStaticFiles();
 
             app.UseCors("AllowFrontend");
 

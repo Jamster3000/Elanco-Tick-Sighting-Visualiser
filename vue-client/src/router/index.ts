@@ -7,6 +7,7 @@ import TickInfo from "../views/TickInfo.vue"
 import TickHistory from "../views/TickHistory.vue"
 import Signup from "../views/Signup.vue"
 import Login from "../views/Login.vue"
+import ManageAccount from "../views/ManageAccount.vue"
 
 const router = createRouter({
   history: createWebHistory(),
@@ -34,6 +35,10 @@ const router = createRouter({
     {
         path: "/Signup",
         component: Signup
+    },
+    {
+        path: "/manage-account",
+        component: ManageAccount
     },
     {
         path: "/tickHistory",

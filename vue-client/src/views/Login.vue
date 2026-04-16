@@ -11,18 +11,44 @@
 
     const formData = ref({
         email: '',
-        password: '',
-        confirmPassword: '',
-        fullName: ''
+        password: ''
     })
 
-    const handleSignup = async () => {
-        if (!formData.value.email || !formData.value.password || !formData.value.confirmPassword || !formData.value.fullName) {
+    const handleLogin = async () => {
+        if (!formData.value.email || !formData.value.password) {
             message.value = { type: 'error', text: 'Please fill in all fields' }
             return
         }
 
         isLoading.value = true
+
+        try {
+            const response = await fetch('http://localhost:5021/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify({
+                    email: formData.value.email,
+                    password: formData.value.password
+                })
+            })
+
+            const data = await response.json()
+
+            if (response.ok) {
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                const firstName = data.user.fullName.split(' ')[0];
+                message.value = { type: 'success', text: `Successfully logged in. Welcome ${firstName}. Redirecting in 3 seconds.` }
+                setTimeout(() => router.push('/'), 3000)
+            } else {
+                message.value = { type: 'error', text: data.message || 'Login failed' }
+            }
+        } catch (error) {
+            message.value = { type: 'error', text: 'An error occurred. Please try again.' }
+            console.error('Login error:', error)
+        } finally {
+            isLoading.value = false
+        }
     }
 
     const goToSignup = () => {
@@ -41,7 +67,7 @@
                                 :type="message.type"
                                 :message="message.text" />
 
-                <form @submit.prevent="handleSignup" class="auth-form">
+                <form @submit.prevent="handleLogin" class="auth-form">
                     <FormInput v-model="formData.email"
                                label="Email Address"
                                type="email"
@@ -51,7 +77,7 @@
                     <PasswordInput v-model="formData.password"
                                    label="Password"
                                    placeholder="Enter your password"
-                                   :strengthCheck=true
+                                   :strengthCheck=false
                                    required />
 
                     <button type="submit"

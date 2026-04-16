@@ -1,5 +1,22 @@
-<script setup lang="ts">import LeafletMap from '@/components/LeafletMap.vue'
+<script setup lang="ts">
     import { ref, onMounted, onUnmounted, provide } from 'vue'
+    import { useRouter } from 'vue-router'
+    import LeafletMap from '@/components/LeafletMap.vue'
+    import Profile from '@/components/Profile.vue'
+
+    const router = useRouter()
+    const fullName = ref<string | null>(null)
+
+    const updateUser = () => {
+    const userData = localStorage.getItem('user')
+    fullName.value = userData ? JSON.parse(userData).fullName : null
+    }
+
+    updateUser()
+
+    watch(() => router.currentRoute.value.path, () => {
+        updateUser()
+    })
 
     const fontStyle = ref('Sans-Serif')
     const fontSize = ref('medium')
@@ -68,7 +85,7 @@ function toggleDarkMode() {
     <div>
         <nav class="navbar">
             <div class="nav-container">
-                <div class="logo">Elanco TickTracker - EXT 12 Version</div>
+                <div class="logo"> Elanco TickTracker</div>
 
                 <div class="links">
                     <router-link to="/">Home</router-link>
@@ -77,10 +94,19 @@ function toggleDarkMode() {
                     <br />
                     <router-link to="/map">Map</router-link>
                     <br />
+
                     <router-link to="/tickHistory">Tick History</router-link>
                     <br />
                     <router-link to="/about">About</router-link>
                     <br />
+                </div>
+
+                <div class="auth-buttons">
+                    <Profile v-if="fullName" :fullName="fullName" />
+                    <template v-else>
+                        <router-link to="/signup" class="btn btn-primary" style="text-decoration: none;">Signup</router-link>
+                        <router-link to="/login" class="btn btn-secondary" style="text-decoration: none;">Login</router-link>
+                    </template>
                 </div>
 
                 <div class="accessibility-menu">
@@ -135,6 +161,8 @@ function toggleDarkMode() {
                     </div>
                 </div>
             </div>
+                
+            </div>
         </nav>
 
         <router-view />
@@ -142,20 +170,16 @@ function toggleDarkMode() {
 </template>
 
 <style scoped>
-    h1 {
-        margin-bottom: 1rem;
-    }
-
     .navbar {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: var(--header-height);
-        background: var(--bg);
-        backdrop-filter: blur(10px);
-        border-bottom: 5px solid var(--primary);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        background-color: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(12px);
+        border-bottom: 2px solid var(--primary-light);
+        box-shadow: 0 4px 24px rgba(52, 152, 219, 0.1);
         z-index: 1000;
     }
 
@@ -174,7 +198,7 @@ function toggleDarkMode() {
         font-weight: 600;
         font-size: calc(24px * var(--font-scale, 1));
         color: var(--primary);
-        text-shadow: 1px 1px 1px var(--shadow_color);
+        letter-spacing: -0.3px;
     }
 
     .links {
@@ -188,20 +212,26 @@ function toggleDarkMode() {
             color: var(--text);
             font-size: calc(18px * var(--font-scale, 1));
             font-weight: 500;
-            transition: color 0.2s ease;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
         }
 
             .links a:hover {
                 color: var(--primary);
+                background: rgba(52, 152, 219, 0.08);
             }
 
     .router-link-active {
         color: var(--primary) !important;
+        background: rgba(52, 152, 219, 0.1) !important;
         font-weight: 600;
     }
 
-    .content {
-        margin-top: 60px;
+    .auth-buttons {
+        display: flex;
+        gap: 12px;
+        align-items: center;
     }
 
     .accessibility-menu {

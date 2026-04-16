@@ -35,13 +35,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: calc(50vh - var(--header-height));
-        background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0.05) 100%);
-        padding: 40px 20px;
+        gap: 40px;
+        min-height: calc(60vh - var(--header-height));
+        padding: 40px 80px;
+        flex-wrap: wrap;
     }
 
     .hero-content {
-        text-align: center;
+        text-align: left;
         max-width: 600px;
         animation: fadeInUp 0.8s ease;
     }
@@ -57,16 +58,14 @@
     .hero-subtitle {
         font-size: calc(24px * var(--font-scale, 1));
         color: var(--primary);
-        font-weight: 600;
+        font-weight: 500;
         margin-bottom: 24px;
     }
 
     .auth-buttons {
         display: flex;
-        gap: 24px;
-        margin-left: auto;
-        padding-right: 80px;
-        justify-content: center;
+        gap: 16px;
+        justify-content: flex-start;
         align-items: center;
         flex-wrap: wrap;
     }
@@ -76,10 +75,9 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 24px;
-        padding: 80px 40px;
-        background: linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(52, 152, 219, 0.02) 100%);
-        border-top: 1px solid rgba(52, 152, 219, 0.1);
+        gap: 20px;
+        padding: 60px 40px;
+        border-top: 1px solid rgba(52, 152, 219, 0.12);
         animation: fadeInUp 1s ease 0.2s both;
     }
 
@@ -87,6 +85,7 @@
         font-size: calc(32px * var(--font-scale, 1));
         font-weight: 600;
         color: var(--text);
+        opacity: 0.85;
     }
 
     @keyframes fadeInUp {
