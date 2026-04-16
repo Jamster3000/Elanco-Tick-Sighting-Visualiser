@@ -130,7 +130,7 @@ function toggleDarkMode() {
                     <div v-if="accessibilityOpen" class="accessibility-panel">
                         <div class="accessibility-header">
                             <span>Accessibility Features</span>
-                            <button @click="accessibilityOpen = false">✕</button>
+                            <button class="btn btn-close" @click="accessibilityOpen = false">✕</button>
                         </div>
 
                         <div class="accessibility-body">
@@ -258,6 +258,31 @@ function toggleDarkMode() {
     .auth-mobile {
         display: none;
     }
+
+    .btn-close {
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 20px;
+        padding: 4px 8px;
+        cursor: pointer;
+        line-height: 1;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        min-height: 28px;
+        border-radius: 4px;
+    }
+
+        .btn-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-close:active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
 
     .hamburger {
         display: none;
