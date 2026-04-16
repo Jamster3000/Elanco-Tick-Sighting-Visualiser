@@ -47,7 +47,7 @@
     }
 
     .hero-title {
-        font-size: 56px;
+        font-size: calc(56px * var(--font-scale, 1));
         font-weight: 700;
         color: var(--text);
         margin-bottom: 16px;
@@ -55,7 +55,7 @@
     }
 
     .hero-subtitle {
-        font-size: 24px;
+        font-size: calc(24px * var(--font-scale, 1));
         color: var(--primary);
         font-weight: 600;
         margin-bottom: 24px;
@@ -84,7 +84,7 @@
     }
 
     .map-section-title {
-        font-size: 32px;
+        font-size: calc(32px * var(--font-scale, 1));
         font-weight: 600;
         color: var(--text);
     }

@@ -81,18 +81,18 @@
 </script>
 
 <template>
-    <h1>Tick Information</h1>
+    <h1 class="title">Tick Information</h1>
     <div class="species-container">
         <button class="btn btn-secondary nav-buttons" @click="previousSpecies">Previous</button>
 
         <div class="card card-center">
-            <h2 style="padding-top: 50px;">{{ species[currentIndex].name }}</h2>
+            <h1 style="padding-bottom: 30px;" class="tick-name">{{ species[currentIndex].name }}</h1>
             <img :src="species[currentIndex].image" alt="Tick Photo" />
-            <p class="Sub-Title">Bio Characteristics</p>
+            <h2 class="tick-name">Bio Characteristics</h2>
             <p class="Information">{{ species[currentIndex].bioCharacteristics }}</p>
-            <p class="Sub-Title">Typical Habitat</p>
+            <h2 class="tick-name">Typical Habitat</h2>
             <p class="Information">{{species[currentIndex].typicalHabitat}}</p>
-            <p class="Sub-Title">Health Risks</p>
+            <h2 class="tick-name">Health Risks</h2>
             <p class="Information">{{species[currentIndex].healthRisks}}</p>
             <p class="current">{{currentIndex+1}} / {{TotalSpecies}}</p>
         </div>
@@ -102,15 +102,21 @@
 </template>
 
 <style scoped>
-    h2 {
-        font-size: 36px;
-        text-decoration: underline;
-    }
-
-    h1 {
+    h1.title {
         text-align: center;
         padding-top: var(--top-padding);
         text-decoration: underline;
+        font-size: calc(32px * var(--font-scale, 1));
+    }
+
+    h1.tick-name {
+        text-decoration: underline;
+        font-size: calc(32px * var(--font-scale, 1));
+    }
+
+    h2.tick-name {
+        text-decoration: underline;
+        font-size: calc(24px * var(--font-scale, 1));
     }
 
     .current {
@@ -137,12 +143,13 @@
             }
 
     .nav-buttons {
-        font-size: 24px;
+        font-size: calc(22px * var(--font-scale, 1));
         margin-top: 20px;
         align-self: flex-start;
         width: 150px;
         height: 60px;
-        background: white;
+        background: var(--bg);
+        color: var(--primary);
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         padding: 10px 20px;
@@ -160,8 +167,8 @@
 
     .Information {
         margin: 10px;
-        text-align: left;
-        font-size: 24px;
+        text-align: center;
+        font-size: calc(18px * var(--font-scale, 1));
     }
 
     .Sub-Title {

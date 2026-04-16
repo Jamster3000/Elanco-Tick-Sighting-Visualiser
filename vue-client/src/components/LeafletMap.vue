@@ -256,10 +256,10 @@
         max-width: 460px;
         height: calc(100vh - var(--header-height));
         padding: 20px;
-        background-color: white;
+        background-color: var(--bg);
         border-left: 3px solid lightgray;
         overflow-y: auto;
-        overflow-x: visible; 
+        overflow-x: visible;
         transform: translateX(100%);
         transition: transform 0.65s ease;
         z-index: 1000;
@@ -286,16 +286,17 @@
         }
 
     .chart-close-btn {
-        color: var(--text); 
-        background: none; 
+        color: var(--text);
+        background: none;
         border: none;
         font-size: 18px;
     }
+
         .chart-close-btn:hover {
             color: var(--primary);
             cursor: pointer;
         }
-    
+
 
     .sidebar-header {
         clear: both;
@@ -308,24 +309,24 @@
 
     .info-label {
         font-weight: bold;
-        font-size: 18px;
+        font-size: calc(18px * var(--font-scale, 1));
         margin-top: 20px;
         margin-bottom: 8px;
     }
 
     .info-button {
         font-weight: bold;
-        font-size: 18px;
+        font-size: calc(18px * var(--font-scale, 1));
         margin-top: 20px;
         margin-bottom: 8px;
     }
 
-    .info-button:hover {
-        cursor: pointer;
-    }
+        .info-button:hover {
+            cursor: pointer;
+        }
 
     .chart1-hover-wrapper {
-        position: static; 
+        position: static;
     }
 
         .chart1-hover-wrapper:hover {
@@ -352,7 +353,7 @@
         top: var(--header-height);
         right: 23.98%;
         width: 450px;
-        background: white;
+        background: var(--bg);
         border: 1px solid lightgray;
         border-radius: 8px;
         padding: 10px;
@@ -374,7 +375,7 @@
         right: 23.98%;
         width: 450px;
         height: auto;
-        background: white;
+        background: var(--bg);
         border: 1px solid lightgray;
         border-radius: 8px;
         padding: 10px;
