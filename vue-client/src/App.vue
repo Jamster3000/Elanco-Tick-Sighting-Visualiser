@@ -193,7 +193,7 @@ function toggleDarkMode() {
         left: 0;
         width: 100%;
         box-sizing: border-box;
-        background-color: rgba(255, 255, 255, 0.98);
+        background-color: var(--bg);
         backdrop-filter: blur(12px);
         border-bottom: 2px solid var(--primary-light);
         box-shadow: 0 4px 24px rgba(52, 152, 219, 0.1);
@@ -300,6 +300,73 @@ function toggleDarkMode() {
                 transform: translateY(-19px) rotate(-45deg);
             }
 
+    /*==========
+        Accessability CSS styling
+    ==========*/
+
+    .accessibility-menu {
+        position: relative;
+    }
+
+    .accessibility-btn {
+        cursor: pointer;
+        font-size: 22px;
+        font-weight: bold;
+        border: 1px solid var(--primary);
+        background: var(--primary);
+        color: var(--primary);
+        border-radius: 4px;
+    }
+
+    .accessibility-panel {
+        position: fixed;
+        top: 50px;
+        right: 24px;
+        width: 300px;
+        background: var(--bg);
+        border: 1px solid var(--primary);
+        z-index: 1100;
+    }
+
+    .accessibility-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--primary);
+        padding: 8px 12px;
+        color: #fff;
+    }
+
+    .accessibility-body {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .control {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+    }
+
+        .control label {
+            white-space: nowrap;
+            font-size: 16px;
+        }
+
+        .control select,
+        .control input[type="checkbox"] {
+            height: 27px;
+        }
+
     @media (max-width: 900px) {
         .nav-container {
             padding: 0 8px;
@@ -404,67 +471,4 @@ function toggleDarkMode() {
                 border-radius: 6px;
             }
     }
-
-    .accessibility-menu {
-        position: relative;
-    }
-
-    .accessibility-btn {
-        cursor: pointer;
-        font-size: 22px;
-        font-weight: bold;
-        border: 1px solid var(--primary);
-        background: var(--primary);
-        color: var(--primary);
-        border-radius: 4px;
-    }
-
-    .accessibility-panel {
-        position: fixed;
-        top: 50px;
-        right: 24px;
-        width: 300px;
-        background: var(--bg);
-        border: 1px solid var(--primary);
-        z-index: 1100;
-    }
-
-    .accessibility-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: var(--primary);
-        padding: 8px 12px;
-        color: #fff;
-    }
-
-    .accessibility-body {
-        padding: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .control-group {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .control {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-    }
-
-        .control label {
-            white-space: nowrap;
-            font-size: 16px;
-        }
-
-        .control select,
-        .control input[type="checkbox"] {
-            height: 27px;
-        }
 </style>
