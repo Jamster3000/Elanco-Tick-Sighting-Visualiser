@@ -19,7 +19,7 @@
     }
 
     h1 {
-        font-size: 32px;
+        font-size: calc(32px * var(--font-scale, 1));
         font-weight: bold;
         text-align: center;
         line-height: 1.6;
@@ -28,7 +28,7 @@
     }
 
     p {
-        font-size: 18px;
+        font-size: calc(18px * var(--font-scale, 1));
         line-height: 1.7;
         letter-spacing: 0.5px;
     }

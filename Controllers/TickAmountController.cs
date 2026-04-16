@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TickVisualizer_Backend.Models;
 using TickVisuilzer_Backend.Service;
 
 namespace ElantroProj.Controllers
@@ -38,6 +39,14 @@ namespace ElantroProj.Controllers
                 Species = speciesList,
                 LatestDate = latestDate
             });
+        }
+
+        [HttpGet("species/{species}/percentage-change")]
+
+        public async Task <IActionResult> GetPercentageChange(string species)
+        {
+            var PercentageChangeResult = await _tickService.GetPercentageChangeBySpecies(species);
+            return Ok(PercentageChangeResult);
         }
     }
 }

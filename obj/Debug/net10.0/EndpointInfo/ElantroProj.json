@@ -196,6 +196,28 @@
         }
       }
     },
+    "/api/TickSightings/species/{species}/percentage-change": {
+      "get": {
+        "tags": [
+          "TickSightings"
+        ],
+        "parameters": [
+          {
+            "name": "species",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TickChart/GetChartData/{city}": {
       "get": {
         "tags": [

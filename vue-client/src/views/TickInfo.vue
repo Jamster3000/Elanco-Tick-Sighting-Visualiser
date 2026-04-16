@@ -78,7 +78,7 @@
 </script>
 
 <template>
-    <h1>Tick Information</h1>
+    <h1 class="title">Tick Information</h1>
     <div class="species-container">
         <div class="nav-buttons-wrapper">
             <button class="nav-arrow nav-prev" title="Press `A` or Left arrow key" @click="previousSpecies">
@@ -126,14 +126,25 @@
 </template>
 
 <style scoped>
-    h1 {
+    h1.title {
         text-align: center;
         padding-top: var(--top-padding);
         text-decoration: underline;
+        font-size: calc(32px * var(--font-scale, 1));
+    }
+
+    h1.tick-name {
+        text-decoration: underline;
+        font-size: calc(32px * var(--font-scale, 1));
+    }
+
+    h2.tick-name {
+        text-decoration: underline;
+        font-size: calc(24px * var(--font-scale, 1));
     }
 
     h2 {
-        font-size: 24px;
+        font-size: calc(24px * var(--font-scale, 1));
         text-decoration: underline;
         margin: 5px 0 10px 0;
         text-align: center;
@@ -185,10 +196,10 @@
     .nav-arrow {
         width: 50px;
         flex: 0 0 50px;
-        background: white;
+        background: var(--bg);
         border: 2px solid var(--primary);
         cursor: pointer;
-        font-size: 40px;
+        font-size: calc(40px * var(--font-scale, 1));
         color: var(--primary);
         display: flex;
         align-items: center;
@@ -198,7 +209,7 @@
 
         .nav-arrow:hover {
             background: var(--primary);
-            color: white;
+            color: var(--bg);
         }
 
     .nav-prev {
@@ -224,13 +235,13 @@
         flex-direction: column;
         padding: 12px;
         border-radius: 8px;
-        background: rgba(52, 152, 219, 0.05);
+        background: var(--bg);
         overflow-y: auto;
     }
 
     .Sub-Title {
         text-decoration: underline;
-        font-size: 20px;
+        font-size: calc(20px * var(--font-scale, 1));
         font-weight: bold;
         margin-bottom: 10px;
         color: var(--primary);
@@ -238,14 +249,14 @@
     }
 
     .Information {
-        font-size: 19px;
+        font-size: calc(18px * var(--font-scale, 1));
         line-height: 1.5;
         text-align: center;
     }
 
     .current {
         text-align: center;
-        font-size: 22px;
+        font-size: calc(22px * var(--font-scale, 1));
         margin-top: 8px;
         color: var(--text);
     }
@@ -256,7 +267,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.8);
+        background: var(--text);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -287,8 +298,8 @@
         right: 0;
         background: none;
         border: none;
-        color: white;
-        font-size: 40px;
+        color: var(--bg));
+        font-size: calc(40px * var(--font-scale, 1));
         cursor: pointer;
         transition: color 0.3s;
     }

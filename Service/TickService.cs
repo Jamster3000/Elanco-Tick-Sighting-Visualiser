@@ -20,6 +20,48 @@ namespace TickVisuilzer_Backend.Service
             "dd-MM-yyyy",
         };
 
+        public async Task<object> GetPercentageChangeBySpecies(string species)
+        {
+            var allSightings = await GetTickSightings();
+
+            var speciesSightings = allSightings.Where(t => t.Species == species && !string.IsNullOrWhiteSpace(t.Date)).ToList();
+
+            var yearlyCounts = speciesSightings.GroupBy(t => { DateTime.TryParse(t.Date, out var parsedDate); return parsedDate.Year; }).Select(g => new { Year = g.Key, Count = g.Count() }).OrderBy(x => x.Year).ToList();
+
+            var firstYear = yearlyCounts.FirstOrDefault();
+            var mostRecentYear = yearlyCounts.LastOrDefault();
+
+            if (firstYear == null || mostRecentYear == null || firstYear.Count <= 0)
+            {
+                return new { Message = "Not enough data" };
+            }
+
+            double percentageChange = ((double)(mostRecentYear.Count - firstYear.Count) / firstYear.Count * 100);
+
+            var peakYearData = yearlyCounts.OrderByDescending(x => x.Count).First();
+            var lowestYearData = yearlyCounts.OrderBy(x => x.Count).First();
+            var averageTickCount = yearlyCounts.Average(x =>  x.Count);
+
+            return new
+            {
+                Species = species,
+                FirstYear = firstYear.Year,
+                MostRecentYear = mostRecentYear.Year,
+                FirstCount = firstYear.Count,
+                MostRecentCount = mostRecentYear.Count,
+                PercentageChange = percentageChange,
+
+                // more values
+                PeakTickCount = peakYearData.Count,
+                LowestTickCount = lowestYearData.Count,
+                PeakYear = peakYearData.Year,
+                LowestYear = lowestYearData.Year,
+                AverageTickCount = averageTickCount,
+
+            };
+        }
+
+
         public async Task<IEnumerable<TickSpecies>> GetAllTickSpecies()
         {
             return await _tickSQL.GetTickSpecies();
