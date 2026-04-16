@@ -166,7 +166,6 @@ function toggleDarkMode() {
                             <hr />
 
                             <div class="control-group">
-
                                 <div class="control">
                                     <label for="dark-mode">Dark Mode:</label>
                                     <input type="checkbox" id="dark-mode" v-model="darkMode" @change="toggleDarkMode">
@@ -175,9 +174,6 @@ function toggleDarkMode() {
                         </div>
                     </div>
                 </div>
-            </div>
-                
-            </div>
 
                 <button class="hamburger" @click.stop="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-label="Toggle navigation">
                     <span :class="{ open: menuOpen }"></span>

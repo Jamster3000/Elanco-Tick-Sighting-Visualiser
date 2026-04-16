@@ -599,7 +599,6 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
-    }
 
     @media (max-width: 900px) {
         #map :deep(.leaflet-control) {

@@ -21,15 +21,15 @@
 
             const currentIndex = ref(0); //tracks currently selected species
 
-        const theme = inject<{
-            colourBlindMode: any
-            darkMode: any
-            themeVersion: any
-        }>('theme')
+            const theme = inject<{
+                colourBlindMode: any
+                darkMode: any
+                themeVersion: any
+            }>('theme')
 
 
-        const fetchChartData = async () => {
-        const selected = species.value[currentIndex.value].name;
+            const fetchChartData = async () => {
+                const selected = species.value[currentIndex.value].name;
 
                 const response = await fetch(`/api/TickChart/GetYearlyData?species=${encodeURIComponent(selected)}`); //sends get request to backend for tick data for selected species
                 const data = await response.json(); //expects a json response
@@ -49,13 +49,12 @@
             const updateChart = (years: number[], counts: number[], label: string) => {
                 const ctx = document.getElementById("tickChart") as HTMLCanvasElement;
 
-            //gets the primary color from theme
-            const rootStyles = getComputedStyle(document.documentElement);
-            const primary = rootStyles.getPropertyValue('--primary').trim();
-            const text = rootStyles.getPropertyValue('--text').trim();
+                //gets the primary color from theme
+                const rootStyles = getComputedStyle(document.documentElement);
+                const primary = rootStyles.getPropertyValue('--primary').trim();
+                const text = rootStyles.getPropertyValue('--text').trim();
 
-                if (chartInstance)
-                {
+                if (chartInstance) {
                     chartInstance.data.labels = years;
                     chartInstance.data.datasets[0].data = counts;
                     chartInstance.data.datasets[0].label = label;
@@ -82,47 +81,14 @@
                                 duration: 750
                             },
                             scales: { //labels the axes, and colours the grid
-                                 x: { title: { display: true, text: "Year", color: text }, grid: {color: text }, ticks: { color: text } },
-                                y: { title: { display: true, text: "Sightings", color: text }, grid: { color: text }, ticks: { color: text } }                
+                                x: { title: { display: true, text: "Year", color: text }, grid: { color: text }, ticks: { color: text } },
+                                y: { title: { display: true, text: "Sightings", color: text }, grid: { color: text }, ticks: { color: text } }
                             },
-                                plugins: { legend: { labels: { color: text } } }
-                            }
+                            plugins: { legend: { labels: { color: text } } }
                         }
                     });
                 }
             };
-            if (chartInstance)
-            {
-                chartInstance.destroy();
-                chartInstance = null;
-            }
-
-        chartInstance = new Chart(ctx, { //maps the line chart
-            type: "line",
-            data: {
-            labels: years,
-            datasets: [
-                {
-                label: label,
-                data: counts,
-                borderColor: primary,
-                backgroundColor: primary,
-                tension: 0.3
-
-                }
-            ]
-            },
-            options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            scales: { //labels the axes, and colours the grid
-                x: { title: { display: true, text: "Year", color: text }, grid: {color: text }, ticks: { color: text } },
-                y: { title: { display: true, text: "Sightings", color: text }, grid: { color: text }, ticks: { color: text } }                
-            },
-                plugins: { legend: { labels: { color: text } } }
-            }
-        });
-        };
 
             onUnmounted(() => {
                 if (chartInstance) {
@@ -131,42 +97,40 @@
                 }
             });
 
-            watch(currentIndex, async () =>
-            {
+            watch(currentIndex, async () => {
                 await fetchChartData();
                 await fetchPercentageChange();
             });
 
-    
-        //watches theme from app.vue
-        watch(
-            () => theme.themeVersion.value,
-            async () => {
-                await nextTick()
-                if (chartInstance) {
-                    const rootStyle = getComputedStyle(document.documentElement)
-                    const primary = rootStyle.getPropertyValue('--primary').trim()
-                    const text = rootStyle.getPropertyValue('--text').trim()
 
-                    chartInstance.data.datasets[0].borderColor = primary
-                    chartInstance.data.datasets[0].backgroundColor = primary
-                    chartInstance.options.scales.x.grid.color = text
-                    chartInstance.options.scales.y.grid.color = text
-                    chartInstance.options.scales.x.title.color = text
-                    chartInstance.options.scales.y.title.color = text
-                    chartInstance.options.scales.x.ticks.color = text
-                    chartInstance.options.scales.y.ticks.color = text
-                    chartInstance.options.plugins.legend.labels.color = text
+            //watches theme from app.vue
+            watch(
+                () => theme.themeVersion.value,
+                async () => {
+                    await nextTick()
+                    if (chartInstance) {
+                        const rootStyle = getComputedStyle(document.documentElement)
+                        const primary = rootStyle.getPropertyValue('--primary').trim()
+                        const text = rootStyle.getPropertyValue('--text').trim()
 
-                    chartInstance.update()
+                        chartInstance.data.datasets[0].borderColor = primary
+                        chartInstance.data.datasets[0].backgroundColor = primary
+                        chartInstance.options.scales.x.grid.color = text
+                        chartInstance.options.scales.y.grid.color = text
+                        chartInstance.options.scales.x.title.color = text
+                        chartInstance.options.scales.y.title.color = text
+                        chartInstance.options.scales.x.ticks.color = text
+                        chartInstance.options.scales.y.ticks.color = text
+                        chartInstance.options.plugins.legend.labels.color = text
+
+                        chartInstance.update()
+                    }
                 }
-            }
-        );
+            );
 
 
-        onMounted(fetchChartData);
-            onMounted(async () =>
-            {
+            onMounted(fetchChartData);
+            onMounted(async () => {
                 await fetchChartData();
                 await fetchPercentageChange();
             });
@@ -273,120 +237,122 @@
     h4 {
         text-align: center;
         font-size: calc(18px * var(--font-scale, 1));
-    .percentage, .population {
-        font-weight: bold;
-        color: var(--text);
-        padding:10px;
-        padding-top: 30px;
     }
 
+        .percentage, .population {
+            font-weight: bold;
+            color: var(--text);
+            padding: 10px;
+            padding-top: 30px;
+        }
 
-    .page-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-        max-height: calc(100vh - var(--header-height));
-        overflow-y: auto;
-    }
 
-    .chart-area {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-height: 60vh;
-        margin: 0 auto;
-    }
-
-    #tickChart {
-        max-width: 100%;
-    }
-
-    h1 {
-        text-align: center;
-        padding-top: 80px;
-        text-decoration: underline;
-    }
-
-    h4 {
-        text-align: center;
-    }
-
-    .controls {
-        align-self: flex-end;
-        margin-right: 60px;
-        margin-bottom: 10px;
-    }
-
-    #ticks {
-        font-size: calc(18px * var(--font-scale, 1));
-        padding: 8px 12px;
-        border-radius: 8px;
-        border: 2px solid var(--primary);
-        cursor: pointer;
-    }
-
-    @media (max-width: 900px) {
         .page-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 22px;
-            height: calc(100vh - var(--mobile-header-height));
+            padding: 20px;
+            max-height: calc(100vh - var(--header-height));
             overflow-y: auto;
-            box-sizing: border-box;
+        }
+
+        .chart-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-height: 60vh;
+            margin: 0 auto;
+        }
+
+        #tickChart {
+            max-width: 100%;
         }
 
         h1 {
             text-align: center;
-            padding-top: var(--mobile-header-height);
-            font-size: 20px;
+            padding-top: 80px;
             text-decoration: underline;
-            margin-bottom: 8px;
-            margin-top: 20px;
         }
 
         h4 {
             text-align: center;
-            font-size: 14px;
-            margin-bottom: 16px;
-            padding: 0 12px;
         }
 
         .controls {
-            align-self: center;
-            margin-right: 0;
-            margin-bottom: 12px;
-            width: 100%;
-            max-width: 300px;
+            align-self: flex-end;
+            margin-right: 60px;
+            margin-bottom: 10px;
         }
 
         #ticks {
-            font-size: 14px;
-            padding: 10px 12px;
-            border-radius: 6px;
+            font-size: calc(18px * var(--font-scale, 1));
+            padding: 8px 12px;
+            border-radius: 8px;
             border: 2px solid var(--primary);
             cursor: pointer;
-            width: 100%;
         }
 
         .chart-area {
-            width: 100%;
-            flex: 1;
-            min-height: 0;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background: var(--bg);
         }
 
-        #tickChart {
-            width: 100% !important;
-            height: 100% !important;
-        }
-    }
+        @media (max-width: 900px) {
+            .page-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 22px;
+                height: calc(100vh - var(--mobile-header-height));
+                overflow-y: auto;
+                box-sizing: border-box;
+            }
 
-    .chart-area {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        background: var(--bg);
-    }
+            h1 {
+                text-align: center;
+                padding-top: var(--mobile-header-height);
+                font-size: 20px;
+                text-decoration: underline;
+                margin-bottom: 8px;
+                margin-top: 20px;
+            }
+
+            h4 {
+                text-align: center;
+                font-size: 14px;
+                margin-bottom: 16px;
+                padding: 0 12px;
+            }
+
+            .controls {
+                align-self: center;
+                margin-right: 0;
+                margin-bottom: 12px;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            #ticks {
+                font-size: 14px;
+                padding: 10px 12px;
+                border-radius: 6px;
+                border: 2px solid var(--primary);
+                cursor: pointer;
+                width: 100%;
+            }
+
+            .chart-area {
+                width: 100%;
+                flex: 1;
+                min-height: 0;
+            }
+
+            #tickChart {
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
 </style>
