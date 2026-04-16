@@ -1,9 +1,8 @@
 <script setup lang="ts">
-    import { onMounted, ref } from 'vue'
+    import { onMounted, ref, nextTick } from 'vue'
     import L, { Marker, LeafletMouseEvent } from 'leaflet'
     import 'leaflet/dist/leaflet.css'
     import { ModuleRegistry, AllCommunityModule } from 'ag-charts-community'
-    import { nextTick } from 'vue'
 
     ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -14,6 +13,10 @@
     const REQUEST_THROTTLE_MS = 1000
     const isChartVisible = ref(false)
     const isChart2Visible = ref(false)
+
+    const searchQuery = ref('');
+    let map: any = null;
+    let currentMarker: any = null;
 
     function makeDraggable(selector: string) {
         nextTick(() => {
@@ -114,7 +117,6 @@
         }
     })
 
-
     const scatterOptions = ref<any>({
         title: { text: 'Tick Population Over Time' },
         legend: { position: 'bottom' },
@@ -125,18 +127,15 @@
         isSidebarOpen.value = false
     }
 
-    
-
     onMounted(() => {
-
-        const map = L.map('map').setView([51.505, -0.09], 6)
+        map = L.map('map').setView([51.505, -0.09], 6)
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map)
 
-        let currentMarker: L.Marker | null = null
         let lastRequestTime = 0
+        makeDraggable('.search-pill-container')
 
         map.on('click', async (e: L.LeafletMouseEvent) => {
             const now = Date.now()
@@ -147,26 +146,14 @@
 
             const { lat, lng } = e.latlng
 
-            if (currentMarker) {
-                map.removeLayer(currentMarker)
-                chartOptions.value.data = []
-                scatterOptions.value = { ...scatterOptions.value, series: [], data: undefined }
-            }
-
-            let city = 'Unknown location'
-            let count = 0
-            let location = ""
-            let speciesList: any[] = []
-            let latestDate = ""
-
             try {
                 const reverseResponse = await fetch(
                     `http://localhost:5021/api/map/reverse?lat=${lat}&lon=${lng}`
                 )
 
+                let city = 'Unknown location'
                 if (reverseResponse.ok) {
                     const reverseData = await reverseResponse.json()
-                    console.log(reverseData);
                     if (reverseData.address) {
                         city =
                             reverseData.address.city ||
@@ -181,48 +168,62 @@
                         city = 'London'
                     }
                 }
+                await fetchTickDataForCity(city, lat, lng);
 
-                const [tickResponse, scatterResponse] = await Promise.all([
-                    fetch(`http://localhost:5021/api/TickChart/GetChartData/${city}`),
-                    fetch(`http://localhost:5021/api/TickLineGraph/GetLineGraphData/${city}`)
-                ])
+            } catch (error) {
+                console.error('API error:', error)
+            } finally {
+                isLoading.value = false
+            }
+        })
+    })
 
-                if (tickResponse.ok) {
-                    const tickData = await tickResponse.json()
+    const fetchTickDataForCity = async (city: string, lat: number, lng: number) => {
+        if (currentMarker) {
+            map.removeLayer(currentMarker)
+            chartOptions.value.data = []
+            scatterOptions.value = { ...scatterOptions.value, series: [], data: undefined }
+        }
 
-                    count = tickData?.sightingsCount ?? 0
-                    location = tickData?.city
-                    speciesList = tickData?.species ?? []
-                    latestDate = tickData?.latestDate
+        try {
+            const [tickResponse, scatterResponse] = await Promise.all([
+                fetch(`http://localhost:5021/api/TickChart/GetChartData/${city}`),
+                fetch(`http://localhost:5021/api/TickLineGraph/GetLineGraphData/${city}`)
+            ])
 
-                    console.log('Chart data being set:', JSON.stringify(speciesList))
+            if (tickResponse.ok) {
+                const tickData = await tickResponse.json()
+                const count = tickData?.sightingsCount ?? 0
+                const location = tickData?.city ?? city
+                const speciesList = tickData?.species ?? []
+                const latestDate = tickData?.latestDate
 
-                    const chartData = Array.isArray(speciesList) && typeof speciesList[0] === 'object'
-                        ? speciesList
-                        : speciesList.map((s: string) => ({ species: s, count: 1 }))
+                const chartData = Array.isArray(speciesList) && typeof speciesList[0] === 'object'
+                    ? speciesList
+                    : speciesList.map((s: string) => ({ species: s, count: 1 }))
 
-                    chartOptions.value = {
-                        ...chartOptions.value,
-                        data: [...chartData]
-                    }
-
-                    tickInfo.value = { city, count, speciesList, latestDate }
-
-                    const message = `You clicked in ${location}. There are ${count} recorded tick sightings here.`
-
-                    currentMarker = L.marker([lat, lng])
-                        .addTo(map)
-                        .bindPopup(message)
-                        .openPopup()
-
-                    isSidebarOpen.value = true
+                chartOptions.value = {
+                    ...chartOptions.value,
+                    data: [...chartData]
                 }
 
-                if (scatterResponse.ok) {
-                    const rawData: any[] = await scatterResponse.json()
+                tickInfo.value = { city: location, count, speciesList, latestDate }
 
+                const message = `You clicked in ${location}. There are ${count} recorded tick sightings here.`
+
+                map.setView([lat, lng], 11)
+                currentMarker = L.marker([lat, lng])
+                    .addTo(map)
+                    .bindPopup(message)
+                    .openPopup()
+
+                isSidebarOpen.value = true
+            }
+
+            if (scatterResponse.ok) {
+                const rawData: any[] = await scatterResponse.json()
+                if (rawData && rawData.length > 0) {
                     const allYears = [...new Set(rawData.map((d: any) => d.year))].sort((a, b) => a - b)
-
                     const allSpecies = [...new Set(rawData.map((d: any) => d.species))]
 
                     const lookup: Record<string, Record<number, number>> = {}
@@ -254,20 +255,66 @@
                         series: series
                     }
                 }
-
-
-            } catch (error) {
-                console.error('API error:', error)
-            } finally {
-                isLoading.value = false
             }
-        })
-    })
+        } catch (error) {
+            console.error('Backend fetch error:', error)
+        }
+    };
+
+    
+    const searchPostcode = async () => {
+        if (!searchQuery.value) return;
+        isLoading.value = true;
+
+        try {
+            const postcodeRes = await fetch(`https://api.postcodes.io/postcodes/${searchQuery.value.trim()}`);
+            if (!postcodeRes.ok) {
+                alert("Invalid UK Postcode. Please try again.");
+                isLoading.value = false;
+                return;
+            }
+
+            const pcData = await postcodeRes.json();
+            let city = pcData.result.admin_district;
+
+            if (city === 'Greater London' || city === 'City of London' || city === 'City of Westminster' || city?.includes('London')) {
+                city = 'London';
+            }
+
+            const cityRes = await fetch(`https://nominatim.openstreetmap.org/search?city=${city}&countrycodes=gb&format=json`);
+            const cityData = await cityRes.json();
+
+            let cityLat = cityData?.[0]?.lat ?? pcData.result.latitude;
+            let cityLng = cityData?.[0]?.lon ?? pcData.result.longitude;
+
+            await fetchTickDataForCity(city, cityLat, cityLng);
+
+        } catch (error) {
+            console.error('API error:', error);
+        } finally {
+            isLoading.value = false;
+        }
+    };
 </script>
 
 <template>
     <div id="map-container">
         <div id="map"></div>
+
+        <div class="search-pill-container">
+            <input type="text"
+                   v-model="searchQuery"
+                   placeholder="Enter Postcode (e.g. S1 1AA)"
+                   class="search-pill-input"
+                   @keyup.enter="searchPostcode"
+                   @mousedown.stop />
+            <button @click="searchPostcode"
+                    :disabled="isLoading"
+                    class="search-pill-btn"
+                    @mousedown.stop>
+                {{ isLoading ? '...' : 'Search' }}
+            </button>
+        </div>
 
         <Transition name="popup" @after-enter="initChart1Drag">
             <div v-if="isChartVisible" class="chart1-popup">
@@ -280,7 +327,6 @@
                 <div class="resize-bar-right"></div>
                 <div class="resize-bar-bottom"></div>
             </div>
-
         </Transition>
 
         <Transition name="popup" @after-enter="initChart2Drag">
@@ -294,13 +340,9 @@
                 <div class="resize-bar-right"></div>
                 <div class="resize-bar-bottom"></div>
             </div>
-
         </Transition>
 
-
-
         <div id="sidebar" :class="{ open: isSidebarOpen }">
-
             <button class="sidebar-close-btn" @click="closeSidebar">✕</button>
 
             <div class="sidebar-header">
@@ -315,7 +357,6 @@
                 Click for tick population over time
             </button>
 
-
             <div class="sidebar-content">
                 <p class="info-label">City: {{ tickInfo.city || 'No city selected' }}</p>
                 <p class="info-label">Total tick sightings:</p>
@@ -323,15 +364,11 @@
                 <p class="info-label">Latest sighting:</p>
                 <p>{{ tickInfo.latestDate || 'No date data' }}</p>
             </div>
-
         </div>
-
     </div>
-
 </template>
 
 <style scoped>
-    /*This moves the zoom in and out buttons down so they're not above the */
     #map :deep(.leaflet-control) {
         margin-top: calc(var(--header-height) + 10px);
     }
@@ -359,7 +396,7 @@
         background-color: white;
         border-left: 3px solid lightgray;
         overflow-y: auto;
-        overflow-x: visible; 
+        overflow-x: visible;
         transform: translateX(100%);
         transition: transform 0.65s ease;
         z-index: 1000;
@@ -386,16 +423,16 @@
         }
 
     .chart-close-btn {
-        color: var(--text); 
-        background: none; 
+        color: var(--text);
+        background: none;
         border: none;
         font-size: 18px;
     }
+
         .chart-close-btn:hover {
             color: var(--primary);
             cursor: pointer;
         }
-    
 
     .sidebar-header {
         clear: both;
@@ -420,12 +457,12 @@
         margin-bottom: 8px;
     }
 
-    .info-button:hover {
-        cursor: pointer;
-    }
+        .info-button:hover {
+            cursor: pointer;
+        }
 
     .chart1-hover-wrapper {
-        position: static; 
+        position: static;
     }
 
         .chart1-hover-wrapper:hover {
@@ -453,7 +490,6 @@
         width: calc(100% - 20px);
     }
 
-
     .chart1-popup {
         position: absolute;
         top: var(--header-height);
@@ -468,7 +504,6 @@
         overflow: hidden;
     }
 
-
     .chart2-hover-wrapper {
         position: static;
     }
@@ -479,17 +514,16 @@
 
     .chart2-popup {
         position: absolute;
-        top: calc(var(--header-height) + 340px); 
-        left: calc(76% - 450px); 
+        top: calc(var(--header-height) + 340px);
+        left: calc(76% - 450px);
         width: 450px;
-        height: 330px; 
+        height: 330px;
         background: white;
         border: 1px solid lightgray;
         border-radius: 8px;
         z-index: 100000;
         cursor: grab;
         overflow: hidden;
-       
     }
 
     .resize-bar-right {
@@ -512,6 +546,51 @@
         z-index: 1000000;
     }
 
+    .search-pill-container {
+        position: absolute;
+        top: 80px;
+        left: calc(50% - 200px);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        padding: 6px 6px 6px 20px;
+        border-radius: 50px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        width: 400px;
+        max-width: 90%;
+        cursor: grab;
+    }
 
+        .search-pill-container:active {
+            cursor: grabbing;
+        }
 
+    .search-pill-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        background: transparent;
+    }
+
+    .search-pill-btn {
+        background-color: var(--primary, #3498db);
+        color: white;
+        border: none;
+        border-radius: 40px;
+        padding: 10px 24px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+
+        .search-pill-btn:hover {
+            opacity: 0.85;
+        }
+
+        .search-pill-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
 </style>
