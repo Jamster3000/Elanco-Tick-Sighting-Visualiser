@@ -197,7 +197,7 @@ Buttons (primary and secondary)
     padding: 12px 24px;
     border: none;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: calc(16px * var(--font-scale, 1));
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
@@ -242,7 +242,7 @@ Buttons (primary and secondary)
 
 .btn-large {
     padding: 16px 48px;
-    font-size: 18px;
+    font-size: calc(18px * var(--font-scale, 1));
     font-weight: 600;
     letter-spacing: 0.5px;
     border-radius: 8px;
