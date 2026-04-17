@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TickVisuilzer Backend\**" />
+    <Content Remove="TickVisuilzer Backend\**" />
+    <EmbeddedResource Remove="TickVisuilzer Backend\**" />
+    <None Remove="TickVisuilzer Backend\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
     <PackageReference Include="Dapper" Version="2.1.72" />
     <PackageReference Include="FuzzySharp" Version="2.0.2" />
@@ -20,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TickVisuilzer Backend\" />
     <Folder Include="wwwroot\Tick-Images\" />
   </ItemGroup>
 
