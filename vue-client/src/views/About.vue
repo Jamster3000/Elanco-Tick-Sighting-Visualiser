@@ -25,12 +25,29 @@
         line-height: 1.6;
         margin-bottom: 40px;
         padding: 0 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+
+    .card {
+        animation: fadeInUp 0.8s ease 0.2s both;
     }
 
     p {
         font-size: calc(18px * var(--font-scale, 1));
         line-height: 1.7;
         letter-spacing: 0.5px;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     @media (max-width: 900px) {
@@ -60,6 +77,12 @@
             font-size: 15px;
             line-height: 1.5;
             letter-spacing: 0.2px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        h1, .card {
+            animation: none;
         }
     }
 </style>
