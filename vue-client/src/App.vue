@@ -13,6 +13,11 @@
     }
 
     const closeMenu = () => {
+        const accessibilityMenu = document.querySelector(".accessibility-menu")
+        if (accessibilityMenu && accessibilityMenu.contains(event.target as Node)) {
+            return //don't hide the menu/popup/panel when clicked inside of
+        }
+
         menuOpen.value = false
         accessibilityOpen.value = false
     }
@@ -127,52 +132,55 @@ function toggleDarkMode() {
 
                 <div class="accessibility-menu">
                     <button class="accessibility-btn" @click.stop="accessibilityOpen = !accessibilityOpen"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-universal-access-circle" viewBox="0 0 16 16"><path d="M8 4.143A1.071 1.071 0 1 0 8 2a1.071 1.071 0 0 0 0 2.143m-4.668 1.47 3.24.316v2.5l-.323 4.585A.383.383 0 0 0 7 13.14l.826-4.017c.045-.18.301-.18.346 0L9 13.139a.383.383 0 0 0 .752-.125L9.43 8.43v-2.5l3.239-.316a.38.38 0 0 0-.047-.756H3.379a.38.38 0 0 0-.047.756Z" /><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8" /></svg></button>
-                    <div v-if="accessibilityOpen" class="accessibility-panel">
-                        <div class="accessibility-header">
-                            <span>Accessibility Features</span>
-                            <button class="btn btn-close" @click="accessibilityOpen = false">✕</button>
-                        </div>
-
-                        <div class="accessibility-body">
-                            <div class="control-group">
-                                <div class="control">
-                                    <label for="font-style">Font Style:</label>
-                                    <select id="font-style" v-model="fontStyle" @change="changeFontStyle">
-                                        <option value="Sans-Serif">Sans-Serif</option>
-                                        <option value="Serif">Serif</option>
-                                        <option value="Dyslexia-friendly">Dyslexia-friendly</option>
-                                    </select>
-                                </div>
-
-                                <div class="control">
-                                    <label for="font-size">Font Size:</label>
-                                    <select id="font-size" v-model="fontSize" @change="changeFontSize">
-                                        <option value="small">Small</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="large">Large</option>
-                                    </select>
-                                </div>
-
-                                <div class="control">
-                                    <label for="colour-blind-mode">Colour Blind Mode:</label>
-                                    <select id="colour-blind-mode" v-model="colourBlindMode" @change="changeColourBlindMode">
-                                        <option value="tritanopia">Tritanopia</option>
-                                        <option value="achromatopsia">Achromatopsia</option>
-                                        <option value="none">None</option>
-                                    </select>
-                                </div>
+                    
+                    <Transition name="popup-slide">
+                        <div v-if="accessibilityOpen" class="accessibility-panel">
+                            <div class="accessibility-header">
+                                <span>Accessibility Features</span>
+                                <button class="btn btn-close" @click="accessibilityOpen = false">✕</button>
                             </div>
 
-                            <hr />
+                            <div class="accessibility-body">
+                                <div class="control-group">
+                                    <div class="control">
+                                        <label for="font-style">Font Style:</label>
+                                        <select id="font-style" v-model="fontStyle" @change="changeFontStyle">
+                                            <option value="Sans-Serif">Sans-Serif</option>
+                                            <option value="Serif">Serif</option>
+                                            <option value="Dyslexia-friendly">Dyslexia-friendly</option>
+                                        </select>
+                                    </div>
 
-                            <div class="control-group">
-                                <div class="control">
-                                    <label for="dark-mode">Dark Mode:</label>
-                                    <input type="checkbox" id="dark-mode" v-model="darkMode" @change="toggleDarkMode">
+                                    <div class="control">
+                                        <label for="font-size">Font Size:</label>
+                                        <select id="font-size" v-model="fontSize" @change="changeFontSize">
+                                            <option value="small">Small</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="large">Large</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="control">
+                                        <label for="colour-blind-mode">Colour Blind Mode:</label>
+                                        <select id="colour-blind-mode" v-model="colourBlindMode" @change="changeColourBlindMode">
+                                            <option value="tritanopia">Tritanopia</option>
+                                            <option value="achromatopsia">Achromatopsia</option>
+                                            <option value="none">None</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <div class="control-group">
+                                    <div class="control">
+                                        <label for="dark-mode">Dark Mode:</label>
+                                        <input type="checkbox" id="dark-mode" v-model="darkMode" @change="toggleDarkMode">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Transition>
                 </div>
 
                 <button class="hamburger" @click.stop="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-label="Toggle navigation">
@@ -257,6 +265,21 @@ function toggleDarkMode() {
 
     .auth-mobile {
         display: none;
+    }
+
+    .popup-slide-enter-active,
+    .popup-slide-leave-active {
+        transition: all 0.6s ease;
+    }
+
+    .popup-slide-enter-from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    .popup-slide-leave-to {
+        opacity: 0;
+        transform: translateY(-10px);
     }
 
     .btn-close {
