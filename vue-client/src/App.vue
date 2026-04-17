@@ -530,4 +530,12 @@ function toggleDarkMode() {
                 border-radius: 6px;
             }
     }
+
+
+    @media (prefers-reduced-motion: reduce) {
+        .popup-slide-enter-active,
+        .popup-slide-leave-active {
+            transition: none !important;
+        }
+    }
 </style>
