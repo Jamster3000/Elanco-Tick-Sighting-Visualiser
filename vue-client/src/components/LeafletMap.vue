@@ -485,20 +485,20 @@
 </template>
 
 <style scoped>
-    #map :deep(.leaflet-control) {
-        margin-top: calc(var(--header-height) + 10px);
+    #map {
+        height: 100vh;
+        width: 100%;
+        isolation: auto;
     }
+
+        #map :deep(.leaflet-control) {
+            margin-top: calc(var(--header-height) + 10px);
+        }
 
     #map-container {
         display: flex;
         height: 100vh;
         z-index: 0;
-    }
-
-    #map {
-        height: 100vh;
-        width: 100%;
-        isolation: auto;
     }
 
     #sidebar {
@@ -523,21 +523,6 @@
             transform: translateX(0);
         }
 
-    .sidebar-close-btn {
-        float: right;
-        font-size: 24px;
-        cursor: pointer;
-        color: var(--text);
-        background: none;
-        border: none;
-        padding: 0;
-        margin-bottom: 10px;
-    }
-
-        .sidebar-close-btn:hover {
-            color: var(--primary);
-        }
-
     .chart-close-btn {
         color: var(--text);
         background: none;
@@ -550,33 +535,6 @@
             cursor: pointer;
         }
 
-    .sidebar-header {
-        clear: both;
-        text-align: center;
-    }
-
-    .sidebar-content {
-        margin-top: 20px;
-    }
-
-    .info-label {
-        font-weight: bold;
-        font-size: calc(18px * var(--font-scale, 1));
-        margin-top: 20px;
-        margin-bottom: 8px;
-    }
-
-    .info-button {
-        font-weight: bold;
-        font-size: calc(18px * var(--font-scale, 1));
-        margin-top: 20px;
-        margin-bottom: 8px;
-    }
-
-        .info-button:hover {
-            cursor: pointer;
-        }
-
     .chart1-hover-wrapper {
         position: static;
     }
@@ -585,45 +543,9 @@
             color: mediumblue;
         }
 
-    .popup-enter-active,
-    .popup-leave-active {
-        transition: all 0.3s ease;
-    }
-
-    .popup-enter-from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-
-    .popup-leave-to {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-
-    .popup-content {
-        padding: 10px;
-        height: calc(100% - 20px);
-        width: calc(100% - 20px);
-        background: var(--bg);
-    }
-
     .chart1-popup {
         position: absolute;
         top: var(--header-height);
-        left: calc(76% - 450px);
-        width: 450px;
-        height: 330px;
-        background: var(--bg);
-        border: 1px solid lightgray;
-        border-radius: 8px;
-        z-index: 100000;
-        cursor: grab;
-        overflow: hidden;
-    }
-
-    .chart2-popup {
-        position: absolute;
-        top: calc(var(--header-height) + 340px);
         left: calc(76% - 450px);
         width: 450px;
         height: 330px;
@@ -643,14 +565,58 @@
             color: mediumblue;
         }
 
-    .resize-bar-right {
+    .chart2-popup {
         position: absolute;
-        top: 0;
-        right: 0;
-        width: 12px;
-        height: 100%;
-        cursor: ew-resize;
-        z-index: 1000000;
+        top: calc(var(--header-height) + 340px);
+        left: calc(76% - 450px);
+        width: 450px;
+        height: 330px;
+        background: var(--bg);
+        border: 1px solid lightgray;
+        border-radius: 8px;
+        z-index: 100000;
+        cursor: grab;
+        overflow: hidden;
+    }
+
+    .info-button {
+        font-weight: bold;
+        font-size: calc(18px * var(--font-scale, 1));
+        margin-top: 20px;
+        margin-bottom: 8px;
+    }
+
+        .info-button:hover {
+            cursor: pointer;
+        }
+
+    .info-label {
+        font-weight: bold;
+        font-size: calc(18px * var(--font-scale, 1));
+        margin-top: 20px;
+        margin-bottom: 8px;
+    }
+
+    .popup-content {
+        padding: 10px;
+        height: calc(100% - 20px);
+        width: calc(100% - 20px);
+        background: var(--bg);
+    }
+
+    .popup-enter-active,
+    .popup-leave-active {
+        transition: all 0.3s ease;
+    }
+
+    .popup-enter-from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    .popup-leave-to {
+        opacity: 0;
+        transform: scale(0.95);
     }
 
     .resize-bar-bottom {
@@ -662,6 +628,36 @@
         cursor: ns-resize;
         z-index: 1000000;
     }
+
+    .resize-bar-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 12px;
+        height: 100%;
+        cursor: ew-resize;
+        z-index: 1000000;
+    }
+
+    .search-pill-btn {
+        background-color: var(--primary, #3498db);
+        color: white;
+        border: none;
+        border-radius: 40px;
+        padding: 10px 24px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+
+        .search-pill-btn:hover {
+            opacity: 0.85;
+        }
+
+        .search-pill-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
 
     .search-pill-container {
         position: absolute;
@@ -691,40 +687,44 @@
         background: transparent;
     }
 
-    .search-pill-btn {
-        background-color: var(--primary, #3498db);
-        color: white;
-        border: none;
-        border-radius: 40px;
-        padding: 10px 24px;
-        font-weight: bold;
+    .sidebar-close-btn {
+        float: right;
+        font-size: 24px;
         cursor: pointer;
-        transition: opacity 0.2s;
+        color: var(--text);
+        background: none;
+        border: none;
+        padding: 0;
+        margin-bottom: 10px;
     }
 
-        .search-pill-btn:hover {
-            opacity: 0.85;
+        .sidebar-close-btn:hover {
+            color: var(--primary);
         }
 
-        .search-pill-btn:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
+    .sidebar-content {
+        margin-top: 20px;
+    }
+
+    .sidebar-header {
+        clear: both;
+        text-align: center;
+    }
 
     @media (max-width: 900px) {
-        #map :deep(.leaflet-control) {
-            margin-top: calc(var(--mobile-header-height) + 10px);
+        #map {
+            height: 100vh;
+            width: 100%;
         }
+
+            #map :deep(.leaflet-control) {
+                margin-top: calc(var(--mobile-header-height) + 10px);
+            }
 
         #map-container {
             display: flex;
             height: 100vh;
             z-index: 0;
-        }
-
-        #map {
-            height: 100vh;
-            width: 100%;
         }
 
         #sidebar {
@@ -754,55 +754,20 @@
                 transform: translateY(0);
             }
 
-        .sidebar-close-btn {
-            float: right;
-            font-size: 20px;
-            cursor: pointer;
+        .chart-close-btn {
             color: var(--text);
             background: none;
             border: none;
-            padding: 0;
-            margin-bottom: 10px;
+            font-size: 20px;
+            align-self: flex-end;
+            padding: 0 4px;
+            cursor: pointer;
+            flex-shrink: 0;
         }
 
-        .sidebar-header {
-            clear: both;
-            text-align: center;
-        }
-
-            .sidebar-header h1 {
-                font-size: 18px;
-                margin: 0;
+            .chart-close-btn:hover {
+                color: var(--primary);
             }
-
-        .sidebar-content {
-            margin-top: 16px;
-        }
-
-        .info-label {
-            font-weight: bold;
-            font-size: 14px;
-            margin-top: 12px;
-            margin-bottom: 6px;
-            text-align: center;
-        }
-
-        .nobold {
-            font-size: 14px;
-            margin-top: 12px;
-            margin-bottom: 6px;
-            text-align: center;
-        }
-
-        .info-button {
-            font-weight: bold;
-            font-size: 14px;
-            margin-top: 12px;
-            margin-bottom: 8px;
-            width: 100%;
-            padding: 12px 16px;
-            text-align: center;
-        }
 
         .chart1-popup {
             position: fixed;
@@ -822,6 +787,14 @@
             flex-direction: column;
         }
 
+            .chart1-popup :deep(.ag-chart-wrapper),
+            .chart2-popup :deep(.ag-chart-wrapper) {
+                padding: 0 !important;
+                margin: 0 !important;
+                flex: 1;
+                min-height: 0;
+            }
+
         .chart2-popup {
             position: fixed;
             top: var(--mobile-header-height);
@@ -840,27 +813,54 @@
             flex-direction: column;
         }
 
-        .chart-close-btn {
+        .info-button {
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 12px;
+            margin-bottom: 8px;
+            width: 100%;
+            padding: 12px 16px;
+            text-align: center;
+        }
+
+        .info-label {
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .nobold {
+            font-size: 14px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .sidebar-close-btn {
+            float: right;
+            font-size: 20px;
+            cursor: pointer;
             color: var(--text);
             background: none;
             border: none;
-            font-size: 20px;
-            align-self: flex-end;
-            padding: 0 4px;
-            cursor: pointer;
-            flex-shrink: 0;
+            padding: 0;
+            margin-bottom: 10px;
         }
 
-            .chart-close-btn:hover {
-                color: var(--primary);
+        .sidebar-content {
+            margin-top: 16px;
+        }
+
+        .sidebar-header {
+            clear: both;
+            text-align: center;
+        }
+
+            .sidebar-header h1 {
+                font-size: 18px;
+                margin: 0;
             }
-
-        .chart1-popup :deep(.ag-chart-wrapper),
-        .chart2-popup :deep(.ag-chart-wrapper) {
-            padding: 0 !important;
-            margin: 0 !important;
-            flex: 1;
-            min-height: 0;
-        }
     }
 </style>
