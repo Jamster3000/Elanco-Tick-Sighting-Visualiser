@@ -524,15 +524,32 @@
         }
 
     .chart-close-btn {
-        color: var(--text);
-        background: none;
+        position: absolute;
+        top: 12px;
+        left: 10px;
+        width: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
         border: none;
-        font-size: 18px;
+        font-size: 20px;
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        padding: 0;
+        line-height: 1;
+        z-index: 10;
     }
 
         .chart-close-btn:hover {
-            color: var(--primary);
-            cursor: pointer;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .chart-close-btn:active {
+            opacity: 0.8;
         }
 
     .chart1-hover-wrapper {
