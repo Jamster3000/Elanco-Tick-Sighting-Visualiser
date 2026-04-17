@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { onMounted, ref, nextTick } from 'vue'
+    import { onMounted, ref, nextTick, watch, inject } from 'vue'
     import L, { Marker, LeafletMouseEvent } from 'leaflet'
     import 'leaflet/dist/leaflet.css'
     import { ModuleRegistry, AllCommunityModule } from 'ag-charts-community'
@@ -14,11 +14,16 @@
     const REQUEST_THROTTLE_MS = 1000
     const isChartVisible = ref(false)
     const isChart2Visible = ref(false)
-    const tapDetected = ref(false) //REMOVE THIS !!!!!!
 
     const searchQuery = ref('');
     let map: any = null;
     let currentMarker: any = null;
+
+    const theme = inject < {
+        colourBlindMode: any
+        darkMode: any
+        themeVersion: any
+    }>('theme')
 
     function makeDraggable(selector: string) {
         nextTick(() => {
@@ -108,8 +113,8 @@
             {
                 type: 'pie',
                 angleKey: 'count',
-                calloutLabelKey: 'species',
                 sectorLabelKey: 'count',
+                calloutLabelKey: 'species',
             }
         ],
 
@@ -128,6 +133,57 @@
         legend: { position: 'right' },
         series: []
     })
+
+    watch(
+        () => theme?.themeVersion.value,
+        async () => {
+            await nextTick()
+            if (chartOptions.value.data && chartOptions.value.data.length > 0) {
+                const rootStyles = getComputedStyle(document.documentElement);
+                const bgColor = rootStyles.getPropertyValue('--bg').trim();
+                const textColor = rootStyles.getPropertyValue('--text').trim();
+
+                chartOptions.value = {
+                    ...chartOptions.value,
+                    title: {
+                        ...chartOptions.value.title,
+                        color: textColor
+                    },
+                    legend: {
+                        ...chartOptions.value.legend,
+                        item: { label: { color: textColor } }
+                    },
+                    background: { fill: bgColor }
+                }
+                scatterOptions.value = {
+                    ...scatterOptions.value,
+                    title: {
+                        ...scatterOptions.value.title,
+                        color: textColor
+                    },
+                    legend: {
+                        ...scatterOptions.value.legend,
+                        item: { label: { color: textColor } }
+                    },
+                    axes: [
+                        {
+                            type: 'category',
+                            position: 'bottom',
+                            label: { color: textColor },
+                            line: { color: textColor }
+                        },
+                        {
+                            type: 'number',
+                            position: 'left',
+                            label: { color: textColor },
+                            line: { color: textColor }
+                        }
+                    ],
+                    background: { fill: bgColor }
+                }
+            }
+        }
+    )
 
     const closeSidebar = () => {
         isSidebarOpen.value = false
@@ -192,6 +248,11 @@
         }
 
         try {
+            //get theme colours
+            const rootStyles = getComputedStyle(document.documentElement);
+            const bgColor = rootStyles.getPropertyValue('--bg').trim();
+            const text = rootStyles.getPropertyValue('--text').trim();
+
             const [tickResponse, scatterResponse] = await Promise.all([
                 fetch(`http://localhost:5021/api/TickChart/GetChartData/${city}`),
                 fetch(`http://localhost:5021/api/TickLineGraph/GetLineGraphData/${city}`)
@@ -209,8 +270,28 @@
                     : speciesList.map((s: string) => ({ species: s, count: 1 }))
 
                 chartOptions.value = {
-                    ...chartOptions.value,
-                    data: [...chartData]
+                    height: 280,
+                    data: [...chartData],
+                    series: [
+                        {
+                            type: 'pie',
+                            angleKey: 'count',
+                            sectorLabelKey: 'count',
+                            calloutLabelKey: 'species',
+                            calloutLabel: {
+                                color: text
+                            }
+                        }
+                    ],
+                    title: {
+                        text: 'Tick Species Distribution',
+                        color: text
+                    },
+                    legend: {
+                        position: 'right',
+                        item: { label: { color: text } }
+                    },
+                    background: { fill: bgColor }
                 }
 
                 tickInfo.value = { city: location, count, speciesList, latestDate }
@@ -251,14 +332,43 @@
                         xKey: 'year',
                         yKey: species,
                         title: species,
-                        marker: { enabled: true }
+                        marker: { enabled: true },
                     }))
 
                     scatterOptions.value = {
+                        height: 280,
                         title: { text: 'Tick Population Over Time' },
                         legend: { position: 'bottom' },
                         data: sharedData,
-                        series: series
+                        series: series,
+                        background: { fill: bgColor },
+                        theme: {
+                            overrides: {
+                                common: {
+                                    title: {
+                                        color: text
+                                    },
+                                    legend: {
+                                        item: {
+                                            label: {
+                                                color: text
+                                            }
+                                        }
+                                    },
+                                    axes: {
+                                        number: {
+                                            label: { color: text },
+                                            line: { color: text }
+                                        },
+                                        // ADD THIS:
+                                        category: {
+                                            label: { color: text },
+                                            line: { color: text }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -494,11 +604,26 @@
         padding: 10px;
         height: calc(100% - 20px);
         width: calc(100% - 20px);
+        background: var(--bg);
     }
 
     .chart1-popup {
         position: absolute;
         top: var(--header-height);
+        left: calc(76% - 450px);
+        width: 450px;
+        height: 330px;
+        background: var(--bg);
+        border: 1px solid lightgray;
+        border-radius: 8px;
+        z-index: 100000;
+        cursor: grab;
+        overflow: hidden;
+    }
+
+    .chart2-popup {
+        position: absolute;
+        top: calc(var(--header-height) + 340px);
         left: calc(76% - 450px);
         width: 450px;
         height: 330px;
@@ -517,20 +642,6 @@
         .chart2-hover-wrapper:hover {
             color: mediumblue;
         }
-
-    .chart2-popup {
-        position: absolute;
-        top: calc(var(--header-height) + 340px);
-        left: calc(76% - 450px);
-        width: 450px;
-        height: 330px;
-        background: var(--bg);
-        border: 1px solid lightgray;
-        border-radius: 8px;
-        z-index: 100000;
-        cursor: grab;
-        overflow: hidden;
-    }
 
     .resize-bar-right {
         position: absolute;

@@ -191,11 +191,11 @@
 <style scoped>
 
     .content {
-        height: 80vh;
+        width: 100%;
         display: flex;
         gap: 30px;
         align-items: flex-start;
-        align-items: stretch;
+        height: 70vh;
     }
 
     .statistics {
@@ -211,7 +211,7 @@
         border-radius: 12px;
         max-width: 600px;
         text-align: center;
-        height: 80%;
+        height: 85%;
     }
     
     .population p{
@@ -224,14 +224,17 @@
 
     .chart-area {
         flex: 4;
-        height: 80%;
+        flex-basis: 0;
+        min-height: 400px;
+        height: 60vh;
         border-style: solid;
         border-width: 3px;
         border-color: #3498db;
         border-radius: 15px;
-        padding-top: 80px;
-        text-decoration: underline;
-        font-size: calc(32px * var(--font-scale, 1));
+        padding: 20px;
+        background: var(--bg);
+        overflow: hidden;
+        position: relative;
     }
 
     h4 {
@@ -256,17 +259,11 @@
             overflow-y: auto;
         }
 
-        .chart-area {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-height: 60vh;
-            margin: 0 auto;
-        }
-
         #tickChart {
-            max-width: 100%;
+            position: absolute;
+            inset: 20px;
+            width: calc(100% - 40px) !important;
+            height: calc(100% - 40px) !important;
         }
 
         h1 {
@@ -294,10 +291,37 @@
         }
 
         .chart-area {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            background: var(--bg);
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .statistics {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        #tickChart {
+            animation: fadeIn 0.8s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @media (max-width: 900px) {
