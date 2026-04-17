@@ -11,7 +11,8 @@ namespace ElantroProj
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
-            builder.Services.AddOpenApi();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
             builder.Services.AddHttpClient();
 
             builder.Services.AddScoped<TickSQL>(provider =>
@@ -20,7 +21,7 @@ namespace ElantroProj
                 return new TickSQL(connectionString);
             });
 
-	        builder.Services.AddScoped<AuthSQL>(provider =>
+            builder.Services.AddScoped<AuthSQL>(provider =>
             {
                 var connectionString = builder.Configuration.GetConnectionString("TickDb");
                 return new AuthSQL(connectionString);
@@ -41,19 +42,17 @@ namespace ElantroProj
             var app = builder.Build();
 
             app.UseStaticFiles();
-
             app.UseCors("AllowFrontend");
 
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
-            //app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseAuthorization();
-
             app.MapControllers();
-
             app.Run();
         }
     }
