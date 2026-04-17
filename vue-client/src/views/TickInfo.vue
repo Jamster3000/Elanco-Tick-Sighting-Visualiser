@@ -392,12 +392,12 @@
     }
 
     @media (max-width: 900px) {
-        h1 {
+        h1.title {
             text-align: center;
-            padding-top: var(--mobile-header-height);
-            font-size: 20px;
+            padding-top: calc(var(--mobile-header-height) + 20px);
+            font-size: 28px;
             text-decoration: underline;
-            margin-bottom: 0px;
+            margin-bottom: 16px;
         }
 
         h2 {

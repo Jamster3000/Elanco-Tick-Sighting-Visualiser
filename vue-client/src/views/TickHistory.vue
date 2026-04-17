@@ -202,6 +202,7 @@
 
     .statistics {
         flex: 1;
+        flex-basis: 0;
         display: flex;
         flex-direction: column;
         gap: 30px;
@@ -214,14 +215,7 @@
         max-width: 600px;
         text-align: center;
         height: 85%;
-    }
-    
-    .population p{
-        margin-top: 6px 0;
-    }
-
-    .population p:nth-child(odd){
-        margin-top: 16px;
+        animation: fadeInUp 0.6s ease-out;
     }
 
     .chart-area {
@@ -237,16 +231,45 @@
         background: var(--bg);
         overflow: hidden;
         position: relative;
+        animation: fadeInUp 0.6s ease-out 0.3s both;
     }
 
-    .chart-area {
-        animation: fadeInUp 0.6s ease-out 0.3s both;
+    #tickChart {
+        position: absolute;
+        inset: 20px;
+        width: calc(100% - 40px) !important;
+        height: calc(100% - 40px) !important;
+        animation: fadeIn 0.8s ease-out 0.5s both;
+    }
+
+    .population p {
+        margin: 6px 0;
+    }
+
+        .population p:nth-child(odd) {
+            margin-top: 16px;
+        }
+
+    .percentage,
+    .population {
+        font-weight: bold;
+        color: var(--text);
+        padding: 10px;
+        padding-top: 30px;
     }
 
     .controls {
         align-self: flex-end;
         margin-right: 60px;
         margin-bottom: 10px;
+    }
+
+    #ticks {
+        font-size: calc(18px * var(--font-scale, 1));
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 2px solid var(--primary);
+        cursor: pointer;
     }
 
     .page-container {
@@ -258,61 +281,6 @@
         overflow-y: auto;
     }
 
-    .percentage,
-    .population {
-        font-weight: bold;
-        color: var(--text);
-        padding: 10px;
-        padding-top: 30px;
-    }
-
-        .population p {
-            margin-top: 6px 0;
-        }
-
-            .population p:nth-child(odd) {
-                margin-top: 16px;
-            }
-
-    .statistics {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        background-color: var(--primary);
-        padding: 16px;
-        border-width: 3px;
-        border-style: solid;
-        border-color: #3498db;
-        border-radius: 12px;
-        max-width: 600px;
-        text-align: center;
-        height: 85%;
-    }
-
-    .statistics {
-        animation: fadeInUp 0.6s ease-out;
-    }
-
-    #tickChart {
-        position: absolute;
-        inset: 20px;
-        width: calc(100% - 40px) !important;
-        height: calc(100% - 40px) !important;
-    }
-
-    #tickChart {
-        animation: fadeIn 0.8s ease-out 0.5s both;
-    }
-
-    #ticks {
-        font-size: calc(18px * var(--font-scale, 1));
-        padding: 8px 12px;
-        border-radius: 8px;
-        border: 2px solid var(--primary);
-        cursor: pointer;
-    }
-
     h1 {
         text-align: center;
         padding-top: 80px;
@@ -322,10 +290,6 @@
     h4 {
         text-align: center;
         font-size: calc(18px * var(--font-scale, 1));
-    }
-
-    h4 {
-        text-align: center;
     }
 
     @keyframes fadeIn {
@@ -351,71 +315,121 @@
     }
 
     @media (max-width: 900px) {
-        .chart-area {
-            width: 100%;
-            flex: 1;
-            min-height: 0;
+        .page-container {
+            padding: 12px;
+            height: auto;
+            max-height: none;
+            min-height: 100vh;
+        }
+
+        h1 {
+            padding-top: calc(var(--mobile-header-height) + 20px);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        h4 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            padding: 0 12px;
         }
 
         .controls {
             align-self: center;
             margin-right: 0;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             width: 100%;
-            max-width: 300px;
-        }
-
-        .page-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 22px;
-            height: calc(100vh - var(--mobile-header-height));
-            overflow-y: auto;
-            box-sizing: border-box;
-        }
-
-        #tickChart {
-            width: 100% !important;
-            height: 100% !important;
+            max-width: none;
         }
 
         #ticks {
-            font-size: 14px;
-            padding: 10px 12px;
-            border-radius: 6px;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 14px;
+            border-radius: 8px;
             border: 2px solid var(--primary);
-            cursor: pointer;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .content {
+            flex-direction: column;
+            gap: 16px;
+            align-items: stretch;
+            height: auto;
             width: 100%;
         }
 
-        h1 {
-            text-align: center;
-            padding-top: var(--mobile-header-height);
-            font-size: 20px;
-            text-decoration: underline;
-            margin-bottom: 8px;
-            margin-top: 20px;
+        .chart-area {
+            flex: none;
+            width: 100%;
+            height: 35vh;
+            min-height: 250px;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
         }
 
-        h4 {
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 16px;
-            padding: 0 12px;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
         #tickChart {
-            animation: none;
+            animation: fadeIn 0.8s ease-out 0.2s both;
         }
 
         .statistics {
-            animation: none;
+            flex: none;
+            width: 100%;
+            max-width: none;
+            height: auto;
+            gap: 0px;
+            padding: 20px;
+            padding-bottom: 0px;
+            padding-top: 0px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
         }
 
-        .chart-area {
+        .population {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+            .population p {
+                margin: 0;
+                font-size: 15px;
+                line-height: 1.4;
+            }
+
+                .population p:first-child {
+                    font-weight: 600;
+                    font-size: 16px;
+                    margin-bottom: 4px;
+                }
+
+                .population p:nth-child(odd) {
+                    margin-top: 0;
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+
+                .population p:nth-child(even) {
+                    font-size: 15px;
+                }
+
+        .percentage {
+            padding: 12px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+            .percentage p {
+                margin: 0;
+                font-size: 14px;
+            }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .chart-area,
+        .statistics,
+        #tickChart {
             animation: none;
         }
     }

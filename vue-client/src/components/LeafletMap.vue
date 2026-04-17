@@ -729,6 +729,60 @@
     }
 
     @media (max-width: 900px) {
+        .search-pill-container {
+            position: fixed;
+            top: calc(var(--mobile-header-height) + 10px);
+            left: 8px;
+            right: 8px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 6px 6px 6px 12px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            width: auto;
+            max-width: none;
+            cursor: grab;
+            gap: 6px;
+        }
+
+            .search-pill-container:active {
+                cursor: grabbing;
+            }
+
+        .search-pill-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            background: transparent;
+            min-width: 0;
+        }
+
+        .search-pill-btn {
+            background-color: var(--primary, #3498db);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+            .search-pill-btn:hover {
+                opacity: 0.85;
+            }
+
+            .search-pill-btn:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+
         #map {
             height: 100vh;
             width: 100%;
@@ -736,6 +790,42 @@
 
             #map :deep(.leaflet-control) {
                 margin-top: calc(var(--mobile-header-height) + 10px);
+            }
+
+            #map :deep(.leaflet-popup-content-wrapper) {
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            #map :deep(.leaflet-popup-content) {
+                font-size: 18px;
+                line-height: 1.4;
+                margin: 8px;
+                word-wrap: break-word;
+                max-width: 200px;
+            }
+
+            #map :deep(.leaflet-popup-close-button) {
+                width: 32px;
+                height: 32px;
+                font-size: 28px;
+                line-height: 32px;
+                text-align: center;
+                padding: 0;
+                right: -6px;
+                color: var(--text);
+                border-radius: 4px;
+                transition: all 0.2s ease;
+            }
+
+            #map :deep(.leaflet-popup-close-button:hover) {
+                background: var(--primary-dark);
+                transform: scale(1.1);
+            }
+
+            #map :deep(.leaflet-popup-tip) {
+                width: 12px;
+                height: 12px;
             }
 
         #map-container {
