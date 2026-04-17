@@ -1,6 +1,9 @@
 <script lang="ts">
     import { ref, onMounted, onUnmounted, watch, inject, nextTick } from "vue";
     import Chart from "chart.js/auto"; //makes all chart.js features available
+    import { SERVER_CONFIG } from '@/config/server'
+
+    const serverURL = SERVER_CONFIG.BASE_URL
 
     export default {
         name: "TickHistory",
@@ -31,7 +34,7 @@
             const fetchChartData = async () => {
                 const selected = species.value[currentIndex.value].name;
 
-                const response = await fetch(`/api/TickChart/GetYearlyData?species=${encodeURIComponent(selected)}`); //sends get request to backend for tick data for selected species
+                const response = await fetch(`${serverURL}/api/TickChart/GetYearlyData?species=${encodeURIComponent(selected)}`); //sends get request to backend for tick data for selected species
                 const data = await response.json(); //expects a json response
                 const years = data.year.map((d: any) => d.year); //takes just the year from each record
                 const counts = data.year.map((d: any) => d.count);
@@ -41,7 +44,7 @@
 
             const fetchPercentageChange = async () => {
                 const selected = species.value[currentIndex.value].name;
-                const response = await fetch(`/api/TickSightings/species/${encodeURIComponent(selected)}/percentage-change`);
+                const response = await fetch(`${serverURL}/api/TickSightings/species/${encodeURIComponent(selected)}/percentage-change`);
                 const data = await response.json();
                 percentageObject.value = data;
             };

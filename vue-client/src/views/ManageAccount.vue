@@ -3,6 +3,9 @@
     import { useRouter } from 'vue-router'
     import MessageDisplay from "@/components/Authentication/MessageDisplay.vue"
     import FormInput from "@/components/Authentication/FormInput.vue"
+    import { SERVER_CONFIG } from '@/config/server';
+
+    const serverURL = SERVER_CONFIG.BASE_URL;
 
     const router = useRouter()
     const message = ref({ type: '', text: '' })
@@ -26,7 +29,7 @@
         isLoading.value = true 
 
         try {
-            const response = await fetch('http://localhost:5021/api/auth/update-email', {
+            const response = await fetch(`${serverURL}/api/auth/update-email`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -57,7 +60,7 @@
         isLoading.value = true
 
         try {
-            const response = await fetch(`http://localhost:5021/api/auth/delete-account/${user.id}`, {
+            const response = await fetch(`${serverURL}/api/auth/delete-account/${user.id}`, {
                 method: "DELETE",
                 headers: { 'ContentType': 'application/json' }
             })

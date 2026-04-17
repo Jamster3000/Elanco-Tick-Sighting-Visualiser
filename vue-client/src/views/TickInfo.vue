@@ -1,5 +1,6 @@
 ﻿<script setup lang="ts">
     import { ref, onMounted, onUnmounted } from 'vue'
+    import { SERVER_CONFIG } from '@/config/server';
 
     interface Species {
         SPECIES_ID: number
@@ -16,14 +17,16 @@
     const isLightboxOpen = ref(false)
     const isLightboxClosing = ref(false)
 
+    const serverURL = SERVER_CONFIG.BASE_URL;
+
     const fetchSpecies = async () => {
         try {
-            const response = await fetch('http://localhost:5021/api/tick/species')
+            const response = await fetch(`${serverURL}/api/tick/species`)
             const data = await response.json()
 
             species.value = data.map((s: Species) => ({
                 ...s,
-                IMAGE: `http://localhost:5021${s.IMAGE}`
+                IMAGE: `${serverURL}${s.IMAGE}`
             }))
             console.log(species.value)
         } catch (error) {

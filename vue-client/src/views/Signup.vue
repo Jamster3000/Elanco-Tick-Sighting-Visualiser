@@ -4,6 +4,9 @@
     import MessageDisplay from "../components/Authentication/MessageDisplay.vue"
     import FormInput from "../components/Authentication/FormInput.vue"
     import PasswordInput from "../components/Authentication/PasswordInput.vue"
+    import { SERVER_CONFIG } from '@/config/server';
+
+    const serverURL = SERVER_CONFIG.BASE_URL;
 
     const router = useRouter()
     const message = ref({ type: '', text: '' })
@@ -35,7 +38,7 @@
         isLoading.value = true
 
         try {
-            const response = await fetch('http://localhost:5021/api/auth/signup', {
+            const response = await fetch(`${serverURL}/api/auth/signup`, {
                 method: 'POST',
                 headers: { 'Content-Type': "application/json" },
                 body: JSON.stringify({
