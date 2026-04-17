@@ -211,15 +211,18 @@
         border-radius: 12px;
         max-width: 600px;
         text-align: center;
-        height: 85%;
+        height: 80%;
+        font-size: calc(16px * var(--font-scale, 1))
     }
-    
-    .population p{
+
+    .population p {
         margin-top: 6px 0;
+        font-size: calc(18px * var(--font-scale, 1));
     }
 
     .population p:nth-child(odd){
         margin-top: 16px;
+        font-size: calc(14px * var(--font-scale, 1));
     }
 
     .chart-area {

@@ -48,7 +48,12 @@
         }
     }
 
+    const direction = ref("forward")
+
     const nextSpecies = () => {
+
+        direction.value = "forward";
+
         if (currentIndex.value < species.value.length - 1) {
             currentIndex.value++
         } else {
@@ -57,6 +62,9 @@
     }
 
     const previousSpecies = () => {
+
+        direction.value = "backward";
+
         if (currentIndex.value > 0) {
             currentIndex.value--
         } else {
@@ -92,29 +100,30 @@
                 </svg>
             </button>
         </div>
+        <transition :name ="direction === 'forward' ? 'slide-left' : 'slide-right'" mode="out-in">
+            <div class="card card-center" :key = "currentIndex" v-if="species.length > 0">
+                <h2>{{ species[currentIndex].SPECIES }}</h2>
+                <p>{{ species[currentIndex].LATIN }}</p>
+                <img :src="species[currentIndex].IMAGE" :alt="species[currentIndex].SPECIES" @click="showLightbox" />
 
-        <div class="card card-center" v-if="species.length > 0">
-            <h2>{{ species[currentIndex].SPECIES }}</h2>
-            <p>{{ species[currentIndex].LATIN }}</p>
-            <img :src="species[currentIndex].IMAGE" :alt="species[currentIndex].SPECIES" @click="showLightbox" />
+                <div class="info-columns">
+                    <div class="info-column">
+                        <p class="Sub-Title">Bio Characteristics</p>
+                        <p class="Information">{{ species[currentIndex].BIO_CHARACTERISTIC }}</p>
+                    </div>
+                    <div class="info-column">
+                        <p class="Sub-Title">Typical Habitat</p>
+                        <p class="Information">{{ species[currentIndex].TYPICAL_HABITAT }}</p>
+                    </div>
+                    <div class="info-column">
+                        <p class="Sub-Title">Health Risks</p>
+                        <p class="Information">{{ species[currentIndex].HEALTH_RISKS }}</p>
+                     </div>
+                </div>
 
-            <div class="info-columns">
-                <div class="info-column">
-                    <p class="Sub-Title">Bio Characteristics</p>
-                    <p class="Information">{{ species[currentIndex].BIO_CHARACTERISTIC }}</p>
-                </div>
-                <div class="info-column">
-                    <p class="Sub-Title">Typical Habitat</p>
-                    <p class="Information">{{ species[currentIndex].TYPICAL_HABITAT }}</p>
-                </div>
-                <div class="info-column">
-                    <p class="Sub-Title">Health Risks</p>
-                    <p class="Information">{{ species[currentIndex].HEALTH_RISKS }}</p>
-                </div>
-            </div>
-
-            <p class="current">{{ currentIndex + 1 }} / {{ species.length }}</p>
+        <p class="current">{{ currentIndex + 1 }} / {{ species.length }}</p>
         </div>
+        </transition>
     </div>
 
     <div class="lightbox" :class="{ 'fade-out': isLightboxClosing }" v-if="isLightboxOpen" @click="closeLightbox">
@@ -126,6 +135,55 @@
 </template>
 
 <style scoped>
+
+    .slide-left-enter-active, .slide-left-leave-active {
+        transition: all 0.3s ease;
+    }
+
+    .slide-left-enter-from{
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    .slide-left-enter-to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+
+    .slide-left-leave-from{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+
+    .slide-left-leave-to{
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .slide-right-enter-active, .slide-right-leave-active {
+        transition: all 0.3s ease;
+    }
+
+    .slide-right-enter-from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .slide-right-enter-to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+
+    .slide-right-leave-from {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+
+    .slide-right-leave-to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
     h1.title {
         text-align: center;
         padding-top: var(--top-padding);
@@ -205,6 +263,8 @@
         align-items: center;
         justify-content: center;
         transition: all 0.3s;
+        height: 20vh;
+        align-self: center;
     }
 
         .nav-arrow:hover {
