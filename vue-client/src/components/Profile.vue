@@ -223,4 +223,18 @@
             margin: 0.25rem;
         }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        .button {
+            transition: none;
+        }
+
+        a, button.item {
+            transition: none;
+        }
+
+        .list-box {
+            transition: none;
+        }
+    }
 </style>

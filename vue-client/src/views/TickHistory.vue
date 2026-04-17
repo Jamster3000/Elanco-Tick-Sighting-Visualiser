@@ -402,4 +402,18 @@
             padding: 0 12px;
         }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        #tickChart {
+            animation: none;
+        }
+
+        .statistics {
+            animation: none;
+        }
+
+        .chart-area {
+            animation: none;
+        }
+    }
 </style>

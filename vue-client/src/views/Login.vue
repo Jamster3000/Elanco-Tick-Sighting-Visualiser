@@ -228,4 +228,10 @@
             color: var(--text);
         }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        .card {
+            animation: none;
+        }
+    }
 </style>

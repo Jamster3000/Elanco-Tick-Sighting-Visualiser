@@ -330,4 +330,10 @@
             margin: 8px 0;
         }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        .card {
+            animation: none;
+        }
+    }
 </style>

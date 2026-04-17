@@ -863,4 +863,15 @@
                 margin: 0;
             }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        #sidebar {
+            transition: transform 0.15s ease;
+        }
+
+        .popup-enter-active,
+        .popup-leave-active {
+            transition: none;
+        }
+    }
 </style>

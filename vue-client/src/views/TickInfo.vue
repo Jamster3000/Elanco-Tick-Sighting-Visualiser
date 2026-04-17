@@ -567,4 +567,29 @@
             transition: color 0.3s;
         }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        .slide-left-enter-active,
+        .slide-left-leave-active,
+        .slide-right-enter-active,
+        .slide-right-leave-active {
+            transition: none !important;
+        }
+
+        .nav-arrow {
+            transition: all 0.1s;
+        }
+
+        .lightbox {
+            animation: fadeIn 0.1s ease;
+        }
+
+        .lightbox.fade-out {
+            animation: fadeOut 0.1s ease forwards;
+        }
+
+        .lightbox-close {
+            transition: color 0.1s;
+        }
+    }
 </style>
