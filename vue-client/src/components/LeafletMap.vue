@@ -405,7 +405,7 @@
         overflow-x: visible;
         transform: translateX(100%);
         transition: transform 0.65s ease;
-        z-index: 1000;
+        z-index: 999;
         box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
     }
 
@@ -505,7 +505,7 @@
         background: var(--bg);
         border: 1px solid lightgray;
         border-radius: 8px;
-        z-index: 100000;
+        z-index: 1001;
         cursor: grab;
         overflow: hidden;
     }
@@ -527,7 +527,7 @@
         background: var(--bg);
         border: 1px solid lightgray;
         border-radius: 8px;
-        z-index: 100000;
+        z-index: 1001;
         cursor: grab;
         overflow: hidden;
     }

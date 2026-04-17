@@ -354,6 +354,7 @@ function toggleDarkMode() {
 
     .accessibility-menu {
         position: relative;
+        z-index: 1100000;
     }
 
     .accessibility-btn {
@@ -384,7 +385,7 @@ function toggleDarkMode() {
         width: 300px;
         background: var(--bg);
         border: 1px solid var(--primary);
-        z-index: 1100;
+        z-index: 1100000;
     }
 
     .accessibility-header {
