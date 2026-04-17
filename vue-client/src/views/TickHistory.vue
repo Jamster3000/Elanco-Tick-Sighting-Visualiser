@@ -197,6 +197,30 @@
         height: 70vh;
     }
 
+    .statistics {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        background-color: var(--primary);
+        padding: 16px;
+        border-width: 3px;
+        border-style: solid;
+        border-color: #3498db;
+        border-radius: 12px;
+        max-width: 600px;
+        text-align: center;
+        height: 85%;
+    }
+    
+    .population p{
+        margin-top: 6px 0;
+    }
+
+    .population p:nth-child(odd){
+        margin-top: 16px;
+    }
+
     .chart-area {
         flex: 4;
         flex-basis: 0;
