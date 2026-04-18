@@ -559,13 +559,15 @@
         z-index: 1000;
         display: flex;
         align-items: center;
-        background-color: white;
+        background-color: var(--bg);
         padding: 6px 6px 6px 20px;
         border-radius: 50px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         width: 400px;
+        margin-top: 5px;
         max-width: 90%;
         cursor: grab;
+        color: var(--text);
     }
 
         .search-pill-container:active {
@@ -576,13 +578,14 @@
         flex: 1;
         border: none;
         outline: none;
-        font-size: 16px;
+        font-size: calc(14px * var(--font-scale, 1));
         background: transparent;
+        color: var(--text);
     }
 
     .search-pill-btn {
         background-color: var(--primary, #3498db);
-        color: white;
+        color: var(--bg);
         border: none;
         border-radius: 40px;
         padding: 10px 24px;

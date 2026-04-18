@@ -117,7 +117,7 @@
     }
 
     .auth-title {
-        font-size: 32px;
+        font-size: calc(32px * var(--font-scale, 1));
         font-weight: 700;
         color: var(--text);
         margin-bottom: 8px;
@@ -125,7 +125,7 @@
     }
 
     .auth-subtitle {
-        font-size: 14px;
+        font-size: calc(14px * var(--font-scale, 1));
         color: var(--text);
         text-align: center;
         margin-bottom: 12px;
@@ -141,13 +141,13 @@
     .btn-block {
         width: 100%;
         padding: 12px 24px;
-        font-size: 16px;
+        font-size: calc(16px * var(--font-scale, 1));
         font-weight: 600;
     }
 
     .auth-footer {
         text-align: center;
-        font-size: 14px;
+        font-size: calc(14px * var(--font-scale, 1));
         color: var(--text);
     }
 

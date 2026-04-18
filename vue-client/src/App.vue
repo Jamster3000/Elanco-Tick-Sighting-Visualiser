@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, watch, onMounted, onUnmounted, provide } from 'vue'
+    import { ref, onMounted, onUnmounted, provide, watch } from 'vue'
     import { useRouter } from 'vue-router'
     import Profile from '@/components/Profile.vue'
 
@@ -182,13 +182,8 @@ function toggleDarkMode() {
                         </div>
                     </Transition>
                 </div>
-
-                <button class="hamburger" @click.stop="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-label="Toggle navigation">
-                    <span :class="{ open: menuOpen }"></span>
-                    <span :class="{ open: menuOpen }"></span>
-                    <span :class="{ open: menuOpen }"></span>
-                </button>
             </div>
+                
         </nav>
         <router-view />
     </div>
@@ -200,7 +195,7 @@ function toggleDarkMode() {
         top: 0;
         left: 0;
         width: 100%;
-        box-sizing: border-box;
+        height: var(--header-height);
         background-color: var(--bg);
         backdrop-filter: blur(12px);
         border-bottom: 2px solid var(--primary-light);

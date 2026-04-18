@@ -55,7 +55,7 @@
         --message-warning-border: #6b5710;
         --message-warning-icon-background: #d4a017;
         --top-padding: 80px;
-        --header-height: 64px;
+        --header-height: 80px;
     }
 
 :root.tritanopia {
@@ -84,7 +84,7 @@
     --message-warning-border: #ffb875;
     --message-warning-icon-background: #ff8f00;
     --top-padding: 80px;
-    --header-height: 64px;
+    --header-height: 80px;
 }
 
 :root.achromatopsia {
@@ -113,7 +113,7 @@
     --message-warning-border: #d4d4d4;
     --message-warning-icon-background: #9e9e9e;
     --top-padding: 80px;
-    --header-height: 64px;
+    --header-height: 80px;
 }
 
     :root.high-contrast {
@@ -142,7 +142,7 @@
         --message-warning-border: #ffeeba;
         --message-warning-icon-background: #ffc107;
         --top-padding: 80px;
-        --header-height: 64px;
+        --header-height: 80px;
     }
 
 * {

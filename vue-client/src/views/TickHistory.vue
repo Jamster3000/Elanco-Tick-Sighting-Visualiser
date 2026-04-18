@@ -68,8 +68,8 @@
                                 {
                                     label: label,
                                     data: counts,
-                                    borderColor: "#1529d6",
-                                    backgroundColor: "rgba(76, 175, 80, 0.2)",
+                                    borderColor: primary,
+                                    backgroundColor: primary,
                                     tension: 0.3
                                 }
                             ]
@@ -84,11 +84,12 @@
                                 x: { title: { display: true, text: "Year", color: text }, grid: { color: text }, ticks: { color: text } },
                                 y: { title: { display: true, text: "Sightings", color: text }, grid: { color: text }, ticks: { color: text } }
                             },
-                            plugins: { legend: { labels: { color: text } } }
+                                plugins: { legend: { labels: { color: text } } 
+                            }
                         }
                     });
-                }
-            };
+                }        
+        };
 
             onUnmounted(() => {
                 if (chartInstance) {
@@ -102,26 +103,24 @@
                 await fetchPercentageChange();
             });
 
+    
+        //watches theme from app.vue
+        watch(
+            () => theme?.themeVersion.value,
+            async () => {
+                await nextTick()
+                if (chartInstance) {
+                    const rootStyle = getComputedStyle(document.documentElement)
+                    const primary = rootStyle.getPropertyValue('--primary').trim()
+                    const text = rootStyle.getPropertyValue('--text').trim()
 
-            //watches theme from app.vue
-            watch(
-                () => theme.themeVersion.value,
-                async () => {
-                    await nextTick()
-                    if (chartInstance) {
-                        const rootStyle = getComputedStyle(document.documentElement)
-                        const primary = rootStyle.getPropertyValue('--primary').trim()
-                        const text = rootStyle.getPropertyValue('--text').trim()
-
-                        chartInstance.data.datasets[0].borderColor = primary
-                        chartInstance.data.datasets[0].backgroundColor = primary
-                        chartInstance.options.scales.x.grid.color = text
-                        chartInstance.options.scales.y.grid.color = text
-                        chartInstance.options.scales.x.title.color = text
-                        chartInstance.options.scales.y.title.color = text
-                        chartInstance.options.scales.x.ticks.color = text
-                        chartInstance.options.scales.y.ticks.color = text
-                        chartInstance.options.plugins.legend.labels.color = text
+                    chartInstance.data.datasets[0].borderColor = primary
+                    chartInstance.data.datasets[0].backgroundColor = primary
+                    chartInstance.options!.scales!.x!.grid!.color = text
+                    chartInstance.options!.scales!.y!.grid!.color = text
+                    chartInstance.options!.scales!.x!.ticks!.color = text
+                    chartInstance.options!.scales!.y!.ticks!.color = text
+                    chartInstance.options!.plugins!.legend!.labels!.color = text
 
                         chartInstance.update()
                     }
@@ -202,33 +201,49 @@
         flex: 1;
         display: flex;
         flex-direction: column;
+        font-size: calc(16px * var(--font-scale, 1));
         gap: 30px;
         background-color: var(--primary);
         padding: 16px;
         border-width: 3px;
         border-style: solid;
-        border-color: #3498db;
+        border-color: var(--primary);
         border-radius: 12px;
         max-width: 600px;
         text-align: center;
         height: 80%;
     }
-    
-    .population p{
+
+    .population p {
         margin-top: 6px 0;
     }
 
-    .population p:nth-child(odd){
-        margin-top: 16px;
-    }
+        .population p:nth-child(odd) {
+            margin-top: 16px;
+        }
 
     .chart-area {
         flex: 4;
         height: 80%;
         border-style: solid;
         border-width: 3px;
-        border-color: #3498db;
+        border-color: var(--primary);
         border-radius: 15px;
+        padding-top: 80px;
+        text-decoration: underline;
+        font-size: calc(32px * var(--font-scale, 1));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-height: 60vh;
+        margin: 0 auto;
+        gap: 30px;
+        background: var(--bg);
+    }
+
+    h1 {
+        text-align: center;
         padding-top: 80px;
         text-decoration: underline;
         font-size: calc(32px * var(--font-scale, 1));
@@ -239,12 +254,12 @@
         font-size: calc(18px * var(--font-scale, 1));
     }
 
-        .percentage, .population {
-            font-weight: bold;
-            color: var(--text);
-            padding: 10px;
-            padding-top: 30px;
-        }
+    .percentage, .population {
+        font-weight: bold;
+        color: var(--text);
+        padding: 10px;
+        padding-top: 30px;
+    }
 
 
         .page-container {
@@ -256,103 +271,21 @@
             overflow-y: auto;
         }
 
-        .chart-area {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-height: 60vh;
-            margin: 0 auto;
-        }
+    #tickChart {
+        max-width: 100%;
+    }
 
-        #tickChart {
-            max-width: 100%;
-        }
+    .controls {
+        align-self: flex-end;
+        margin-right: 60px;
+        margin-bottom: 10px;
+    }
 
-        h1 {
-            text-align: center;
-            padding-top: 80px;
-            text-decoration: underline;
-        }
-
-        h4 {
-            text-align: center;
-        }
-
-        .controls {
-            align-self: flex-end;
-            margin-right: 60px;
-            margin-bottom: 10px;
-        }
-
-        #ticks {
-            font-size: calc(18px * var(--font-scale, 1));
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 2px solid var(--primary);
-            cursor: pointer;
-        }
-
-        .chart-area {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            background: var(--bg);
-        }
-
-        @media (max-width: 900px) {
-            .page-container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding: 22px;
-                height: calc(100vh - var(--mobile-header-height));
-                overflow-y: auto;
-                box-sizing: border-box;
-            }
-
-            h1 {
-                text-align: center;
-                padding-top: var(--mobile-header-height);
-                font-size: 20px;
-                text-decoration: underline;
-                margin-bottom: 8px;
-                margin-top: 20px;
-            }
-
-            h4 {
-                text-align: center;
-                font-size: 14px;
-                margin-bottom: 16px;
-                padding: 0 12px;
-            }
-
-            .controls {
-                align-self: center;
-                margin-right: 0;
-                margin-bottom: 12px;
-                width: 100%;
-                max-width: 300px;
-            }
-
-            #ticks {
-                font-size: 14px;
-                padding: 10px 12px;
-                border-radius: 6px;
-                border: 2px solid var(--primary);
-                cursor: pointer;
-                width: 100%;
-            }
-
-            .chart-area {
-                width: 100%;
-                flex: 1;
-                min-height: 0;
-            }
-
-            #tickChart {
-                width: 100% !important;
-                height: 100% !important;
-            }
-        }
+    #ticks {
+        font-size: calc(18px * var(--font-scale, 1));
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 2px solid var(--primary);
+        cursor: pointer;
+    }
 </style>
