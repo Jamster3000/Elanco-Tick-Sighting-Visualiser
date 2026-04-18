@@ -3,6 +3,9 @@
     import { useRouter } from 'vue-router'
     import MessageDisplay from "@/components/Authentication/MessageDisplay.vue"
     import FormInput from "@/components/Authentication/FormInput.vue"
+    import { SERVER_CONFIG } from '@/config/server';
+
+    const serverURL = SERVER_CONFIG.BASE_URL;
 
     const router = useRouter()
     const message = ref({ type: '', text: '' })
@@ -26,7 +29,7 @@
         isLoading.value = true 
 
         try {
-            const response = await fetch('http://localhost:5021/api/auth/update-email', {
+            const response = await fetch(`${serverURL}/api/auth/update-email`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -57,7 +60,7 @@
         isLoading.value = true
 
         try {
-            const response = await fetch(`http://localhost:5021/api/auth/delete-account/${user.id}`, {
+            const response = await fetch(`${serverURL}/api/auth/delete-account/${user.id}`, {
                 method: "DELETE",
                 headers: { 'ContentType': 'application/json' }
             })
@@ -260,7 +263,7 @@
         }
 
         .title {
-            font-size: 24px;
+            font-size: calc(24px * var(--font-scale, 1));
             font-weight: 700;
             color: var(--text);
             margin-bottom: 12px;
@@ -272,7 +275,7 @@
         }
 
         .section-title {
-            font-size: 20px;
+            font-size: calc(20px * var(--font-scale, 1));
             font-weight: bold;
             color: var(--text);
             margin-bottom: 12px;
@@ -290,7 +293,7 @@
         }
 
         .warning-text {
-            font-size: 15px;
+            font-size: calc(15px * var(--font-scale, 1));
             color: var(--message-error-text);
             margin-bottom: 12px;
             text-align: center;
@@ -304,7 +307,7 @@
         }
 
         .confirm-text {
-            font-size: 12px;
+            font-size: calc(12px * var(--font-scale, 1));
             color: var(--text);
             margin-bottom: 12px;
             font-weight: 500;
@@ -319,7 +322,7 @@
         .btn-block {
             width: 100%;
             padding: 12px 16px;
-            font-size: 15px;
+            font-size: calc(15px * var(--font-scale, 1));
         }
 
         .divider {
@@ -328,6 +331,12 @@
             background: var(--text);
             opacity: 0.1;
             margin: 8px 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .card {
+            animation: none;
         }
     }
 </style>

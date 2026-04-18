@@ -447,6 +447,7 @@
         justify-content: space-between;
         background: var(--primary);
         padding: 8px 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         color: var(--bg);
     }
 
@@ -487,7 +488,7 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: calc(28px * var(--font-scale, 1));
         }
 
         .hamburger {
@@ -542,6 +543,8 @@
             pointer-events: none;
             transition: opacity 0.3s ease;
             display: flex;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 0 0 12px 12px;
         }
 
             .links.open {
@@ -552,7 +555,7 @@
             .links a {
                 width: 100%;
                 padding: 14px 20px;
-                font-size: 16px;
+                font-size: calc(16px * var(--font-scale, 1));
                 font-weight: 500;
                 border-radius: 0;
                 border-bottom: 1px solid rgba(52, 152, 219, 0.08);
@@ -580,8 +583,69 @@
                 width: 100%;
                 text-align: center;
                 padding: 12px 16px !important;
-                font-size: 14px !important;
+                font-size: calc(14px * var(--font-scale, 1)) !important;
                 border-radius: 6px;
             }
+
+        .accessibility-panel {
+            width: 100%;
+            right: 0;
+            top: var(--mobile-header-height);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 0 0 12px 12px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .accessibility-header {
+            padding: 16px;
+            justify-content: center;
+            position: relative;
+        }
+
+        .accessibility-header span {
+            font-size: calc(26px * var(--font-scale, 1));
+        }
+
+        .btn-close {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .accessibility-body {
+            gap: 20px;
+        }
+
+        .control-group {
+            gap: 20px;
+            padding-right: 10px;
+        }
+
+        .control label {
+            font-size: calc(22px * var(--font-scale, 1));
+        }
+
+        .control select,
+        .control input[type="checkbox"] {
+            height: 42px;
+        }
+
+        .control select {
+            font-size: calc(20px * var(--font-scale, 1));
+        }
+
+        .control input[type=checkbox] {
+            width: 40px;
+        }
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+        .popup-slide-enter-active,
+        .popup-slide-leave-active {
+            transition: none !important;
+        }
     }
 </style>

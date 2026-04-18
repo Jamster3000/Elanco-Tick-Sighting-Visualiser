@@ -265,11 +265,11 @@
         }
 
         .form-label {
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
         }
 
         .form-input {
-            font-size: 16px;
+            font-size: calc(16px * var(--font-scale, 1));
             padding: 12px 44px 12px 16px;
         }
 
@@ -278,7 +278,7 @@
         }
 
         .strength-label {
-            font-size: 12px;
+            font-size: calc(12px * var(--font-scale, 1));
             margin-bottom: 4px;
         }
 

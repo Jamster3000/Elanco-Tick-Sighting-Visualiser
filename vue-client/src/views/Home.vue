@@ -101,7 +101,7 @@
         width: 100%;
         padding: 14px 16px;
         box-sizing: border-box;
-        font-size: 16px;
+        font-size: calc(16px * var(--font-scale, 1));
         border-radius: 6px;
       }
 
@@ -120,7 +120,7 @@
       }
 
       .hero-subtitle {
-        font-size: 16px;
+        font-size: calc(16px * var(--font-scale, 1));
         margin-bottom: 24px;
       }
 
@@ -139,12 +139,12 @@
       .map-section .btn {
         width: 100%;
         padding: 14px 16px;
-        font-size: 16px;
+        font-size: calc(16px * var(--font-scale, 1));
         border-radius: 6px;
       }
 
       .map-section-title {
-        font-size: 24px;
+        font-size: calc(24px * var(--font-scale, 1));
       }
     }
 </style>

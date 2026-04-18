@@ -4,6 +4,9 @@
     import MessageDisplay from "../components/Authentication/MessageDisplay.vue"
     import FormInput from "../components/Authentication/FormInput.vue"
     import PasswordInput from "../components/Authentication/PasswordInput.vue"
+    import { SERVER_CONFIG } from '@/config/server';
+
+    const serverURL = SERVER_CONFIG.BASE_URL;
 
     const router = useRouter()
     const message = ref({ type: '', text: '' })
@@ -23,7 +26,7 @@
         isLoading.value = true
 
         try {
-            const response = await fetch('http://localhost:5021/api/auth/login', {
+            const response = await fetch(`${serverURL}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': "application/json" },
                 body: JSON.stringify({
@@ -194,7 +197,7 @@
         }
 
         .auth-title {
-            font-size: 24px;
+            font-size: calc(24px * var(--font-scale, 1));
             font-weight: 700;
             color: var(--text);
             margin-bottom: 8px;
@@ -202,7 +205,7 @@
         }
 
         .auth-subtitle {
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             color: var(--text);
             text-align: center;
             margin-bottom: 12px;
@@ -218,14 +221,20 @@
         .btn-block {
             width: 100%;
             padding: 12px 16px;
-            font-size: 16px;
+            font-size: calc(16px * var(--font-scale, 1));
             font-weight: 600;
         }
 
         .auth-footer {
             text-align: center;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             color: var(--text);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .card {
+            animation: none;
         }
     }
 </style>
