@@ -259,7 +259,7 @@
     .percentage,
     .population {
         font-weight: bold;
-        color: var(--text);
+        color: var(--bg);
         padding: 10px;
         padding-top: 30px;
     }
@@ -325,7 +325,7 @@
     h4 {
         text-align: center;
     }
-        }
+        
     @keyframes fadeIn {
         from {
             opacity: 0;
@@ -403,5 +403,5 @@
             padding: 0 12px;
         }
     }
-        }
+        
 </style>
