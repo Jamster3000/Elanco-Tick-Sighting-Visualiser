@@ -393,7 +393,8 @@ function toggleDarkMode() {
         justify-content: space-between;
         background: var(--primary);
         padding: 8px 12px;
-        color: #fff;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        color: var(--bg);
     }
 
     .accessibility-body {
@@ -488,6 +489,8 @@ function toggleDarkMode() {
             pointer-events: none;
             transition: opacity 0.3s ease;
             display: flex;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 0 0 12px 12px;
         }
 
             .links.open {
@@ -529,6 +532,59 @@ function toggleDarkMode() {
                 font-size: 14px !important;
                 border-radius: 6px;
             }
+
+        .accessibility-panel {
+            width: 100%;
+            right: 0;
+            top: var(--mobile-header-height);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 0 0 12px 12px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .accessibility-header {
+            padding: 16px;
+            justify-content: center;
+            position: relative;
+        }
+
+        .accessibility-header span {
+            font-size: 26px;
+        }
+
+        .btn-close {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .accessibility-body {
+            gap: 20px;
+        }
+
+        .control-group {
+            gap: 20px;
+            padding-right: 10px;
+        }
+
+        .control label {
+            font-size: 22px;
+        }
+
+        .control select,
+        .control input[type="checkbox"] {
+            height: 42px;
+        }
+
+        .control select {
+            font-size: 20px;
+        }
+
+        .control input[type=checkbox] {
+            width: 40px;
+        }
     }
 
 

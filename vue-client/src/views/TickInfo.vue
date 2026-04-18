@@ -361,7 +361,7 @@
         right: 0;
         background: none;
         border: none;
-        color: var(--bg));
+        color: var(--bg);
         font-size: calc(40px * var(--font-scale, 1));
         cursor: pointer;
         transition: color 0.3s;
