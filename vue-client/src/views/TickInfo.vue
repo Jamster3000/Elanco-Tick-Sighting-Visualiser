@@ -526,7 +526,7 @@
 
         .current {
             text-align: center;
-            font-size: calc(14px * var(--font-scale, 1)0;
+            font-size: calc(14px * var(--font-scale, 1));
             margin-top: 8px;
             color: var(--text);
         }
