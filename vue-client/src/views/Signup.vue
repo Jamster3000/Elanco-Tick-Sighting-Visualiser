@@ -237,6 +237,7 @@
             flex-direction: column;
             gap: 16px;
             margin-bottom: 20px;
+            color: var(--bg);
         }
 
         .btn-block {

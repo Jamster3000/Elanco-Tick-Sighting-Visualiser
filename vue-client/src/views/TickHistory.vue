@@ -81,15 +81,16 @@
                                 duration: 750
                             },
                             scales: { //labels the axes, and colours the grid
-                                x: { title: { display: true, text: "Year", color: text }, grid: { color: text }, ticks: { color: text } },
-                                y: { title: { display: true, text: "Sightings", color: text }, grid: { color: text }, ticks: { color: text } }
+                                x: { title: { display: true, text: "Year", color: "#ababab" }, grid: { color: text }, ticks: { color: text } },
+                                y: { title: { display: true, text: "Sightings", color: "#ababab" }, grid: { color: text }, ticks: { color: text } }
                             },
-                                plugins: { legend: { labels: { color: text } } 
+                            plugins: {
+                                legend: { labels: { color: text } }
                             }
                         }
                     });
-                }        
-        };
+                }
+            };
 
             onUnmounted(() => {
                 if (chartInstance) {
@@ -103,24 +104,24 @@
                 await fetchPercentageChange();
             });
 
-    
-        //watches theme from app.vue
-        watch(
-            () => theme?.themeVersion.value,
-            async () => {
-                await nextTick()
-                if (chartInstance) {
-                    const rootStyle = getComputedStyle(document.documentElement)
-                    const primary = rootStyle.getPropertyValue('--primary').trim()
-                    const text = rootStyle.getPropertyValue('--text').trim()
 
-                    chartInstance.data.datasets[0].borderColor = primary
-                    chartInstance.data.datasets[0].backgroundColor = primary
-                    chartInstance.options!.scales!.x!.grid!.color = text
-                    chartInstance.options!.scales!.y!.grid!.color = text
-                    chartInstance.options!.scales!.x!.ticks!.color = text
-                    chartInstance.options!.scales!.y!.ticks!.color = text
-                    chartInstance.options!.plugins!.legend!.labels!.color = text
+            //watches theme from app.vue
+            watch(
+                () => theme?.themeVersion.value,
+                async () => {
+                    await nextTick()
+                    if (chartInstance) {
+                        const rootStyle = getComputedStyle(document.documentElement)
+                        const primary = rootStyle.getPropertyValue('--primary').trim()
+                        const text = rootStyle.getPropertyValue('--text').trim()
+
+                        chartInstance.data.datasets[0].borderColor = primary
+                        chartInstance.data.datasets[0].backgroundColor = primary
+                        chartInstance.options!.scales!.x!.grid!.color = text
+                        chartInstance.options!.scales!.y!.grid!.color = text
+                        chartInstance.options!.scales!.x!.ticks!.color = text
+                        chartInstance.options!.scales!.y!.ticks!.color = text
+                        chartInstance.options!.plugins!.legend!.labels!.color = text
 
                         chartInstance.update()
                     }
@@ -256,7 +257,7 @@
 
     .percentage, .population {
         font-weight: bold;
-        color: var(--text);
+        color: var(--bg);
         padding: 10px;
         padding-top: 30px;
     }
