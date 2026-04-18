@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, watch, onMounted, onUnmounted, provide } from 'vue'
+    import { ref, onMounted, onUnmounted, provide, watch } from 'vue'
     import { useRouter } from 'vue-router'
     import Profile from '@/components/Profile.vue'
 
@@ -12,7 +12,7 @@
         fullName.value = userData ? JSON.parse(userData).fullName : null
     }
 
-    const closeMenu = () => {
+    const closeMenu = (event: MouseEvent) => {
         const accessibilityMenu = document.querySelector(".accessibility-menu")
         if (accessibilityMenu && accessibilityMenu.contains(event.target as Node)) {
             return //don't hide the menu/popup/panel when clicked inside of
@@ -37,10 +37,11 @@
         menuOpen.value = false
     })
 
-    const fontStyle = ref('Sans-Serif')
-    const fontSize = ref('medium')
-    const colourBlindMode = ref('none')
-    const darkMode = ref(false)
+    const fontStyle = ref(loadSettings('fontStyle', 'Sans-Serif'))
+    const fontSize = ref(loadSettings('fontSize', 'medium'))
+    const colourBlindMode = ref(loadSettings('colourBlindMode', 'none'))
+    const darkMode = ref(loadSettings('darkMode', false))
+
     const accessibilityOpen = ref(false)
     const themeVersion = ref(0) //increments every time theme is changed - had problems with returning chart grid and axis in tickhistory to default styling when dark mode filters are removed, so this sidesteps that, giving the watcher something that is definitely different every time
 
@@ -57,48 +58,105 @@
         'Dyslexia-friendly': 'OpenDyslexic, sans-serif'
     }
 
-    const fontSizes: Record<string, string> = { //saves font sizes as multipliers to be applied to a base font size in css
-        small: '0.8',
-        medium: '1',
-        large: '1.4'
+    const fontSizes: Record<string, number> = { //saves font sizes as multipliers to be applied to a base font size in css
+        small: 0.8,
+        medium: 1,
+        large: 1.4
     }
 
+    const fontFamilyMultipliers: Record<string, number> = { //unique multipliers to allow fonts with slightly different sized to be scaled porperly
+        'Sans-Serif': 1,
+        'Serif': 1.12,
+        'Dyslexia-friendly': 0.92
+    }
+
+    
     function changeFontStyle() {
+        applyCombinedFontSettings()
+    }
+    function changeFontSize() {
+        applyCombinedFontSettings()
+    }
+    function applyCombinedFontSettings() {
+        const baseMultipliers = fontSizes[fontSize.value]
+        const familyMultiplier = fontFamilyMultipliers[fontStyle.value]
+
+        const finalScale = baseMultipliers * familyMultiplier
+
+        document.documentElement.style.setProperty('--font-scale', finalScale.toString())
         document.body.style.fontFamily = fontFamilies[fontStyle.value]
     }
 
-    function changeFontSize() {
-        document.documentElement.style.setProperty('--font-scale', fontSizes[fontSize.value])
-    }
 
-    function changeColourBlindMode() { //includes relevant colour blindness filters - doesnt have deuteranopia or protanopia as these arent as relevant given the blue colour scheme
+    function changeTheme() {
         const root = document.documentElement
-        const modes = ["none", "tritanopia", "achromatopsia"]
+        const modes = ["none", "tritanopia", "achromatopsia", "dark-mode", "dark-tritanopia", "dark-achromatopsia"]
 
-        modes.forEach(mode => root.classList.remove(mode))
+        if (!darkMode.value && colourBlindMode.value == "none") {
+            modes.forEach(mode => root.classList.remove(mode))
+            root.classList.add()
+        }
+        else if (darkMode.value && colourBlindMode.value == "none") {
+            modes.forEach(mode => root.classList.remove(mode))
+            root.classList.add('dark-mode')
+        }
+        else if (!darkMode.value && colourBlindMode.value !== "none") {
+            modes.forEach(mode => root.classList.remove(mode))
+            switch (colourBlindMode.value) {
+                case "tritanopia":
+                    root.classList.add('tritanopia')
+                    break
+                case "achromatopsia":
+                    root.classList.add('achromatopsia')
+                    break
+            }
+        }
+        else if (darkMode.value && colourBlindMode.value !== "none") {
+            modes.forEach(mode => root.classList.remove(mode))
 
-    if (colourBlindMode.value !== "none") {
-        root.classList.add(colourBlindMode.value)
-        root.classList.remove('dark-mode')
-        darkMode.value = false
+            switch (colourBlindMode.value) {
+                case "tritanopia":
+                    root.classList.add('dark-tritanopia')
+                    break
+                case "achromatopsia":
+                    root.classList.add('dark-achromatopsia')
+                    break
+            }
+        }
+        themeVersion.value++
     }
-    themeVersion.value++
-}
 
-function toggleDarkMode() {
-  const root = document.documentElement
-  if (darkMode.value) {
-    root.classList.add('dark-mode')
+    function loadSettings<T>(key: string, fallback: T): T {
+        const storedSettings = localStorage.getItem(key)
+        return storedSettings ? JSON.parse(storedSettings) as T : fallback
+    }
 
-    colourBlindMode.value = 'none' //resets colour blind mode when dark mode is enabled
-    root.classList.remove('tritanopia')
-    root.classList.remove('achromatopsia')
-  } else {
-    root.classList.remove('dark-mode')
-  }
-  themeVersion.value++
-  }
-  </script>
+    watch(fontStyle, (val) => {
+        localStorage.setItem('fontStyle', JSON.stringify(val))
+        applyCombinedFontSettings()
+    })
+
+    watch(fontSize, (val) => {
+        localStorage.setItem('fontSize', JSON.stringify(val))
+        applyCombinedFontSettings()
+    })
+
+    watch(colourBlindMode, (val) => {
+        localStorage.setItem('colourBlindMode', JSON.stringify(val))
+        changeTheme()
+    })
+
+    watch(darkMode, (val) => {
+        localStorage.setItem('darkMode', JSON.stringify(val))
+        changeTheme()
+    })
+
+    onMounted(() => {
+        applyCombinedFontSettings()
+        changeTheme()
+    })
+
+</script>
 
 <template>
     <div>
@@ -162,7 +220,7 @@ function toggleDarkMode() {
 
                                     <div class="control">
                                         <label for="colour-blind-mode">Colour Blind Mode:</label>
-                                        <select id="colour-blind-mode" v-model="colourBlindMode" @change="changeColourBlindMode">
+                                        <select id="colour-blind-mode" v-model="colourBlindMode" @change="changeTheme">
                                             <option value="tritanopia">Tritanopia</option>
                                             <option value="achromatopsia">Achromatopsia</option>
                                             <option value="none">None</option>
@@ -175,20 +233,15 @@ function toggleDarkMode() {
                                 <div class="control-group">
                                     <div class="control">
                                         <label for="dark-mode">Dark Mode:</label>
-                                        <input type="checkbox" id="dark-mode" v-model="darkMode" @change="toggleDarkMode">
+                                        <input type="checkbox" id="dark-mode" v-model="darkMode" @change="changeTheme">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </Transition>
                 </div>
-
-                <button class="hamburger" @click.stop="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-label="Toggle navigation">
-                    <span :class="{ open: menuOpen }"></span>
-                    <span :class="{ open: menuOpen }"></span>
-                    <span :class="{ open: menuOpen }"></span>
-                </button>
             </div>
+                
         </nav>
         <router-view />
     </div>
@@ -200,7 +253,7 @@ function toggleDarkMode() {
         top: 0;
         left: 0;
         width: 100%;
-        box-sizing: border-box;
+        height: var(--header-height);
         background-color: var(--bg);
         backdrop-filter: blur(12px);
         border-bottom: 2px solid var(--primary-light);
@@ -285,7 +338,7 @@ function toggleDarkMode() {
     .btn-close {
         background: transparent;
         border: none;
-        color: #fff;
+        color: var(--bg);
         font-size: 20px;
         padding: 4px 8px;
         cursor: pointer;
@@ -354,6 +407,7 @@ function toggleDarkMode() {
 
     .accessibility-menu {
         position: relative;
+        z-index: 1100000;
     }
 
     .accessibility-btn {
@@ -362,7 +416,7 @@ function toggleDarkMode() {
         font-weight: bold;
         border: 1px solid var(--primary);
         background: var(--primary);
-        color: #fff;
+        color: var(--bg);
         border-radius: 4px;
         padding: 8px;
         display: flex;
@@ -375,6 +429,7 @@ function toggleDarkMode() {
         .accessibility-btn:hover {
             background-color: var(--primary-dark);
             border-color: var(--primary-dark);
+            color: var(--bg);
         }
 
     .accessibility-panel {
@@ -384,7 +439,7 @@ function toggleDarkMode() {
         width: 300px;
         background: var(--bg);
         border: 1px solid var(--primary);
-        z-index: 1100;
+        z-index: 1100000;
     }
 
     .accessibility-header {

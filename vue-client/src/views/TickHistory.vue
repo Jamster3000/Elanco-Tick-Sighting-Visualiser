@@ -71,8 +71,8 @@
                                 {
                                     label: label,
                                     data: counts,
-                                    borderColor: "#1529d6",
-                                    backgroundColor: "rgba(76, 175, 80, 0.2)",
+                                    borderColor: primary,
+                                    backgroundColor: primary,
                                     tension: 0.3
                                 }
                             ]
@@ -84,10 +84,12 @@
                                 duration: 750
                             },
                             scales: { //labels the axes, and colours the grid
-                                x: { title: { display: true, text: "Year", color: text }, grid: { color: text }, ticks: { color: text } },
-                                y: { title: { display: true, text: "Sightings", color: text }, grid: { color: text }, ticks: { color: text } }
+                                x: { title: { display: true, text: "Year", color: "#ababab" }, grid: { color: text }, ticks: { color: text } },
+                                y: { title: { display: true, text: "Sightings", color: "#ababab" }, grid: { color: text }, ticks: { color: text } }
                             },
-                            plugins: { legend: { labels: { color: text } } }
+                            plugins: {
+                                legend: { labels: { color: text } }
+                            }
                         }
                     });
                 }
@@ -108,7 +110,7 @@
 
             //watches theme from app.vue
             watch(
-                () => theme.themeVersion.value,
+                () => theme?.themeVersion.value,
                 async () => {
                     await nextTick()
                     if (chartInstance) {
@@ -118,13 +120,11 @@
 
                         chartInstance.data.datasets[0].borderColor = primary
                         chartInstance.data.datasets[0].backgroundColor = primary
-                        chartInstance.options.scales.x.grid.color = text
-                        chartInstance.options.scales.y.grid.color = text
-                        chartInstance.options.scales.x.title.color = text
-                        chartInstance.options.scales.y.title.color = text
-                        chartInstance.options.scales.x.ticks.color = text
-                        chartInstance.options.scales.y.ticks.color = text
-                        chartInstance.options.plugins.legend.labels.color = text
+                        chartInstance.options!.scales!.x!.grid!.color = text
+                        chartInstance.options!.scales!.y!.grid!.color = text
+                        chartInstance.options!.scales!.x!.ticks!.color = text
+                        chartInstance.options!.scales!.y!.ticks!.color = text
+                        chartInstance.options!.plugins!.legend!.labels!.color = text
 
                         chartInstance.update()
                     }
@@ -205,12 +205,13 @@
         flex-basis: 0;
         display: flex;
         flex-direction: column;
+        font-size: calc(16px * var(--font-scale, 1));
         gap: 30px;
         background-color: var(--primary);
         padding: 16px;
         border-width: 3px;
         border-style: solid;
-        border-color: #3498db;
+        border-color: var(--primary);
         border-radius: 12px;
         max-width: 600px;
         text-align: center;
@@ -225,7 +226,7 @@
         height: 60vh;
         border-style: solid;
         border-width: 3px;
-        border-color: #3498db;
+        border-color: var(--primary);
         border-radius: 15px;
         padding: 20px;
         background: var(--bg);
@@ -253,7 +254,7 @@
     .percentage,
     .population {
         font-weight: bold;
-        color: var(--text);
+        color: var(--bg);
         padding: 10px;
         padding-top: 30px;
     }
@@ -433,4 +434,5 @@
             animation: none;
         }
     }
+        
 </style>

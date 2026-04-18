@@ -515,7 +515,7 @@
         overflow-x: visible;
         transform: translateX(100%);
         transition: transform 0.65s ease;
-        z-index: 1000;
+        z-index: 999;
         box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
     }
 
@@ -569,7 +569,7 @@
         background: var(--bg);
         border: 1px solid lightgray;
         border-radius: 8px;
-        z-index: 100000;
+        z-index: 1001;
         cursor: grab;
         overflow: hidden;
     }
@@ -591,7 +591,7 @@
         background: var(--bg);
         border: 1px solid lightgray;
         border-radius: 8px;
-        z-index: 100000;
+        z-index: 1001;
         cursor: grab;
         overflow: hidden;
     }
@@ -683,13 +683,15 @@
         z-index: 1000;
         display: flex;
         align-items: center;
-        background-color: white;
+        background-color: var(--bg);
         padding: 6px 6px 6px 20px;
         border-radius: 50px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         width: 400px;
+        margin-top: 5px;
         max-width: 90%;
         cursor: grab;
+        color: var(--text);
     }
 
         .search-pill-container:active {
@@ -700,8 +702,9 @@
         flex: 1;
         border: none;
         outline: none;
-        font-size: 16px;
+        font-size: calc(14px * var(--font-scale, 1));
         background: transparent;
+        color: var(--text);
     }
 
     .sidebar-close-btn {
