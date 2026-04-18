@@ -524,15 +524,32 @@
         }
 
     .chart-close-btn {
-        color: var(--text);
-        background: none;
+        position: absolute;
+        top: 12px;
+        left: 10px;
+        width: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
         border: none;
-        font-size: 18px;
+        font-size: 20px;
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        padding: 0;
+        line-height: 1;
+        z-index: 10;
     }
 
         .chart-close-btn:hover {
-            color: var(--primary);
-            cursor: pointer;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .chart-close-btn:active {
+            opacity: 0.8;
         }
 
     .chart1-hover-wrapper {
@@ -666,13 +683,15 @@
         z-index: 1000;
         display: flex;
         align-items: center;
-        background-color: white;
+        background-color: var(--bg);
         padding: 6px 6px 6px 20px;
         border-radius: 50px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         width: 400px;
+        margin-top: 5px;
         max-width: 90%;
         cursor: grab;
+        color: var(--text);
     }
 
         .search-pill-container:active {
@@ -683,8 +702,9 @@
         flex: 1;
         border: none;
         outline: none;
-        font-size: 16px;
+        font-size: calc(14px * var(--font-scale, 1));
         background: transparent;
+        color: var(--text);
     }
 
     .sidebar-close-btn {
@@ -712,6 +732,60 @@
     }
 
     @media (max-width: 900px) {
+        .search-pill-container {
+            position: fixed;
+            top: calc(var(--mobile-header-height) + 10px);
+            left: 8px;
+            right: 8px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 6px 6px 6px 12px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            width: auto;
+            max-width: none;
+            cursor: grab;
+            gap: 6px;
+        }
+
+            .search-pill-container:active {
+                cursor: grabbing;
+            }
+
+        .search-pill-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: calc(14px * var(--font-scale, 1));
+            background: transparent;
+            min-width: 0;
+        }
+
+        .search-pill-btn {
+            background-color: var(--primary, #3498db);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: calc(14px * var(--font-scale, 1));
+            cursor: pointer;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+            .search-pill-btn:hover {
+                opacity: 0.85;
+            }
+
+            .search-pill-btn:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+
         #map {
             height: 100vh;
             width: 100%;
@@ -719,6 +793,42 @@
 
             #map :deep(.leaflet-control) {
                 margin-top: calc(var(--mobile-header-height) + 10px);
+            }
+
+            #map :deep(.leaflet-popup-content-wrapper) {
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            #map :deep(.leaflet-popup-content) {
+                font-size: calc(18px * var(--font-scale, 1));
+                line-height: 1.4;
+                margin: 8px;
+                word-wrap: break-word;
+                max-width: 200px;
+            }
+
+            #map :deep(.leaflet-popup-close-button) {
+                width: 32px;
+                height: 32px;
+                font-size: 28px;
+                line-height: 32px;
+                text-align: center;
+                padding: 0;
+                right: -6px;
+                color: var(--text);
+                border-radius: 4px;
+                transition: all 0.2s ease;
+            }
+
+            #map :deep(.leaflet-popup-close-button:hover) {
+                background: var(--primary-dark);
+                transform: scale(1.1);
+            }
+
+            #map :deep(.leaflet-popup-tip) {
+                width: 12px;
+                height: 12px;
             }
 
         #map-container {
@@ -815,7 +925,7 @@
 
         .info-button {
             font-weight: bold;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             margin-top: 12px;
             margin-bottom: 8px;
             width: 100%;
@@ -825,14 +935,14 @@
 
         .info-label {
             font-weight: bold;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             margin-top: 12px;
             margin-bottom: 6px;
             text-align: center;
         }
 
         .nobold {
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             margin-top: 12px;
             margin-bottom: 6px;
             text-align: center;
@@ -859,8 +969,19 @@
         }
 
             .sidebar-header h1 {
-                font-size: 18px;
+                font-size: calc(18px * var(--font-scale, 1));
                 margin: 0;
             }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #sidebar {
+            transition: transform 0.15s ease;
+        }
+
+        .popup-enter-active,
+        .popup-leave-active {
+            transition: none;
+        }
     }
 </style>

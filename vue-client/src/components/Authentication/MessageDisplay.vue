@@ -103,7 +103,7 @@
         }
 
         .message-text {
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             font-weight: 500;
         }
 

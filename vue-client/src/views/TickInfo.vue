@@ -1,5 +1,6 @@
 ﻿<script setup lang="ts">
     import { ref, onMounted, onUnmounted } from 'vue'
+    import { SERVER_CONFIG } from '@/config/server';
 
     interface Species {
         SPECIES_ID: number
@@ -16,14 +17,16 @@
     const isLightboxOpen = ref(false)
     const isLightboxClosing = ref(false)
 
+    const serverURL = SERVER_CONFIG.BASE_URL;
+
     const fetchSpecies = async () => {
         try {
-            const response = await fetch('http://localhost:5021/api/tick/species')
+            const response = await fetch(`${serverURL}/api/tick/species`)
             const data = await response.json()
 
             species.value = data.map((s: Species) => ({
                 ...s,
-                IMAGE: `http://localhost:5021${s.IMAGE}`
+                IMAGE: `${serverURL}${s.IMAGE}`
             }))
             console.log(species.value)
         } catch (error) {
@@ -358,7 +361,7 @@
         right: 0;
         background: none;
         border: none;
-        color: var(--bg));
+        color: var(--bg);
         font-size: calc(40px * var(--font-scale, 1));
         cursor: pointer;
         transition: color 0.3s;
@@ -389,16 +392,16 @@
     }
 
     @media (max-width: 900px) {
-        h1 {
+        h1.title {
             text-align: center;
-            padding-top: var(--mobile-header-height);
-            font-size: 20px;
+            padding-top: calc(var(--mobile-header-height) + 20px);
+            font-size: calc(28px * var(--font-scale, 1));
             text-decoration: underline;
-            margin-bottom: 0px;
+            margin-bottom: 16px;
         }
 
         h2 {
-            font-size: 18px;
+            font-size: calc(18px * var(--font-scale, 1));
             text-decoration: underline;
             margin: 0px 0 1px 0;
             text-align: center;
@@ -441,7 +444,7 @@
             background: white;
             border: 2px solid var(--primary);
             cursor: pointer;
-            font-size: 28px;
+            font-size: calc(28px * var(--font-scale, 1));
             color: var(--primary);
             display: flex;
             align-items: center;
@@ -508,7 +511,7 @@
 
         .Sub-Title {
             text-decoration: underline;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             font-weight: bold;
             margin-bottom: 8px;
             color: var(--primary);
@@ -516,14 +519,14 @@
         }
 
         .Information {
-            font-size: 13px;
+            font-size: calc(13px * var(--font-scale, 1));
             line-height: 1.4;
             text-align: center;
         }
 
         .current {
             text-align: center;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1)0;
             margin-top: 8px;
             color: var(--text);
         }
@@ -565,6 +568,31 @@
             font-size: 32px;
             cursor: pointer;
             transition: color 0.3s;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .slide-left-enter-active,
+        .slide-left-leave-active,
+        .slide-right-enter-active,
+        .slide-right-leave-active {
+            transition: none !important;
+        }
+
+        .nav-arrow {
+            transition: all 0.1s;
+        }
+
+        .lightbox {
+            animation: fadeIn 0.1s ease;
+        }
+
+        .lightbox.fade-out {
+            animation: fadeOut 0.1s ease forwards;
+        }
+
+        .lightbox-close {
+            transition: color 0.1s;
         }
     }
 </style>
