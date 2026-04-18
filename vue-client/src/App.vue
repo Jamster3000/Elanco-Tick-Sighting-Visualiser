@@ -434,7 +434,7 @@ function toggleDarkMode() {
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: calc(28px * var(--font-scale, 1));
         }
 
         .hamburger {
@@ -501,7 +501,7 @@ function toggleDarkMode() {
             .links a {
                 width: 100%;
                 padding: 14px 20px;
-                font-size: 16px;
+                font-size: calc(16px * var(--font-scale, 1));
                 font-weight: 500;
                 border-radius: 0;
                 border-bottom: 1px solid rgba(52, 152, 219, 0.08);
@@ -529,7 +529,7 @@ function toggleDarkMode() {
                 width: 100%;
                 text-align: center;
                 padding: 12px 16px !important;
-                font-size: 14px !important;
+                font-size: calc(14px * var(--font-scale, 1)) !important;
                 border-radius: 6px;
             }
 
@@ -550,7 +550,7 @@ function toggleDarkMode() {
         }
 
         .accessibility-header span {
-            font-size: 26px;
+            font-size: calc(26px * var(--font-scale, 1));
         }
 
         .btn-close {
@@ -570,7 +570,7 @@ function toggleDarkMode() {
         }
 
         .control label {
-            font-size: 22px;
+            font-size: calc(22px * var(--font-scale, 1));
         }
 
         .control select,
@@ -579,7 +579,7 @@ function toggleDarkMode() {
         }
 
         .control select {
-            font-size: 20px;
+            font-size: calc(20px * var(--font-scale, 1));
         }
 
         .control input[type=checkbox] {

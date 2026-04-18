@@ -755,7 +755,7 @@
             flex: 1;
             border: none;
             outline: none;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             background: transparent;
             min-width: 0;
         }
@@ -767,7 +767,7 @@
             border-radius: 40px;
             padding: 8px 16px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             cursor: pointer;
             transition: opacity 0.2s;
             white-space: nowrap;
@@ -798,7 +798,7 @@
             }
 
             #map :deep(.leaflet-popup-content) {
-                font-size: 18px;
+                font-size: calc(18px * var(--font-scale, 1));
                 line-height: 1.4;
                 margin: 8px;
                 word-wrap: break-word;
@@ -922,7 +922,7 @@
 
         .info-button {
             font-weight: bold;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             margin-top: 12px;
             margin-bottom: 8px;
             width: 100%;
@@ -932,14 +932,14 @@
 
         .info-label {
             font-weight: bold;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             margin-top: 12px;
             margin-bottom: 6px;
             text-align: center;
         }
 
         .nobold {
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             margin-top: 12px;
             margin-bottom: 6px;
             text-align: center;
@@ -966,7 +966,7 @@
         }
 
             .sidebar-header h1 {
-                font-size: 18px;
+                font-size: calc(18px * var(--font-scale, 1));
                 margin: 0;
             }
     }

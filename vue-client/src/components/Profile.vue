@@ -178,7 +178,7 @@
             --br: 0.625rem;
             --gap: 0.25rem;
             --popup-max-h: 20rem;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             position: relative;
             z-index: 1003;
         }
@@ -188,7 +188,7 @@
             font-weight: 600;
             padding: 0.5rem 0rem 0.5rem 0.625rem;
             color: var(--text);
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
         }
 
         .button {
@@ -206,7 +206,7 @@
 
         a, button.item {
             padding: calc(var(--gap) * 1.5) calc(var(--gap) * 6) calc(var(--gap) * 1.5) calc(var(--gap) * 3);
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
         }
 
         .list-box {

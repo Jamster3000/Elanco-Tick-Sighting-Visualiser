@@ -395,13 +395,13 @@
         h1.title {
             text-align: center;
             padding-top: calc(var(--mobile-header-height) + 20px);
-            font-size: 28px;
+            font-size: calc(28px * var(--font-scale, 1));
             text-decoration: underline;
             margin-bottom: 16px;
         }
 
         h2 {
-            font-size: 18px;
+            font-size: calc(18px * var(--font-scale, 1));
             text-decoration: underline;
             margin: 0px 0 1px 0;
             text-align: center;
@@ -444,7 +444,7 @@
             background: white;
             border: 2px solid var(--primary);
             cursor: pointer;
-            font-size: 28px;
+            font-size: calc(28px * var(--font-scale, 1));
             color: var(--primary);
             display: flex;
             align-items: center;
@@ -511,7 +511,7 @@
 
         .Sub-Title {
             text-decoration: underline;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             font-weight: bold;
             margin-bottom: 8px;
             color: var(--primary);
@@ -519,14 +519,14 @@
         }
 
         .Information {
-            font-size: 13px;
+            font-size: calc(13px * var(--font-scale, 1));
             line-height: 1.4;
             text-align: center;
         }
 
         .current {
             text-align: center;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1)0;
             margin-top: 8px;
             color: var(--text);
         }

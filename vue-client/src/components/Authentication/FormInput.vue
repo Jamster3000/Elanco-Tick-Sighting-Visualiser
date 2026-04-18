@@ -157,16 +157,16 @@
 
         .form-label {
             padding-top: 0;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
         }
 
         .form-input {
-            font-size: 16px;
+            font-size: calc(16px * var(--font-scale, 1));
             padding: 12px 16px;
         }
 
         .form-error {
-            font-size: 12px;
+            font-size: calc(12px * var(--font-scale, 1));
             margin-top: 4px;
         }
 

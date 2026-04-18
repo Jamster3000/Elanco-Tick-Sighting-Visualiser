@@ -263,7 +263,7 @@
         }
 
         .title {
-            font-size: 24px;
+            font-size: calc(24px * var(--font-scale, 1));
             font-weight: 700;
             color: var(--text);
             margin-bottom: 12px;
@@ -275,7 +275,7 @@
         }
 
         .section-title {
-            font-size: 20px;
+            font-size: calc(20px * var(--font-scale, 1));
             font-weight: bold;
             color: var(--text);
             margin-bottom: 12px;
@@ -293,7 +293,7 @@
         }
 
         .warning-text {
-            font-size: 15px;
+            font-size: calc(15px * var(--font-scale, 1));
             color: var(--message-error-text);
             margin-bottom: 12px;
             text-align: center;
@@ -307,7 +307,7 @@
         }
 
         .confirm-text {
-            font-size: 12px;
+            font-size: calc(12px * var(--font-scale, 1));
             color: var(--text);
             margin-bottom: 12px;
             font-weight: 500;
@@ -322,7 +322,7 @@
         .btn-block {
             width: 100%;
             padding: 12px 16px;
-            font-size: 15px;
+            font-size: calc(15px * var(--font-scale, 1));
         }
 
         .divider {

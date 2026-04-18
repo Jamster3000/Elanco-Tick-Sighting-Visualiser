@@ -75,7 +75,7 @@
             }
 
         h1 {
-            font-size: 20px;
+            font-size: calc(20px * var(--font-scale, 1));
             font-weight: bold;
             text-align: center;
             line-height: 1.4;
@@ -84,7 +84,7 @@
         }
 
         p {
-            font-size: 15px;
+            font-size: calc(15px * var(--font-scale, 1));
             line-height: 1.5;
             letter-spacing: 0.2px;
         }

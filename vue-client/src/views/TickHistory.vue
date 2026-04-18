@@ -324,12 +324,12 @@
 
         h1 {
             padding-top: calc(var(--mobile-header-height) + 20px);
-            font-size: 24px;
+            font-size: calc(24px * var(--font-scale, 1));
             margin-bottom: 8px;
         }
 
         h4 {
-            font-size: 16px;
+            font-size: calc(16px * var(--font-scale, 1));
             margin-bottom: 16px;
             padding: 0 12px;
         }
@@ -344,7 +344,7 @@
 
         #ticks {
             width: 100%;
-            font-size: 16px;
+            font-size: calc(16px * var(--font-scale, 1));
             padding: 12px 14px;
             border-radius: 8px;
             border: 2px solid var(--primary);
@@ -394,35 +394,35 @@
 
             .population p {
                 margin: 0;
-                font-size: 15px;
+                font-size: calc(15px * var(--font-scale, 1));
                 line-height: 1.4;
             }
 
                 .population p:first-child {
                     font-weight: 600;
-                    font-size: 16px;
+                    font-size: calc(16px * var(--font-scale, 1));
                     margin-bottom: 4px;
                 }
 
                 .population p:nth-child(odd) {
                     margin-top: 0;
                     font-weight: 600;
-                    font-size: 16px;
+                    font-size: calc(16px * var(--font-scale, 1));
                 }
 
                 .population p:nth-child(even) {
-                    font-size: 15px;
+                    font-size: calc(15px * var(--font-scale, 1));
                 }
 
         .percentage {
             padding: 12px 0;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale, 1));
             line-height: 1.6;
         }
 
             .percentage p {
                 margin: 0;
-                font-size: 14px;
+                font-size: calc(14px * var(--font-scale, 1));
             }
     }
 
