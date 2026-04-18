@@ -1,6 +1,22 @@
 <script setup lang="ts">
     import { useRouter } from 'vue-router'
+    import { ref, onMounted } from 'vue'
+
     const router = useRouter()
+    const userData = ref<any>(null)
+
+    onMounted(() => {
+        const user = localStorage.getItem('user')
+        userData.value = user ? JSON.parse(user) : null
+    })
+
+    const handleLogout = () => {
+        localStorage.removeItem("user")
+        userData.value = null
+        window.dispatchEvent(new Event('user-logout')) //logging out from home didn't updated nav bar
+        router.push('/')
+    }
+
 </script>
 
 <template>
@@ -11,8 +27,13 @@
                 <p class="hero-subtitle">Track and analyze tick populations in the UK</p>
             </div>
             <div class="auth-buttons">
-                <button class="btn btn-secondary btn-large" @click="router.push('/login')">Login</button>
-                <button class="btn btn-primary btn-large" @click="router.push('/Signup')">Sign Up</button>
+                <template v-if="userData">
+                    <button class="btn btn-primary btn-large" @click="handleLogout">Logout</button>
+                </template>
+                <template v-else>
+                    <button class="btn btn-secondary btn-large" @click="router.push('/login')">Login</button>
+                    <button class="btn btn-primary btn-large" @click="router.push('/Signup')">Sign Up</button>
+                </template>
             </div>
         </div>
         <div class="map-section">

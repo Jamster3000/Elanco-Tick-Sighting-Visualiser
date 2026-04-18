@@ -24,10 +24,14 @@
 
     onMounted(() => {
         document.addEventListener('click', closeMenu)
+        window.addEventListener('storage', updateUser)
+        window.addEventListener('user-logout', updateUser)
     })
 
     onUnmounted(() => {
         document.removeEventListener('click', closeMenu)
+        window.removeEventListener('storage', updateUser)
+        window.removeEventListener('user-logout', updateUser)
     })
 
     updateUser()

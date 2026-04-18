@@ -140,6 +140,7 @@
         top: 100%;
         right: 0;
         opacity: 0;
+        pointer-events: none;
         margin-top: var(--gap);
         border-radius: var(--br);
         padding: 0 calc(var(--gap) * 1.5);
