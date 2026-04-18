@@ -298,7 +298,7 @@
 
                 const message = `You clicked in ${location}. There are ${count} recorded tick sightings here.`
 
-                map.setView([lat, lng], 11)
+                map.setView([lat, lng], 8)
                 currentMarker = L.marker([lat, lng])
                     .addTo(map)
                     .bindPopup(message)

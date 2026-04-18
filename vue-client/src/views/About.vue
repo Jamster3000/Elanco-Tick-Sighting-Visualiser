@@ -16,7 +16,15 @@
         padding-top: var(--top-padding);
         max-width: 1000px;
         margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
     }
+        .about-container .card {
+            height: auto !important;
+            min-height: fit-content;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
 
     h1 {
         font-size: calc(32px * var(--font-scale, 1));
@@ -30,6 +38,7 @@
 
     .card {
         animation: fadeInUp 0.8s ease 0.2s both;
+        overflow-wrap: break-word;
     }
 
     p {
@@ -57,6 +66,7 @@
             padding-right: 12px;
             max-width: 100%;
             margin: 0;
+            overflow-x: hidden;
         }
 
             .about-container .card {
