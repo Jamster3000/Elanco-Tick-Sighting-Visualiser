@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TickVisuilzer_Backend.Service;
 
 namespace ElantroProj.Controllers
@@ -80,6 +81,20 @@ namespace ElantroProj.Controllers
             {
                 year = yearlyCounts
             });
+        }
+
+        [HttpGet("GetAllCities")]
+        public async Task<IActionResult> GetAllCities()
+        {
+            var allSightings = await _tickService.GetTickSightings();
+
+            var cities = allSightings
+                .Where(t => !string.IsNullOrWhiteSpace(t.LocationName))
+                .Select(t => new { city = t.LocationName })
+                .Distinct()
+                .ToList();
+
+            return Ok(cities);
         }
     }
 }
