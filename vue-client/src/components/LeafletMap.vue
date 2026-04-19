@@ -18,12 +18,60 @@
     const searchQuery = ref('');
     let map: any = null;
     let currentMarker: any = null;
+    let cityOverlayLayers: L.GeoJSON[] = []
 
     const theme = inject < {
         colourBlindMode: any
         darkMode: any
         themeVersion: any
     }>('theme')
+
+
+    async function getCityPolygon(city: string) {
+        try {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&polygon_geojson=1&q=${encodeURIComponent(city)}`
+            const res = await fetch(url)
+            const data = await res.json()
+            if (!data.length) return null
+            return {
+                lat: parseFloat(data[0].lat),
+                lon: parseFloat(data[0].lon),
+                polygon: data[0].geojson
+            };
+        } catch {
+            console.warn(`Failed to get polygon for: ${city}`)
+            return null
+        }
+    }
+
+    function addCityPolygonToMap(polygonGeoJson: any) {
+        const layer = L.geoJSON(polygonGeoJson, {
+            style: {
+                color: "orange",
+                fillColor: "orange",
+                fillOpacity: 0.35,
+                weight: 1
+            }
+        }).addTo(map)
+        cityOverlayLayers.push(layer) 
+    }
+
+    async function addTickCityOverlays() {
+        try {
+            const res = await fetch(`${serverURL}/api/TickChart/GetAllCities`)
+            if (!res.ok) throw new Error('Failed to fetch city list')
+            const tickData: { city: string }[] = await res.json()
+
+            for (const item of tickData) {
+                const cityInfo = await getCityPolygon(item.city)
+                if (!cityInfo) continue
+                addCityPolygonToMap(cityInfo.polygon)
+                await new Promise(resolve => setTimeout(resolve, 1100)) 
+            }
+        } catch (err) {
+            console.error('Failed to load city overlays:', err)
+        }
+    }
 
     function makeDraggable(selector: string) {
         nextTick(() => {
@@ -189,56 +237,60 @@
         isSidebarOpen.value = false
     }
 
-    onMounted(() => {
-        map = L.map('map').setView([51.505, -0.09], 6)
+    onMounted(async () => {
+        map = L.map('map').setView([51.505, -0.09], 6);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
-        }).addTo(map)
+        }).addTo(map);
 
-        let lastRequestTime = 0
-        makeDraggable('.search-pill-container')
+        let lastRequestTime = 0;
+        makeDraggable('.search-pill-container');
+
+        await addTickCityOverlays();
 
         map.on('click', async (e: L.LeafletMouseEvent) => {
-            const now = Date.now()
-            if (now - lastRequestTime < REQUEST_THROTTLE_MS) return
+            const now = Date.now();
+            if (now - lastRequestTime < REQUEST_THROTTLE_MS) return;
 
-            lastRequestTime = now
-            isLoading.value = true
+            lastRequestTime = now;
+            isLoading.value = true;
 
-            const { lat, lng } = e.latlng
+            const { lat, lng } = e.latlng;
 
             try {
                 const reverseResponse = await fetch(
                     `${serverURL}/api/map/reverse?lat=${lat}&lon=${lng}`
-                )
+                );
 
-                let city = 'Unknown location'
+                let city = 'Unknown location';
                 if (reverseResponse.ok) {
-                    const reverseData = await reverseResponse.json()
+                    const reverseData = await reverseResponse.json();
                     if (reverseData.address) {
                         city =
                             reverseData.address.city ||
                             reverseData.address.town ||
                             reverseData.address.village ||
-                            city
+                            city;
                     }
                     if (city === 'Greater London' ||
                         city === 'City of London' ||
                         city === 'City of Westminster' ||
                         city?.includes('London')) {
-                        city = 'London'
+                        city = 'London';
                     }
                 }
+
                 await fetchTickDataForCity(city, lat, lng);
 
             } catch (error) {
-                console.error('API error:', error)
+                console.error('API error:', error);
             } finally {
-                isLoading.value = false
+                isLoading.value = false;
             }
-        })
-    })
+        });
+    });
+
 
     const fetchTickDataForCity = async (city: string, lat: number, lng: number) => {
         if (currentMarker) {
