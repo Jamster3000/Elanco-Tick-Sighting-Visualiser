@@ -207,7 +207,7 @@
         flex-direction: column;
         font-size: calc(16px * var(--font-scale, 1));
         gap: 30px;
-        background-color: var(--primary);
+        background-color: var(--fg);
         padding: 16px;
         border-width: 3px;
         border-style: solid;
@@ -254,7 +254,7 @@
     .percentage,
     .population {
         font-weight: bold;
-        color: var(--bg);
+        color: var(--fg);
         padding: 10px;
         padding-top: 30px;
     }
