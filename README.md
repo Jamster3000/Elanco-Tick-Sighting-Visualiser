@@ -25,20 +25,21 @@
     <img width="1734" height="927" alt="image" src="https://github.com/user-attachments/assets/2fe6f638-c557-47b6-9bb5-9d22fc81656f" />
 
 # Running the frontend
-1. Open a termainal (ideally, we suggest a `Developer Powershell` in visual studio) -> use CD or make sure you're in the project root directory.
+1. Open a terminal (ideally, we suggest a `Developer PowerShell` in visual studio) -> use CD or make sure you're in the project root directory.
 2. Run `cd vue-client` -> this is where all the frontend code lives.
 3. Run `npm install` -> This will install all libraries/packages this project uses in the frontend (e.g., leaflet.js for the map functionality) - (If you are quick at making tea, here's your third opportunity).
-4. If there are no errors (you may get some warnings but these are okay and shouldn't interupt running the frontend), you can then run the frontend with `npm run dev`.
+4. If there are no errors (you may get some warnings but these are okay and shouldn't interrupt running the frontend), you can then run the frontend with `npm run dev`.
 5. It should be clear once the frontend is running as the command shows coloured text and all the basic information needed whilst it is running. Now to visit the web app, it should tell you the localhost address to visit (e.g., `http://localhost:5173/` - This should be exactly same as yours). Copy and paste this into any web browser of your choice.
 
 # Confirm the frontend communicates with backend
 > This might be obvious, but it's always to check.
 
-1. Simpily head to another page (we suggest going to the `Explore Tick Species` page).
+1. Simply head to another page (we suggest going to the `Explore Tick Species` page).
 2. If you see images, a card, and information about ticks, then the frontend has successfully communicated with the backend and all is working as intended.
    IF you don't see these. Please check your developer console (Chrome based web browsers `Ctrl+Shift+I`), backend terminal, and frontend terminal to see if there are any obvious errors that can be fixed.
 3. Certain things like firewall or antivirus are common things that often intercept development builds and are known to cause a lot of problems.
 
+> And of course, there's always time to stop throughout this process for more tea.
 
 <br><br>
 ---
