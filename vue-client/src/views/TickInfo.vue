@@ -108,6 +108,7 @@
                 <h2>{{ species[currentIndex].SPECIES }}</h2>
                 <p>{{ species[currentIndex].LATIN }}</p>
                 <img :src="species[currentIndex].IMAGE" :alt="species[currentIndex].SPECIES" @click="showLightbox" />
+                <p v-if="currentIndex !== 2" class="photo-credit">Photo courtesy of ESCCAP UK & Ireland</p>
 
                 <div class="info-columns">
                     <div class="info-column">
@@ -130,9 +131,10 @@
     </div>
 
     <div class="lightbox" :class="{ 'fade-out': isLightboxClosing }" v-if="isLightboxOpen" @click="closeLightbox">
+        <button class="lightbox-close" @click="closeLightbox">×</button>
         <div class="lightbox-content" @click.stop>
-            <button class="lightbox-close" @click="closeLightbox">×</button>
             <img :src="species[currentIndex].IMAGE" :alt="species[currentIndex].SPECIES" />
+            <p v-if="currentIndex !== 4" class="lightbox-photo-credit">Photo courtesy of ESCCAP UK & Ireland</p>
         </div>
     </div>
 </template>
@@ -317,11 +319,13 @@
         text-align: center;
     }
 
-    .current {
-        text-align: center;
-        font-size: calc(22px * var(--font-scale, 1));
-        margin-top: 8px;
+    .photo-credit {
+        font-size: calc(14px * var(--font-scale, 1));
         color: var(--text);
+        text-align: center;
+        margin: 8px 0 0 0;
+        font-style: italic;
+        opacity: 0.8;
     }
 
     .lightbox {
@@ -340,31 +344,47 @@
 
     .lightbox-content {
         position: relative;
-        max-width: 90vw;
-        max-height: 90vh;
+        max-width: 75vw;
+        max-height: 75vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
         .lightbox-content img {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
             object-fit: contain;
             border-radius: 8px;
         }
+
+    .lightbox-photo-credit {
+        font-size: calc(14px * var(--font-scale, 1));
+        color: var(--bg);
+        text-align: center;
+        margin: 12px 0 0 0;
+        font-style: italic;
+        opacity: 0.8;
+    }
 
     .lightbox.fade-out {
         animation: fadeOut 0.3s ease forwards;
     }
 
     .lightbox-close {
-        position: absolute;
-        top: -40px;
-        right: 0;
+        position: fixed;
+        top: 20px;
+        right: 20px;
         background: none;
         border: none;
         color: var(--bg);
         font-size: calc(40px * var(--font-scale, 1));
         cursor: pointer;
         transition: color 0.3s;
+        z-index: 2001;
     }
 
         .lightbox-close:hover {
@@ -524,6 +544,15 @@
             text-align: center;
         }
 
+        .photo-credit {
+            font-size: calc(12px * var(--font-scale, 1));
+            color: var(--text);
+            text-align: center;
+            margin: 6px 0 0 0;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
         .current {
             text-align: center;
             font-size: calc(14px * var(--font-scale, 1));
@@ -549,25 +578,41 @@
             position: relative;
             max-width: 95vw;
             max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
             .lightbox-content img {
-                width: 100%;
-                height: 100%;
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
                 object-fit: contain;
                 border-radius: 8px;
             }
 
+        .lightbox-photo-credit {
+            font-size: 12px;
+            color: white;
+            text-align: center;
+            margin: 10px 0 0 0;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
         .lightbox-close {
-            position: absolute;
-            top: -35px;
-            right: 0;
+            position: fixed;
+            top: 15px;
+            right: 15px;
             background: none;
             border: none;
             color: white;
             font-size: 32px;
             cursor: pointer;
             transition: color 0.3s;
+            z-index: 2001;
         }
     }
 
