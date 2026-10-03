@@ -1,9 +1,3 @@
-# Portfolio
-Access the Portfolio document below with the link:
-[Portfoio group project word doc](https://sheffieldhallam-my.sharepoint.com/:w:/g/personal/c5026574_hallam_shu_ac_uk/IQCxRbF484p_QZEAVyREyptmAT3KGKO0gT3tSYbJa2qlh1c?e=2CRuQi)
-
-> Suggest opening it in word desktop for correct and proper formatting.
-
 # Tick Sighting Visualiser
 
 ## Project Summary
@@ -52,12 +46,3 @@ Upon project completion, your team is required to submit the following:
     encountered, solutions implemented, and key insights derived from the data analysis.
 2. **Functional Solution:** The developed web application, accompanied by all relevant source code and
     comprehensive documentation.
-
-## Elanco Project Team
-
-The following Elanco team members will provide guidance and support throughout the project:
-
-- Tom Youngs - Engineer - tom.youngs@elancoah.com
-- Liam Hammond - Data Engineer - liam.hammond@elancoah.com
-- Samad Olaibi - Engineer - samad.olaibi@network.elancoah.com
-- Luke Chapman - Data Engineer - luke.chapman@network.elancoah.com
